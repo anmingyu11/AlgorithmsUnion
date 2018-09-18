@@ -7,6 +7,12 @@ public class Base {
         nums[j] = tmp;
     }
 
+    public static void swap(int nums[][], int ai, int aj, int bi, int bj) {
+        int tmp = nums[bi][bj];
+        nums[bi][bj] = nums[ai][aj];
+        nums[ai][aj] = tmp;
+    }
+
     public static void reverse(int nums[], int begin, int end) {
         while (begin < end) {
             swap(nums, begin++, end--);
