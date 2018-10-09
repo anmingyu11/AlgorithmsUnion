@@ -1,6 +1,6 @@
-package _1array;
+package _01array;
 
-import _0base.Base;
+import _00base.Base;
 
 public class PlusOne extends Base {
     public int[] plusOne(int[] digits) {

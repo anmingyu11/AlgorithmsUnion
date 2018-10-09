@@ -1,4 +1,4 @@
-package _0base;
+package _00base;
 
 public class Base {
     public static void swap(int nums[], int i, int j) {

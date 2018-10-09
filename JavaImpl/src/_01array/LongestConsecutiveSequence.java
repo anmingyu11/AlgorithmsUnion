@@ -1,8 +1,8 @@
-package _1array;
+package _01array;
 
 import java.util.HashSet;
 
-import _0base.Base;
+import _00base.Base;
 
 public class LongestConsecutiveSequence extends Base {
     public static int longestConsecutive(int[] nums) {

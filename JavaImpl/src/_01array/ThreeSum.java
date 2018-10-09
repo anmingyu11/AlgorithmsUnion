@@ -1,10 +1,10 @@
-package _1array;
+package _01array;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import _0base.Base;
+import _00base.Base;
 
 public class ThreeSum extends Base {
 

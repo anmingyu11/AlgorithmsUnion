@@ -1,4 +1,4 @@
-package _1array;
+package _01array;
 
 public class GasStation {
 
@@ -7,7 +7,7 @@ public class GasStation {
         int tank = 0;
         int total = 0;
 
-        for (int i = 0; i < gas.length; ++i) {
+        for (int i =     0; i < gas.length; ++i) {
             total += gas[i] - cost[i];
             tank += gas[i] - cost[i];
             if (tank < 0) {

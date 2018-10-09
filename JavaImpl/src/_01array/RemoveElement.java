@@ -1,4 +1,4 @@
-package _1array;
+package _01array;
 
 public class RemoveElement {
 
