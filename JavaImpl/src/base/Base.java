@@ -26,4 +26,7 @@ public class Base {
     public static void println(Object o) {
         System.out.println(o);
     }
+    public void test(){
+
+    }
 }
