@@ -120,10 +120,10 @@ public class JumpGame2 extends Base {
     static class Solution5 {
         public static int jump(int[] nums) {
             int jumps = 0, curEnd = 0, curFarthest = 0;
-            for (int i = 0; i < nums.length - 1; i++) {
-                curFarthest = Math.max(curFarthest, i + nums[i]);
+            for (int i = 0; i < nums.length; ++i) {
+                curFarthest = Math.max(curFarthest, nums[i] + i);
                 if (i == curEnd) {
-                    jumps++;
+                    ++jumps;
                     curEnd = curFarthest;
                 }
             }
@@ -133,6 +133,7 @@ public class JumpGame2 extends Base {
 
     public static void main(String[] args) {
         int[] nums = {2, 3, 1, 1, 4};
-        println(Arrays.toString(nums) + " need : " + Solution3.jump(nums));
+        println(Arrays.toString(nums) + " need : " + Solution5.jump(nums));
     }
+
 }
