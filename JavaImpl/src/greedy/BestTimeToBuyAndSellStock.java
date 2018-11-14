@@ -2,7 +2,7 @@ package greedy;
 
 import base.Base;
 
-public class BestTimetoBuyandSellStock extends Base {
+public class BestTimeToBuyAndSellStock extends Base {
 
     public static int maxProfit(int[] prices) {
         int minPrice = Integer.MAX_VALUE;
