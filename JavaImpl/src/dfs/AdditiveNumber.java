@@ -41,10 +41,12 @@ public class AdditiveNumber extends Base {
         String s1 = "112358";
         String s2 = "199100199";
         String s3 = "0";
-        String s4 ="123";
+        String s4 = "123";
+        String s5 = "0235813";
         //println(isAdditiveNumber(s1));
         //println(isAdditiveNumber(s2));
         //println(isAdditiveNumber(s3));
-        println(isAdditiveNumber(s4));
+        //println(isAdditiveNumber(s4));
+        println(isAdditiveNumber(s5));
     }
 }
