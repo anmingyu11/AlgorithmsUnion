@@ -16,6 +16,7 @@ public class WordLadder extends Base {
             Set<String> wordDict = new HashSet<>();
             // Detect endWord has or not
             for (String word : wordList) {
+                //Todo 其实这段是影响效率的。
                 if (!hasEnd && word.equals(endWord)) {
                     hasEnd = true;
                 }
