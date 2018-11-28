@@ -1,5 +1,7 @@
 package base;
 
+import java.util.Arrays;
+
 public class Base {
     public static void swap(int nums[], int i, int j) {
         int tmp = nums[i];
@@ -17,6 +19,27 @@ public class Base {
         while (begin < end) {
             swap(nums, begin++, end--);
         }
+    }
+
+    public static <T> void print(int[][] arr2) {
+        for (int[] objarr : arr2) {
+            println(Arrays.toString(objarr));
+        }
+        println("");
+    }
+
+    public static <T> void print(char[][] arr2) {
+        for (char[] objarr : arr2) {
+            println(Arrays.toString(objarr));
+        }
+        println("");
+    }
+
+    public static <T> void print(T[][] arr2) {
+        for (T[] objarr : arr2) {
+            println(Arrays.toString(objarr));
+        }
+        println("");
     }
 
     public static void print(Object o) {
