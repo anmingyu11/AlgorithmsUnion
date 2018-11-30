@@ -5,7 +5,26 @@ import java.util.List;
 
 public class Tests extends Base {
     public static void main(String[] args) {
-        linkedListInsertDeleteTest();
+        //linkedListInsertDeleteTest();
+        testBitMani();
+    }
+
+    private static void testBitMani() {
+        println("and");
+        println(1 & 1);
+        println(1 & 0);
+        println(0 & 1);
+        println(0 & 0);
+        println("or");
+        println(1 | 1);
+        println(1 | 0);
+        println(0 | 1);
+        println(0 | 0);
+        println("xor");
+        println(1 ^ 1);
+        println(1 ^ 0);
+        println(0 ^ 1);
+        println(0 ^ 0);
     }
 
     private static void linkedListInsertDeleteTest() {
