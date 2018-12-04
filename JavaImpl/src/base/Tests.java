@@ -6,7 +6,20 @@ import java.util.List;
 public class Tests extends Base {
     public static void main(String[] args) {
         //linkedListInsertDeleteTest();
-        testBitMani();
+        //testBitMani();
+        //testStrEmpty();
+        testSubStr();
+    }
+
+    private static void testStrEmpty() {
+        String s = "";
+        println(s.length());
+    }
+
+    private static void testSubStr() {
+        String s = "012";
+        //println(s.substring(3, s.length()));
+        println(Integer.parseInt(s));
     }
 
     private static void testBitMani() {
