@@ -35,6 +35,19 @@ public class Base {
         println("");
     }
 
+
+    public static void print(int[] arr1) {
+        println(Arrays.toString(arr1));
+    }
+
+    public static void print(char[] arr1) {
+        println(Arrays.toString(arr1));
+    }
+
+    public static <T> void print(T[] arr1) {
+        println(Arrays.toString(arr1));
+    }
+
     public static <T> void print(T[][] arr2) {
         for (T[] objarr : arr2) {
             println(Arrays.toString(objarr));
