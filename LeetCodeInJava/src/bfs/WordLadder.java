@@ -13,7 +13,7 @@ public class WordLadder extends Base {
         public static int ladderLength(String beginWord, String endWord, List<String> wordList) {
             boolean hasEnd = false;
 
-            Set<String> wordDict = new HashSet<>();
+            Set<String> wordDict = new HashSet<String>();
             // Detect endWord has or not
             for (String word : wordList) {
                 //Todo 其实这段是影响效率的。

@@ -13,7 +13,7 @@ public class MinimumWindowSubstring extends Base {
         }
 
         // Dictionary which keeps a count of all the unique characters int t.
-        Map<Character, Integer> dictT = new HashMap<>();
+        Map<Character, Integer> dictT = new HashMap<Character, Integer>();
         for (int i = 0; i < t.length(); ++i) {
             char c = t.charAt(i);
             int count = dictT.getOrDefault(t.charAt(i), 0);

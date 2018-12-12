@@ -8,7 +8,7 @@ import base.Base;
 public class ContainsDuplicate2 extends Base {
 
     public static boolean containsNearbyDuplicate(int[] nums, int k) {
-        Set<Integer> set = new HashSet<>();
+        Set<Integer> set = new HashSet<Integer>();
         for (int i = 0; i < nums.length; ++i) {
             if (i > k) {
                 set.remove(nums[i - k - 1]);

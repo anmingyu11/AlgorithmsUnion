@@ -16,7 +16,7 @@ public class NQueens extends Base {
             }
         }
 
-        List<List<String>> res = new ArrayList<>();
+        List<List<String>> res = new ArrayList<List<String>>();
         dfs(board, 0, res);
         return res;
     }

@@ -8,7 +8,7 @@ import base.Base;
 public class PascalsTriangle extends Base {
 
     public static List<List<Integer>> generate(int numRows) {
-        List<List<Integer>> allrows = new ArrayList<>();
+        List<List<Integer>> allrows = new ArrayList<List<Integer>>();
         List<Integer> row = new ArrayList<>();
 
         for (int i = 0; i < numRows; ++i) {

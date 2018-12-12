@@ -41,7 +41,7 @@ public class Tests extends Base {
     }
 
     private static void linkedListInsertDeleteTest() {
-        List<Integer> list = new LinkedList<>();
+        List<Integer> list = new LinkedList<Integer>();
         list.add(0, 1);
         list.add(0, 2);
         list.add(0, 3);

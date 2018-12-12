@@ -18,7 +18,7 @@ public class JumpGame2 extends Base {
             int[] jumps = new int[nums.length];
             Arrays.fill(jumps, Integer.MAX_VALUE);
             jumps[0] = 0;
-            Queue<Integer> q = new LinkedList<>();
+            Queue<Integer> q = new LinkedList<Integer>();
             q.add(0);
             final int len = nums.length;
             while (!q.isEmpty()) {

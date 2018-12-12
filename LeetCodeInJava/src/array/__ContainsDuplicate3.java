@@ -12,7 +12,7 @@ public class __ContainsDuplicate3 extends Base {
             return false;
         }
 
-        Map<Long, Long> map = new HashMap<>();
+        Map<Long, Long> map = new HashMap<Long,Long>();
         for (int i = 0; i < nums.length; i++) {
             long remappedNum = (long) nums[i] - Integer.MIN_VALUE;
             long bucket = remappedNum / ((long) t + 1);

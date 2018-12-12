@@ -10,7 +10,7 @@ public class RestoreIPAddress extends Base {
     static class Solution1 {
 
         public List<String> restoreIpAddresses(String s) {
-            List<String> res = new LinkedList<>();
+            List<String> res = new LinkedList<String>();
             if (s.length() > 12 || s.length() < 4) {
                 return res;
             }

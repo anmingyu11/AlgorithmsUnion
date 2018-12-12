@@ -21,7 +21,7 @@ public class PermutationSequence extends Base {
         println(" factorial : " + Arrays.toString(factorial));
 
         // 2. 创建数字序列数组
-        List<Integer> nums = new ArrayList<>(n + 1);
+        List<Integer> nums = new ArrayList<Integer>(n + 1);
         for (int i = 1; i <= n; ++i) {
             nums.add(i);
         }

@@ -11,7 +11,7 @@ public class LongestSubstringWithoutRepeatingCharacters extends Base {
         public int lengthOfLongestSubstring(String s) {
             int len = s.length();
             int res = 0, l = 0, r = 0;
-            HashSet<Character> set = new HashSet<>();
+            HashSet<Character> set = new HashSet<Character>();
             while (r < len && l < len) {
                 if (!set.contains(s.charAt(r))) {
                     set.add(s.charAt(r++));
