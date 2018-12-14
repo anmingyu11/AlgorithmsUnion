@@ -42,7 +42,7 @@ rn = max(pi + r(n-i))
 
 两种方法得到的算法具有相同的渐近运行时间，仅有的差异是在某些特殊情况下，自顶向下法并未真正递归地考察所有可能的子问题。由于没有频繁的递归函数调用的开销，自底向上法的时间复杂性函数通常具有更小的系数。
 
-自顶向下
+#### 自顶向下
 ```
 MEMOIZED-CUT-ROD(p,n)
 let r[0..n]be a new array
@@ -58,12 +58,12 @@ if n == 0
 else
 	q = -INF
 	for i = 1 to n
-		q = max(q, p[i] + MEMOIZED-CUT-ROD-AUX(p,n-i,r))
-r[n]=q
+		q = max(q, p[i] + MEMOIZED-CUT-ROD-AUX(p, n-i ,r))
+r[n] = q
 return q
 ```
 
-自底向上
+#### 自底向上
 ```
 BOTTOM-UP-CUT-ROD(p,n)
 let r[0..n] be a new array
@@ -71,11 +71,26 @@ r[0] = 0
 for j = 1 to n
 	q = -INF
 	for i = 1 to j
-		q = max(q,p[i] + r[j-i])
+		q = max(q , p[i] + r[j-i])
 	r[j] = q
 return r[n]
 ```
 
 自底向上的动态规划处理子问题图中顶点的顺序为：对于一个给定的子问题x，在求解它之前求解邻接至它的子问题y。换句话说，对于任何子问题，直至它依赖的所有子问题已求解完成，才会求解它，
 
-###重构解
+#### 重构解
+```
+EXTENDED-BOTTOM-UP-CUT-ROD(p,n)
+let r[0...n] and s[0...n] be new arrays
+r[0] = 0;
+
+for j = 1 to n
+	q = -INF
+		for i = 1 to j
+			if q < p[i] + r[j-i]
+				q = p[i] + r[j-i]
+				s[j] = i
+			r[j] = q
+
+return r and s
+```

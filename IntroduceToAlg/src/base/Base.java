@@ -21,38 +21,56 @@ public class Base {
         }
     }
 
-    public static <T> void print(int[][] arr2) {
+    public static void print2DArr(int[][] arr2) {
         for (int[] objarr : arr2) {
-            println(Arrays.toString(objarr));
+            for (int i = 0; i < objarr.length; ++i) {
+                int val = objarr[i];
+                if (i == 0) {
+                    System.out.printf("[ %d,", val);
+                } else if (i == objarr.length - 1) {
+                    System.out.printf("%7d ]\n", val);
+                } else {
+                    System.out.printf(" %7d,", val);
+                }
+            }
         }
         println("");
     }
 
-    public static <T> void print(char[][] arr2) {
+    public static void print2DArr(char[][] arr2) {
         for (char[] objarr : arr2) {
-            println(Arrays.toString(objarr));
+            for (int i = 0; i < objarr.length; ++i) {
+                char ch = objarr[i];
+                if (i == 0) {
+                    System.out.printf("[ %c,", ch);
+                } else if (i == objarr.length - 1) {
+                    System.out.printf("%5c ]\n", ch);
+                } else {
+                    System.out.printf(" %5c,", ch);
+                }
+            }
         }
         println("");
     }
 
-
-    public static void print(int[] arr1) {
-        println(Arrays.toString(arr1));
-    }
-
-    public static void print(char[] arr1) {
-        println(Arrays.toString(arr1));
-    }
-
-    public static <T> void print(T[] arr1) {
-        println(Arrays.toString(arr1));
-    }
-
-    public static <T> void print(T[][] arr2) {
+    public static <T> void print2DArr(T[][] arr2) {
         for (T[] objarr : arr2) {
             println(Arrays.toString(objarr));
         }
         println("");
+    }
+
+
+    public static void printLiArr(int[] arr1) {
+        println(Arrays.toString(arr1));
+    }
+
+    public static void printLiArr(char[] arr1) {
+        println(Arrays.toString(arr1));
+    }
+
+    public static <T> void printLiArr(T[] arr1) {
+        println(Arrays.toString(arr1));
     }
 
     public static void print(Object o) {
