@@ -4,10 +4,10 @@ import base.Base;
 
 public class RangeSumQuery2D extends Base {
 
-    static class NumMatrix1 {
+    static class NumMatrix {
         private int[][] dp;
 
-        public NumMatrix1(int[][] matrix) {
+        public NumMatrix(int[][] matrix) {
             final int row = matrix.length;
             if (row == 0) {
                 return;
@@ -39,9 +39,9 @@ public class RangeSumQuery2D extends Base {
         };
         int[][] matrix2 = {};
         int[][] matrix3 = {{1}};
-        NumMatrix1 n = new NumMatrix1(matrix1);
+        NumMatrix n = new NumMatrix(matrix1);
         //NumMatrix1 n2 = new NumMatrix1(matrix2);
-        NumMatrix1 n3 = new NumMatrix1(matrix3);
+        NumMatrix n3 = new NumMatrix(matrix3);
         println(n.sumRegion(2, 1, 4, 3));
         println(n.sumRegion(1, 1, 2, 2));
         println(n3.sumRegion(0, 0, 0, 0));
