@@ -35,9 +35,20 @@ public class Base {
         println("");
     }
 
-
-    public static void print(int[] arr1) {
-        println(Arrays.toString(arr1));
+    public static void print2DArr(int[][] arr2) {
+        for (int[] objarr : arr2) {
+            for (int i = 0; i < objarr.length; ++i) {
+                int val = objarr[i];
+                if (i == 0) {
+                    System.out.printf("[ %d,", val);
+                } else if (i == objarr.length - 1) {
+                    System.out.printf("%7d ]\n", val);
+                } else {
+                    System.out.printf(" %7d,", val);
+                }
+            }
+        }
+        println("");
     }
 
     public static void print(char[] arr1) {
