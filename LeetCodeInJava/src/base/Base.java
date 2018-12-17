@@ -35,6 +35,21 @@ public class Base {
         println("");
     }
 
+    public static void print2DArr(String[][] arr2) {
+        for (String[] objarr : arr2) {
+            for (int i = 0; i < objarr.length; ++i) {
+                String val = objarr[i];
+                if (i == 0) {
+                    System.out.printf("[ %s,", val);
+                } else if (i == objarr.length - 1) {
+                    System.out.printf("%10s ]\n", val);
+                } else {
+                    System.out.printf(" %10s,", val);
+                }
+            }
+        }
+        println("");
+    }
     public static void print2DArr(int[][] arr2) {
         for (int[] objarr : arr2) {
             for (int i = 0; i < objarr.length; ++i) {
