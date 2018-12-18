@@ -5,45 +5,45 @@ import base.Base;
 public class MaximumSubarray extends Base {
 
     static class Solution1 {
+        // 更有点像贪心
+        public int maxSubArray(int[] nums) {
+            final int n = nums.length;
+            int[] dp = new int[n];
+            int max = nums[0];
+            dp[0] = nums[0];
 
-        public static double findMaxAverage(int[] nums, int k) {
-            final int len = nums.length;
-            int[] sums = new int[len];
-            sums[0] = nums[0];
-            for (int i = 1; i < len; ++i) {
-                sums[i] = sums[i - 1] + nums[i];
-            }
-            double av = sums[k - 1] * 1.0 / k;
-            for (int i = k; i < len; ++i) {
-                av = Math.max((sums[i] - sums[i - k]) * 1.0 / k, av);
+            for (int i = 1; i < n; ++i) {
+                dp[i] = nums[i] + (dp[i - 1] > 0 ? dp[i - 1] : 0);
+                max = Math.max(max, dp[i]);
             }
 
-            return av;
+            return max;
+
         }
 
     }
 
     static class Solution2 {
+        public int maxSubArray(int[] nums) {
+            final int n = nums.length;
 
-        public static double findMaxAverage(int[] nums, int k) {
-            final int len = nums.length;
-            double sum = 0;
-            for (int i = 0; i < k; ++i) {
-                sum += nums[i];
-            }
-            double maxSum = sum;
-            for (int i = k; i < len; ++i) {
-                sum += nums[i] - nums[i - k];
-                maxSum = Math.max(maxSum, sum);
+            int prev = nums[0];
+            int max = nums[0];
+
+            for (int i = 1; i < n; ++i) {
+                prev = Math.max(nums[i] + prev, nums[i]);
+                max = Math.max(max, prev);
             }
 
-            return maxSum / k;
+            return max;
         }
     }
 
     public static void main(String[] args) {
-        int[] nums1 = {1, 12, -5, -6, 50, 3};
-        println("Solution1 : " + Solution1.findMaxAverage(nums1, 4));
-        println("Solution2 : " + Solution2.findMaxAverage(nums1, 4));
+        int[] nums = new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4};
+        int[] nums2 = new int[]{1, 2};
+        println(new Solution2().maxSubArray(nums));
+        println(new Solution2().maxSubArray(nums2));
     }
+
 }
