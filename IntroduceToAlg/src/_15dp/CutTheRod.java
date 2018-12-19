@@ -7,7 +7,6 @@ import base.StopwatchCPU;
 
 public class CutTheRod extends Base {
 
-
     static class Solution {
 
         private final int[] prices = new int[]{
