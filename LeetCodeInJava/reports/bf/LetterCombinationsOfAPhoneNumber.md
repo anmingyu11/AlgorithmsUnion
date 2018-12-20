@@ -23,3 +23,5 @@ public Solution1() {
 ```Java
 String[] mapping = new String[]{"0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 ```
+
+还有一点，这是个广搜问题，最优的答案将问题优化到了一个变量，而不用那个多余的计数变量，非常的有才。
