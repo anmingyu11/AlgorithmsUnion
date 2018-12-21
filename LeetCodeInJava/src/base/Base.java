@@ -35,6 +35,21 @@ public class Base {
         println("");
     }
 
+    public static void print2DArr(boolean[][] arr2) {
+        for (boolean[] objarr : arr2) {
+            for (int i = 0; i < objarr.length; ++i) {
+                boolean val = objarr[i];
+                if (i == 0) {
+                    System.out.printf("[ %-5b, ", val);
+                } else if (i == objarr.length - 1) {
+                    System.out.printf("%-5b ]\n", val);
+                } else {
+                    System.out.printf("%-5b, ", val);
+                }
+            }
+        }
+        println("");
+    }
     public static void print2DArr(String[][] arr2) {
         for (String[] objarr : arr2) {
             for (int i = 0; i < objarr.length; ++i) {

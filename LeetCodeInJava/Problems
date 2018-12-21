@@ -145,8 +145,6 @@ Find Minimum in Rotated Sorted Array
 Find Minimum in Rotated Sorted Array II
 Median of Two Sorted Arrays
 H-Index II
-暴力枚举法
-Letter Combinations of a Phone Number
 贪心法
 Jump Game
 Jump Game II
@@ -159,7 +157,6 @@ Patching Array
 Best Time to Buy and Sell Stock III
 Best Time to Buy and Sell Stock IV
 Best Time to Buy and Sell Stock with Cooldown
-Interleaving String
 Scramble String
 Edit Distance
 Distinct Subsequences
