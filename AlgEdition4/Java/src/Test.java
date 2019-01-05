@@ -3,10 +3,10 @@ import base.stdlib.StdOut;
 public class Test {
 
     public static void main(String[] args) {
-        ArrayTest();
+        //ArrayTest();
     }
 
-    private static void DrawTest(){
+    private static void DrawTest() {
 
     }
 
