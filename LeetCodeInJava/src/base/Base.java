@@ -20,21 +20,6 @@ public class Base {
             swap(nums, begin++, end--);
         }
     }
-
-    public static <T> void print(int[][] arr2) {
-        for (int[] objarr : arr2) {
-            println(Arrays.toString(objarr));
-        }
-        println("");
-    }
-
-    public static <T> void print(char[][] arr2) {
-        for (char[] objarr : arr2) {
-            println(Arrays.toString(objarr));
-        }
-        println("");
-    }
-
     public static void print2DArr(boolean[][] arr2) {
         for (boolean[] objarr : arr2) {
             for (int i = 0; i < objarr.length; ++i) {
@@ -50,6 +35,7 @@ public class Base {
         }
         println("");
     }
+
     public static void print2DArr(String[][] arr2) {
         for (String[] objarr : arr2) {
             for (int i = 0; i < objarr.length; ++i) {
@@ -65,6 +51,7 @@ public class Base {
         }
         println("");
     }
+
     public static void print2DArr(int[][] arr2) {
         for (int[] objarr : arr2) {
             for (int i = 0; i < objarr.length; ++i) {
@@ -81,15 +68,34 @@ public class Base {
         println("");
     }
 
-    public static void print(char[] arr1) {
+
+    public static <T> void printArr(int[][] arr2) {
+        for (int[] objarr : arr2) {
+            println(Arrays.toString(objarr));
+        }
+        println("");
+    }
+
+    public static <T> void printArr(char[][] arr2) {
+        for (char[] objarr : arr2) {
+            println(Arrays.toString(objarr));
+        }
+        println("");
+    }
+
+    public static void printArr(char[] arr1) {
         println(Arrays.toString(arr1));
     }
 
-    public static <T> void print(T[] arr1) {
+    public static void printArr(int[] arr){
+        println(Arrays.toString(arr));
+    }
+
+    public static <T> void printArr(T[] arr1) {
         println(Arrays.toString(arr1));
     }
 
-    public static <T> void print(T[][] arr2) {
+    public static <T> void printArr(T[][] arr2) {
         for (T[] objarr : arr2) {
             println(Arrays.toString(objarr));
         }
@@ -98,6 +104,10 @@ public class Base {
 
     public static void print(Object o) {
         System.out.print(o);
+    }
+
+    public static void printf(String format, Object... args) {
+        System.out.printf(format, args);
     }
 
     public static void println(Object o) {
