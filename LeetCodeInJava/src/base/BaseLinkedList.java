@@ -22,7 +22,7 @@ public class BaseLinkedList extends Base {
         if (h!= null) {
             print(h.val + " -> null\n");
         }else {
-            print("null ");
+            print("null \n");
         }
     }
 
