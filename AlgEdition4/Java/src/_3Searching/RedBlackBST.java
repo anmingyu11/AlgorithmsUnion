@@ -1,4 +1,5 @@
 package _3Searching;
+
 /******************************************************************************
  *  Compilation:  javac RedBlackBST.java
  *  Execution:    java RedBlackBST < input.txt
@@ -256,6 +257,9 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
             throw new NoSuchElementException("BST underflow");
         }
 
+        // 然后其中又有两种情况，如果h.right.left为黑，则说明兄弟节点也是2-node，就从父节点借节点，直接color flip即可.
+        // 如果h.right.left为红，则可以直接从兄弟节点借一个节点过来.
+
         // if both children of root are black, set root to red
         if (!isRed(root.left) && !isRed(root.right)) {
             root.color = RED;
@@ -307,20 +311,29 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
     // delete the key-value pair with the maximum key rooted at h
     private Node deleteMax(Node h) {
+        // 核心: 保证h.right是红结点,当进入到这里时,h必然是红结点
+        // 下面要保证h.right是红结点,分为几种情况,如果h.right是2-结点,从当前结点下沉一个结点,或从兄弟结点中借一个结点.
+
+        // 3-结点右倾,如果h相连的是3-结点,保证h.right是红结点 lean 3- node to the right
         if (isRed(h.left)) {
             h = rotateRight(h);
         }
 
+
+        // 删除底层结点,必须得是红结点 remove node on bottom level (h must be RED by invariant)
         if (h.right == null) {
             return null;
         }
 
+        // 如果有必要,从兄弟节点中借,将当前结点下沉,或从h.right的兄弟结点中借一个 borrow from sibling if necessary
         if (!isRed(h.right) && !isRed(h.right.left)) {
             h = moveRedRight(h);
         }
 
+        // move down one level 下一步
         h.right = deleteMax(h.right);
 
+        // 修复右倾红色链接并消除4-结点 fix right-leaning red-links and eliminate 4-node on the way up
         return balance(h);
     }
 
@@ -355,7 +368,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     private Node delete(Node h, Key key) {
         // assert get(h, key) != null;
 
-        if (key.compareTo(h.key) < 0) {
+        int cmp = key.compareTo(h.key);
+        if (cmp < 0) {
             if (!isRed(h.left) && !isRed(h.left.left)) {
                 h = moveRedLeft(h);
             }
@@ -364,13 +378,13 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
             if (isRed(h.left)) {
                 h = rotateRight(h);
             }
-            if (key.compareTo(h.key) == 0 && (h.right == null)) {
+            if (cmp == 0 && (h.right == null)) {
                 return null;
             }
             if (!isRed(h.right) && !isRed(h.right.left)) {
                 h = moveRedRight(h);
             }
-            if (key.compareTo(h.key) == 0) {
+            if (cmp == 0) {
                 Node x = min(h.right);
                 h.key = x.key;
                 h.val = x.val;
@@ -432,6 +446,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         // assert isRed(h) && !isRed(h.left) && !isRed(h.left.left);
 
         flipColors(h);
+        // h.right是3-结点
         if (isRed(h.right.left)) {
             h.right = rotateRight(h.right);
             h = rotateLeft(h);

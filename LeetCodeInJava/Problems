@@ -1,3 +1,5 @@
+介绍
+线性表
 数组
 Remove Duplicates from Sorted Array
 Remove Duplicates from Sorted Array II
@@ -143,6 +145,36 @@ Find Minimum in Rotated Sorted Array
 Find Minimum in Rotated Sorted Array II
 Median of Two Sorted Arrays
 H-Index II
+暴力枚举法
+Subsets
+Subsets II
+Permutations
+Permutations II
+Combinations
+Letter Combinations of a Phone Number
+广度优先搜索
+Word Ladder
+Word Ladder II
+Surrounded Regions
+总结
+深度优先搜索
+Additive Number
+Palindrome Partitioning
+Unique Paths
+Unique Paths II
+N-Queens
+N-Queens II
+Restore IP Addresses
+Combination Sum
+Combination Sum II
+Combination Sum III
+Generate Parentheses
+Sudoku Solver
+Word Search
+总结
+分治法
+Pow(x,n)
+Sqrt(x)
 贪心法
 Jump Game
 Jump Game II
@@ -152,7 +184,29 @@ Longest Substring Without Repeating Characters
 Container With Most Water
 Patching Array
 动态规划
+Triangle
+Maximum Subarray
+Maximum Product Subarray
+Longest Increasing Subsequence
+Palindrome Partitioning II
+Maximal Rectangle
+Best Time to Buy and Sell Stock III
+Best Time to Buy and Sell Stock IV
+Best Time to Buy and Sell Stock with Cooldown
+Interleaving String
 Scramble String
+Minimum Path Sum
+Edit Distance
+Decode Ways
+Distinct Subsequences
+Word Break
+Word Break II
+Dungeon Game
+House Robber
+House Robber II
+House Robber III
+Range Sum Query - Immutable
+Range Sum Query 2D - Immutable
 图
 Clone Graph
 位操作
