@@ -5,9 +5,9 @@ import java.util.Random;
 import base.Base;
 
 //Simulation
-public class _384ShuffleAnArray extends Base {
+public class _0384ShuffleAnArray extends Base {
 
-    abstract static class Solution {
+    private abstract static class Solution {
 
         public Solution() {
         }
@@ -20,7 +20,7 @@ public class _384ShuffleAnArray extends Base {
         abstract public int[] shuffle();
     }
 
-    static class Solution1 extends Solution {
+    private static class Solution1 extends Solution {
         int[] origin;
         int[] shuffle;
 

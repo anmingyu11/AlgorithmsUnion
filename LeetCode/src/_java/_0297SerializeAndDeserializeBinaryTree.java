@@ -2,9 +2,9 @@ package _java;
 
 import base.Base;
 
-public class _297SerializeAndDeserializeBinaryTree extends Base {
+public class _0297SerializeAndDeserializeBinaryTree extends Base {
 
-    static class TreeNode {
+    private static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
@@ -23,7 +23,7 @@ public class _297SerializeAndDeserializeBinaryTree extends Base {
         }
     }
 
-    abstract static class Codec {
+    private abstract static class Codec {
 
         // Encodes a tree to a single string.
         abstract String serialize(TreeNode root);
@@ -32,7 +32,7 @@ public class _297SerializeAndDeserializeBinaryTree extends Base {
         abstract TreeNode deserialize(String data);
     }
 
-    static class Codec1 extends Codec {
+    private static class Codec1 extends Codec {
 
         String serialize(TreeNode root) {
             StringBuilder sb = new StringBuilder();
