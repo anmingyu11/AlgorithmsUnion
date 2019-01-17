@@ -83,7 +83,9 @@ public class LinkedStack<Item> implements Iterable<Item> {
      * @throws java.util.NoSuchElementException if this stack is empty
      */
     public Item pop() {
-        if (isEmpty()) throw new NoSuchElementException("Stack underflow");
+        if (isEmpty()) {
+            throw new NoSuchElementException("Stack underflow");
+        }
         Item item = first.item;
         first = first.next;
         --n;
@@ -99,7 +101,9 @@ public class LinkedStack<Item> implements Iterable<Item> {
      * @throws java.util.NoSuchElementException if this stack is empty
      */
     public Item peek() {
-        if (isEmpty()) throw new NoSuchElementException("Stack underflow");
+        if (isEmpty()) {
+            throw new NoSuchElementException("Stack underflow");
+        }
         return first.item;
     }
 
@@ -110,8 +114,9 @@ public class LinkedStack<Item> implements Iterable<Item> {
      */
     public String toString() {
         StringBuilder s = new StringBuilder();
-        for (Item item : this)
+        for (Item item : this) {
             s.append(item + " ");
+        }
         return s.toString();
     }
 
@@ -137,7 +142,9 @@ public class LinkedStack<Item> implements Iterable<Item> {
         }
 
         public Item next() {
-            if (!hasNext()) throw new NoSuchElementException();
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
             Item item = current.item;
             current = current.next;
             return item;

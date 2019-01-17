@@ -73,7 +73,9 @@ public class Queue<Item> implements Iterable<Item> {
      * @throws NoSuchElementException if this queue is empty
      */
     public Item peek() {
-        if (isEmpty()) throw new NoSuchElementException("Queue underflow");
+        if (isEmpty()) {
+            throw new NoSuchElementException("Queue underflow");
+        }
         return first.item;
     }
 
@@ -102,7 +104,9 @@ public class Queue<Item> implements Iterable<Item> {
      * @throws NoSuchElementException if this queue is empty
      */
     public Item dequeue() {
-        if (isEmpty()) throw new NoSuchElementException("Queue underflow");
+        if (isEmpty()) {
+            throw new NoSuchElementException("Queue underflow");
+        }
         Item item = first.item;
         first = first.next;
         --n;
@@ -153,7 +157,9 @@ public class Queue<Item> implements Iterable<Item> {
         }
 
         public Item next() {
-            if (!hasNext()) throw new NoSuchElementException();
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
             Item item = current.item;
             current = current.next;
             return item;

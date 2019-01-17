@@ -75,7 +75,9 @@ public class ResizingArrayQueue<Item> implements Iterable<Item> {
      * @throws java.util.NoSuchElementException if this queue is empty
      */
     public Item dequeue() {
-        if (isEmpty()) throw new NoSuchElementException("Queue underflow");
+        if (isEmpty()) {
+            throw new NoSuchElementException("Queue underflow");
+        }
         Item item = q[first];
         q[first] = null;
         --n;
@@ -94,7 +96,9 @@ public class ResizingArrayQueue<Item> implements Iterable<Item> {
      * @throws java.util.NoSuchElementException if this queue is empty
      */
     public Item peek() {
-        if (isEmpty()) throw new NoSuchElementException("Queue underflow");
+        if (isEmpty()) {
+            throw new NoSuchElementException("Queue underflow");
+        }
         return q[first];
     }
 

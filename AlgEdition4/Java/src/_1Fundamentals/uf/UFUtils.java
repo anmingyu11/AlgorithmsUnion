@@ -37,6 +37,11 @@ public class UFUtils {
                 int[] ints = in.readAllInts();
                 return new UFDataHolder(N, ints);
             }
+            case 3: {
+                int N = 10;
+                int[] ints = new int[]{1, 2, 1, 3, 1, 4, 1, 5, 1, 6};
+                return new UFDataHolder(N, ints);
+            }
             default: {
                 throw new RuntimeException("Are u idoit or something?");
             }

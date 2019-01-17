@@ -97,7 +97,9 @@ public class ResizingArrayBag<Item> implements Iterable<Item> {
         }
 
         public Item next() {
-            if (!hasNext()) throw new NoSuchElementException();
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
             return a[i++];
         }
     }

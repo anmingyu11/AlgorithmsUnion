@@ -6,15 +6,15 @@ import java.lang.management.ThreadMXBean;
 import base.stdlib.StdOut;
 
 /**
- *  The {@code StopwatchCPU} data type is for measuring
- *  the CPU time used during a programming task.
+ * The {@code StopwatchCPU} data type is for measuring
+ * the CPU time used during a programming task.
+ * <p>
+ * See {@link Stopwatch} for a version that measures wall-clock time
+ * (the real time that elapses).
  *
- *  See {@link Stopwatch} for a version that measures wall-clock time
- *  (the real time that elapses).
- *
- *  @author Josh Hug
- *  @author Robert Sedgewick
- *  @author Kevin Wayne
+ * @author Josh Hug
+ * @author Robert Sedgewick
+ * @author Kevin Wayne
  */
 
 public class StopwatchCPU {
@@ -39,6 +39,11 @@ public class StopwatchCPU {
     public double elapsedTime() {
         long now = threadTimer.getCurrentThreadCpuTime();
         return (now - start) / NANOSECONDS_PER_SECOND;
+    }
+
+    public double elapsedTime2() {
+        long now = threadTimer.getCurrentThreadCpuTime();
+        return (now - start);
     }
 
     /**

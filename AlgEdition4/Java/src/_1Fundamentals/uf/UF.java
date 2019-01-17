@@ -1,6 +1,8 @@
 package _1Fundamentals.uf;
 
-import base.stdlib.StdIn;
+import java.util.Arrays;
+
+import base.StopwatchCPU;
 import base.stdlib.StdOut;
 
 /**
@@ -93,7 +95,7 @@ public class UF {
         count = n;
         parent = new int[n];
         rank = new byte[n];
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; ++i) {
             parent[i] = i;
             rank[i] = 0;
         }
@@ -150,12 +152,16 @@ public class UF {
     public void union(int p, int q) {
         int rootP = find(p);
         int rootQ = find(q);
-        if (rootP == rootQ) return;
+        if (rootP == rootQ) {
+            return;
+        }
 
         // make root of smaller rank point to root of larger rank
-        if (rank[rootP] < rank[rootQ]) parent[rootP] = rootQ;
-        else if (rank[rootP] > rank[rootQ]) parent[rootQ] = rootP;
-        else {
+        if (rank[rootP] < rank[rootQ]) {
+            parent[rootP] = rootQ;
+        } else if (rank[rootP] > rank[rootQ]) {
+            parent[rootQ] = rootP;
+        } else {
             parent[rootQ] = rootP;
             rank[rootP]++;
         }
@@ -180,15 +186,20 @@ public class UF {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        int n = StdIn.readInt();
-        UF uf = new UF(n);
-        while (!StdIn.isEmpty()) {
-            int p = StdIn.readInt();
-            int q = StdIn.readInt();
+        UFUtils.UFDataHolder h = UFUtils.getUFList(3);
+
+        StdOut.println("Start QUF");
+        StopwatchCPU c = new StopwatchCPU();
+        UF uf = new UF(h.N);
+        int[] ints = h.ints;
+        for (int i = 0; i < h.N - 1; ++i) {
+            int p = ints[i];
+            int q = ints[++i];
             if (uf.connected(p, q)) continue;
             uf.union(p, q);
-            StdOut.println(p + " " + q);
+            //StdOut.println(p + " " + q);
         }
         StdOut.println(uf.count() + " components");
+        StdOut.println(Arrays.toString(uf.rank));
     }
 }

@@ -71,7 +71,7 @@ public class LinkedQueue<Item> implements Iterable<Item> {
      * @throws java.util.NoSuchElementException if this queue is empty
      */
     public Item peek() {
-        if (isEmpty()) throw new NoSuchElementException("Queue underflow");
+        if (isEmpty()){throw new NoSuchElementException("Queue underflow");}
         return first.item;
     }
 
@@ -118,8 +118,9 @@ public class LinkedQueue<Item> implements Iterable<Item> {
      */
     public String toString() {
         StringBuilder s = new StringBuilder();
-        for (Item item : this)
+        for (Item item : this) {
             s.append(item + " ");
+        }
         return s.toString();
     }
 

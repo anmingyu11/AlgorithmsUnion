@@ -123,7 +123,7 @@ public class QuickUnionUF {
         while (p != parent[p]) {
             p = parent[p];
         }
-        return parent[p];
+        return p;
     }
 
     // validate that p is a valid index
