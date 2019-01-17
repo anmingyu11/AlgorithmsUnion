@@ -35,7 +35,13 @@ public class _0149MaxPointsOnALine extends Base {
         abstract public int maxPoints(Point[] points);
     }
 
+    //这个可以用斜截式来求，但是有精度问题，而且没有实现完全。
     private static class Solution1 extends Solution {
+
+        private static class Equation {
+            double slope;
+            double intercept;
+        }
 
         Map<Double, HashSet<Point>> map = new HashMap<>();
         int max;
@@ -47,9 +53,6 @@ public class _0149MaxPointsOnALine extends Base {
             }
             for (int i = 0; i < points.length - 1; ++i) {
                 backTrack(points, i);
-            }
-            for (Double slope : map.keySet()){
-                println("slope : " + slope  + " size : " + map.get(slope).size());
             }
             return max;
         }
@@ -74,6 +77,15 @@ public class _0149MaxPointsOnALine extends Base {
         }
     }
 
+    private static class Solution2 extends Solution {
+
+        @Override
+        public int maxPoints(Point[] points) {
+            return 0;
+        }
+
+    }
+
     public static void main(String[] args) {
         Point[] points1 = new Point[]{new Point(1, 1), new Point(2, 2), new Point(3, 3)};
         Point[] points2 = new Point[]{new Point(1, 1), new Point(3, 2), new Point(5, 3),
@@ -83,11 +95,13 @@ public class _0149MaxPointsOnALine extends Base {
                 new Point(0, -5), new Point(1, 5), new Point(2, -2),
                 new Point(5, -4), new Point(3, 4), new Point(-2, 4),
                 new Point(-1, 4), new Point(0, -5), new Point(0, -8),
-                new Point(-2, -1), new Point(0, -11), new Point(0, -9)};
+                new Point(-2, -1), new Point(0, -11), new Point(0, -9)
+        };
 
-        Solution s = new Solution1();
-        //println(s.maxPoints(points1));
-        //println(s.maxPoints(points2));
+
+        Solution s = new Solution2();
+        println(s.maxPoints(points1));
+        println(s.maxPoints(points2));
         println(s.maxPoints(points3));
     }
 }
