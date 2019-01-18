@@ -8,9 +8,14 @@ public class Tests extends Base {
         //linkedListInsertDeleteTest();
         //testBitMani();
         //testStrEmpty();
-        testSubStr();
+        //testSubStr();
+        testZero();
     }
 
+    private static void testZero(){
+        println(Integer.toBinaryString(-0));
+        println(Integer.toBinaryString(0));
+    }
     private static void testStrEmpty() {
         String s = "";
         println(s.length());
