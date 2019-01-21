@@ -141,7 +141,6 @@ public class MinPQ<Key> implements Iterable<Key> {
 
     // helper function to double the size of the heap array
     private void resize(int capacity) {
-        assert capacity > n;
         Key[] temp = (Key[]) new Object[capacity];
         for (int i = 1; i <= n; i++) {
             temp[i] = pq[i];
@@ -155,15 +154,12 @@ public class MinPQ<Key> implements Iterable<Key> {
      * @param x the key to add to this priority queue
      */
     public void insert(Key x) {
-        // double size of array if necessary
         if (n == pq.length - 1) {
             resize(2 * pq.length);
         }
 
-        // add x, and percolate it up to maintain heap invariant
         pq[++n] = x;
         swim(n);
-        assert isMinHeap();
     }
 
     /**
@@ -183,7 +179,6 @@ public class MinPQ<Key> implements Iterable<Key> {
         if ((n > 0) && (n == (pq.length - 1) / 4)) {
             resize(pq.length / 2);
         }
-        assert isMinHeap();
         return min;
     }
 
@@ -237,7 +232,9 @@ public class MinPQ<Key> implements Iterable<Key> {
 
     // is subtree of pq[1..n] rooted at k a min heap?
     private boolean isMinHeap(int k) {
-        if (k > n) return true;
+        if (k > n) {
+            return true;
+        }
         int left = 2 * k;
         int right = 2 * k + 1;
         if (left <= n && greater(k, left)) {

@@ -158,15 +158,12 @@ public class MaxPQ<Key> implements Iterable<Key> {
      */
     public void insert(Key x) {
 
-        // double size of array if necessary
         if (n == pq.length - 1) {
             resize(2 * pq.length);
         }
 
-        // add x, and percolate it up to maintain heap invariant
         pq[++n] = x;
         swim(n);
-        assert isMaxHeap();
     }
 
     /**
@@ -182,11 +179,10 @@ public class MaxPQ<Key> implements Iterable<Key> {
         Key max = pq[1];
         exch(1, n--);
         sink(1);
-        pq[n + 1] = null;     // to avoid loiteing and help with garbage collection
+        pq[n + 1] = null;
         if ((n > 0) && (n == (pq.length - 1) / 4)) {
             resize(pq.length / 2);
         }
-        assert isMaxHeap();
         return max;
     }
 
@@ -236,11 +232,17 @@ public class MaxPQ<Key> implements Iterable<Key> {
 
     // is subtree of pq[1..n] rooted at k a max heap?
     private boolean isMaxHeap(int k) {
-        if (k > n) return true;
+        if (k > n) {
+            return true;
+        }
         int left = 2 * k;
         int right = 2 * k + 1;
-        if (left <= n && less(k, left)) return false;
-        if (right <= n && less(k, right)) return false;
+        if (left <= n && less(k, left)) {
+            return false;
+        }
+        if (right <= n && less(k, right)) {
+            return false;
+        }
         return isMaxHeap(left) && isMaxHeap(right);
     }
 
