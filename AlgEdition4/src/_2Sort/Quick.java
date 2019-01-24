@@ -29,6 +29,7 @@ package _2Sort;
  ******************************************************************************/
 
 import base.BaseSort;
+import base.StopwatchCPU;
 import base.stdlib.StdRandom;
 
 /**
@@ -101,6 +102,104 @@ public class Quick extends BaseSort {
         return j;
     }
 
+
+    private void sort(int[] arr) {
+        sort(arr, 0, arr.length - 1);
+    }
+
+    private void sort(int[] arr, int lo, int hi) {
+        if (lo >= hi) {
+            return;
+        }
+        int p = partition1(arr, lo, hi);
+        sort(arr, lo, p - 1);
+        sort(arr, p + 1, hi);
+    }
+
+    private int partition1(int[] arr, int lo, int hi) {
+        int p = arr[lo];// 枢轴记录
+        int i = lo, j = hi;
+        while (i < j) {
+            while (i < j && arr[j] >= p) {
+                --j;
+            }
+            arr[i] = arr[j];// 交换比枢轴小的记录到左端
+            while (i < j && arr[i] <= p) {
+                ++i;
+            }
+            arr[j] = arr[i];// 交换比枢轴大的记录到右端
+        }
+        // 扫描完成，枢轴到位
+        arr[i] = p;
+        // 返回的是枢轴的位置
+        return i;
+    }
+
+    private int partition2(int[] a, int lo, int hi) {
+        int i = lo;
+        int j = hi + 1;
+        int v = a[lo];
+        while (true) {
+
+            while (v > a[++i]) {
+                if (i == hi) {
+                    break;
+                }
+            }
+
+            while (v < a[--j]) {
+                if (j == lo) {
+                    break;
+                }
+            }
+
+            if (i >= j) {
+                break;
+            }
+
+            swap(a, i, j);
+        }
+
+        swap(a, lo, j);
+
+        return j;
+    }
+
+    private int partition3(int[] nums, int lo, int hi) {
+        int v = nums[lo];
+        //i==lo 因为要剔除一个两个元素的情况，如果跳过第一个就没了。
+        int i = lo, j = hi;
+        while (i < j) {
+            while (nums[i] <= v) {
+                ++i;
+                if (i == hi) {
+                    break;
+                }
+            }
+            while (nums[j] >= v) {
+                --j;
+                if (j == lo) {
+                    break;
+                }
+            }
+
+            if (i >= j) {
+                break;
+            }
+            swap(nums, i, j);
+        }
+
+        swap(nums, j, lo);
+
+        return j;
+    }
+
+    private void swap(int[] nums, int i, int j) {
+        int t = nums[j];
+        nums[j] = nums[i];
+        nums[i] = t;
+    }
+
     /**
      * Rearranges the array so that {@code a[k]} contains the kth smallest key;
      * {@code a[0]} through {@code a[k-1]} are less than (or equal to) {@code a[k]}; and
@@ -139,6 +238,27 @@ public class Quick extends BaseSort {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
+        int[] arr1 = new int[]{3, 2, 1, 5, 6, 4};
+        int[] arr2 = new int[]{3, 2, 3, 1, 2, 4, 5, 5, 6};
+        int[] arr3 = new int[]{99, 99};
+        int[] arr4 = new int[]{1};
+        int[] arr5 = new int[]{7, 6, 5, 4, 3, 2, 1};
+        int[] arr6 = new int[]{-1, 2, 0};
+
+        StopwatchCPU cpu = new StopwatchCPU();
+        //new Quick().sort(arr1);
+        new Quick().sort(arr2);
+        new Quick().sort(arr3);
+        new Quick().sort(arr4);
+        new Quick().sort(arr5);
+        new Quick().sort(arr6);
+        //println(Arrays.toString(arr1));
+        //println(Arrays.toString(arr2));
+        //println(Arrays.toString(arr3));
+        //println(Arrays.toString(arr4));
+        //println(Arrays.toString(arr5));
+        //println(Arrays.toString(arr6));
+        println(cpu.elapsedTime2());
     }
 
 }
