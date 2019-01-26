@@ -77,6 +77,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     private static final boolean BLACK = false;
 
     private Node root;     // root of the BST
+    private boolean mBoolean;
 
     // BST helper node data type
     private class Node {
@@ -119,7 +120,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         return x.size;
     }
 
-
     /**
      * Returns the number of key-value pairs in this symbol table.
      *
@@ -137,7 +137,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     public boolean isEmpty() {
         return root == null;
     }
-
 
     /***************************************************************************
      *  Standard BST search.
@@ -210,19 +209,13 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
         root = put(root, key, val);
         root.color = BLACK;
-        // assert check();
+
     }
 
     // insert the key-value pair in the subtree rooted at h
 
     /**
-     * 有多种情况,设当前结点是h
-     * 1. 插入的是右子结点.
-     * 1-1. 如果左子结点是黑结点,左旋.
-     * 1-2. 如果左子结点是红结点,变换颜色将当前节点送上去.
-     * 2. 插入的是左子结点,直接插入,递归调整.
-     * 1.如果左右子节点都是红的,上浮
-     * 2.如果左子节点的子节点也是红的,右旋,变换颜色将当前节点送上去.
+     * 插入是第一部分操作,也就是收敛条件,关键是回溯的部分,回溯的部分会调整树的平衡性 balance().
      */
     private Node put(Node h, Key key, Value val) {
         if (h == null) {
@@ -238,19 +231,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
             h.val = val;
         }
 
-        if (isRed(h.right) && !isRed(h.left)) {
-            h = rotateLeft(h);
-        }
-        if (isRed(h.left) && isRed(h.left.left)) {
-            h = rotateRight(h);
-        }
-        if (isRed(h.left) && isRed(h.right)) {
-            flipColors(h);
-        }
-
-        h.size = size(h.left) + size(h.right) + 1;
-
-        return h;
+        return balance(h);
     }
 
     /***************************************************************************
@@ -259,13 +240,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
     /**
      * Removes the smallest key and associated value from the symbol table.
-     * <p>
-     * 为了保证我们删除的不是一个2-结点,我们沿左链接向下进行变换,确保当前结点不是2-结点.
-     * 首先,根结点有可能是两种情况:
-     * 1. 根结点是2-结点
-     * 1-1 两个子节点都是2-结点,直接将根结点和她的两个子节点变为4-结点,也就是先将根结点变红,然后flipColors()
-     * 1-2 根结点的左子节点是3-结点
-     * 2. 根节点是3-结点,我们需要保持根结点的左子结点不是2-结点.
+     * 源代码有一部分多余,root.right不可能是红的
      *
      * @throws NoSuchElementException if the symbol table is empty
      */
@@ -274,7 +249,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
             throw new NoSuchElementException("BST underflow");
         }
 
-        if (!isRed(root.left) && !isRed(root.right)) {
+        if (!isRed(root.left) && !isRed(root.right)) {//!isRed(root.root)这个是没有必要的
             root.color = RED;
         }
 
@@ -283,12 +258,32 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (!isEmpty()) {
             root.color = BLACK;
         }
-        // assert check();
     }
 
     // delete the key-value pair with the minimum key rooted at h
-    // 如果当前结点是2-结点(isBlack(h.left)),
-    // 且当前结点的左子结点也是2-结点,(这是左倾的红黑树,右子结点肯定是黑的,注意是黑的) moveRedLeft
+
+    /**
+     * 设h是当前结点.
+     * 如果我们删除的是2-结点,则树会失去平衡,
+     * 那么我们需要在向下递归查找最小值的过程中,将树配平,即不允许h的子结点存在2-结点,从而保证删除成功.
+     * <p>
+     * 如要删除,则有两种情况:
+     * 1.要删除的结点是3-结点
+     * 2.要删除的结点是2-结点
+     * <p>
+     * 第一种情况:
+     * 直接删除即可
+     * 第二种:
+     * 我们需要在递归的过程中保证下一个遍历的结点h.left是3-结点,即我们可以通过配平保证向下递归的过程中,每一个被遍历的子节点h.left都是红的.
+     * 首先,当前被遍历的h结点必定是红的
+     * 那么当h.left不存在,直接删除当前结点,如果存在,且h.left是2-结点
+     * 有两种情况:
+     * 第一种,存在兄弟结点是3-结点,那么从兄弟结点中转移一个结点过来,使当前结点成为3-结点
+     * 第二种,如果兄弟结点也是2-结点,那么将父结点和两个子节点配成一个3-结点.继续向下遍历.
+     *
+     * @param h
+     * @return
+     */
     private Node deleteMin(Node h) {
         if (h.left == null) {
             return null;
@@ -314,7 +309,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
             throw new NoSuchElementException("BST underflow");
         }
 
-        // if both children of root are black, set root to red
         if (!isRed(root.left) && !isRed(root.right)) {
             root.color = RED;
         }
@@ -323,14 +317,16 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (!isEmpty()) {
             root.color = BLACK;
         }
-        // assert check();
     }
 
-    // delete the key-value pair with the maximum key rooted at h
-    // 当前结点是h
-    // 当前结点为3-结点,右旋
-    // 如果当前结点是最小的点,那么直接删除,因为前一步的步骤,已经能够保证当前结点至少是3-结点
-    // 如果
+    /**
+     * 原理跟deleteMin类似
+     * 但有所区别,因为我们的树是左倾的,所以不可能会出现右结点是红色的,
+     * 所以,我们会先对当前结点(设为h)进行一次检查,如果它的左结点是红色的,直接右旋将左子节点转到当前节点的右面,将h.right配红
+     *
+     * @param h
+     * @return
+     */
     private Node deleteMax(Node h) {
         if (isRed(h.left)) {
             h = rotateRight(h);
@@ -352,6 +348,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     /**
      * Removes the specified key and its associated value from this symbol table
      * (if the key is in this symbol table).
+     * <p>
+     * contains操作很有必要,不然会做大量的操作去配平,并重新调整树.
      *
      * @param key the key
      * @throws IllegalArgumentException if {@code key} is {@code null}
@@ -364,8 +362,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
             return;
         }
 
-        // if both children of root are black, set root to red
-        if (!isRed(root.left) && !isRed(root.right)) {
+        if (!isRed(root.left) && isRed(root.right)) {
             root.color = RED;
         }
 
@@ -373,17 +370,30 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (!isEmpty()) {
             root.color = BLACK;
         }
-        // assert check();
     }
 
-    // delete the key-value pair with the given key rooted at h
-    // 将最小的结点和要删除的结点交换,然后删除最小的结点,避免过度复杂的删除情况. 非常的聪明.
-    // 二叉树的删除流程,如果要删除node结点,则用node结点左子树的最大节点或者右子树的最小结点来替换d,
-    // 那么就先找到右子树的最小结点对node结点进行替换,然后删除右子树的最小结点.
-    // 1.从左子树往下找的过程中不断配平
-    // 2.从右子树往下找
-    // 2-1.就是一个deleteMax()的过程,配平或者从子结点中借一个结点.
-    // 3.找到了,找到当前node:h的右子树的最小结点,覆盖成当前结点,并删除当前结点右子树的最小结点
+    /**
+     * 删除操作所涉及的情况过多了,所以我们要用另一个方式去做:
+     *
+     * 如同删除最大值和最小值一样,在递归向下的过程中,依然去将向下过程中经过的结点配平,
+     *
+     * 当在左子树递归的时候,设当前结点为h
+     * 用deleteMin()的配平方式不断向下递归
+     * 当在右子树递归的时候,设当前结点为h
+     * 用deleteMax()的配平方式不断向下递归
+     *
+     *
+     * 如果h就是要查找的结点
+     *  1.如果h有左子节点并且左子节点是红,右旋,并继续向右子树遍历.
+     *  2.如果h没有左子节点或者左子结点是黑色结点,且没有右子结点,那么直接以删除最大结点的方式删除,返回0.
+     *  3.如果h的左子结点是黑,且右子结点是2-结点(h.right==black && h.right.left == black),那么进行配平,从左子节点借一个结点,
+     *  如果左子结点也是2-结点,那么将h,h.left,h.right配成一个3-结点, 将当前节点用她的右子树的最小结点进行覆盖,并删除她的右子树的最小结点.
+     *
+     * 最后调整树
+     * @param h
+     * @param key
+     * @return
+     */
     private Node delete(Node h, Key key) {
         // assert get(h, key) != null;
 
@@ -419,7 +429,11 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
      *  Red-black tree helper functions.
      ***************************************************************************/
 
-    // make a left-leaning link lean to the right
+    /**
+     * 右旋操作
+     * @param h
+     * @return
+     */
     private Node rotateRight(Node h) {
         // assert (h != null) && isRed(h.left);
         Node x = h.left;
@@ -432,7 +446,11 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         return x;
     }
 
-    // make a right-leaning link lean to the left
+    /**
+     * 左旋操作.
+     * @param h
+     * @return
+     */
     private Node rotateLeft(Node h) {
         // assert (h != null) && isRed(h.right);
         Node x = h.right;
@@ -446,6 +464,16 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     }
 
     // flip the colors of a node and its two children
+
+    /**
+     * 设当前结点为h,
+     * 转换颜色, h一定是两个子结点颜色的反色,即
+     * 满足,h!=null && h.left!=null && h.right !=null
+     * 且满足两者条件其一,
+     * 1. h是黑色结点,两个子节点都是红色结点. 即这个结点是由h结点的父结点连接的4-结点,翻转颜色让她和她的父节点合并成一个结点,将她的两个子节点的颜色变黑
+     * 2. h是红结点,两个子节点都是黑结点. 即这个结点是一个3-结点,将这个结点下沉,和她的两个子节点合并成一个4-结点,变成了h是一个由h的父节点连接的4-结点
+     * @param h
+     */
     private void flipColors(Node h) {
         // h must have opposite color of its two children
         // assert (h != null) && (h.left != null) && (h.right != null);
@@ -458,10 +486,23 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
     // Assuming that h is red and both h.left and h.left.left
     // are black, make h.left or one of its children red.
+
+    /**
+     * 设当前结点为h
+     * 必须满足的条件是h!=null且h是红色结点,
+     *
+     * 翻转颜色
+     * 这样可以将父节点下沉一个结点给左子节点,即将h结点和她的两个子节点合并,成为一个由其父结点连接的4-结点
+     *
+     * 但如果她的右子节点是3-结点,那么我们是直接从右子节点借一个结点到左子节点,
+     * 翻转颜色过后,通过左旋她的右子节点,再左旋h结点,翻转颜色,这样左子节点就变成了3-结点
+     *
+     * @param h
+     * @return
+     */
     private Node moveRedLeft(Node h) {
         // assert (h != null);
         // assert isRed(h) && !isRed(h.left) && !isRed(h.left.left);
-
         flipColors(h);
 
         if (isRed(h.right.left)) {
@@ -473,8 +514,19 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         return h;
     }
 
-    // Assuming that h is red and both h.right and h.right.left
-    // are black, make h.right or one of its children red.
+    /**
+     *
+     * 设当前结点为h
+     * 必须满足的条件是h!=null且h是红色结点,
+     *
+     * 翻转颜色,这个不必多说.
+     *
+     * 如果h结点的左子结点是一个3-结点,将她的左子节点借一个结点到右子节点
+     * 先右旋h结点,然后翻转颜色即可做到.
+     *
+     * @param h
+     * @return
+     */
     private Node moveRedRight(Node h) {
         // assert (h != null);
         // assert isRed(h) && !isRed(h.right) && !isRed(h.right.left);
@@ -489,10 +541,20 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     }
 
     // restore red-black tree invariant
+
+    /**
+     * 第一次判断,如果h.right是红的,左旋.左面是不是红色的其实对结果并没有影响,因为就算左面是红的,后面的两次操作也会调整过去,
+     * 但是如果加上!isRed(h.left) 会增加效率,因为如果左面也是红的的话,可以不进行rotateLeft,直接flipColor,这样少了一次左旋操作.如果左面是黑的,直接旋转即可
+     * 第二次判断,如果h.left是红色的,而且h.left.left也是红的,则需要右旋,这样会制造3-结点,然后转换颜色将父节点送上去.
+     * 第三次判断,如果左右都是红的,出现了3-结点,转换颜色将父节点送上去.
+     *
+     * @param h
+     * @return
+     */
     private Node balance(Node h) {
         // assert (h != null);
 
-        if (isRed(h.right)) {
+        if (!isRed(h.left) && isRed(h.right)) {
             h = rotateLeft(h);
         }
         if (isRed(h.left) && isRed(h.left.left)) {
@@ -577,7 +639,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
             return max(x.right);
         }
     }
-
 
     /**
      * Returns the largest key in the symbol table less than or equal to {@code key}.
@@ -930,7 +991,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         }
         return isBalanced(x.left, black) && isBalanced(x.right, black);
     }
-
 
     /**
      * Unit tests the {@code RedBlackBST} data type.
