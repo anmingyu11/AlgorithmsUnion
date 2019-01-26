@@ -35,6 +35,7 @@ public class _0149MaxPointsOnALine extends Base {
     }
 
     // Brute Force 以边为中心 failed in [[0,0],[1,65536],[65536,0]] 乘法溢出
+    // 如果改成long 的话　是8ms,94.77%
     private static class Solution1 extends Solution {
 
         public int maxPoints(Point[] points) {
@@ -50,9 +51,9 @@ public class _0149MaxPointsOnALine extends Base {
                     // points[i] 和 points[j]
                     // 这里需要一个bool值的slope 来判断斜率是否存在，不存在的话设置为false,后续单独处理
                     boolean slope = true;
-                    int dX = points[i].x - points[j].x;
-                    int dY = points[i].y - points[j].y;
-                    int interceptDX = 0;
+                    long dX = points[i].x - points[j].x;
+                    long dY = points[i].y - points[j].y;
+                    long interceptDX = 0;
                     if (dX == 0) {
                         // 这时候两个点连线是垂直于x轴的，木有斜率
                         slope = false;
