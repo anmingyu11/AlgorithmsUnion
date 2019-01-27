@@ -55,6 +55,41 @@ public class _0384ShuffleAnArray extends Base {
         }
     }
 
+    private static class Solution2 extends Solution {
+        int[] origin;
+        int[] shuffle;
+
+        public Solution2(int[] nums) {
+            shuffle = nums;
+            origin = nums.clone();
+        }
+
+        public int[] reset() {
+            //这里也是一个点。
+            shuffle = origin;
+            origin = origin.clone();
+            return origin;
+        }
+
+        public int[] shuffle() {
+            Random ra = new Random();
+            final int n = shuffle.length;
+            for (int i = 0; i < n; ++i) {
+                int raI = i + (int) (ra.nextDouble() * (n - i));
+                int t = shuffle[i];
+                shuffle[i] = shuffle[raI];
+                shuffle[raI] = t;
+            }
+            return shuffle;
+        }
+
+        private void swap(int i, int j) {
+            int t = shuffle[i];
+            shuffle[i] = shuffle[j];
+            shuffle[j] = t;
+        }
+    }
+
     public static void main(String[] args) {
         int[] nums1 = new int[]{1, 2, 3, 4, 5};
         int[] nums2 = new int[]{};
