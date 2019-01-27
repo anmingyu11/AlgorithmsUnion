@@ -45,7 +45,6 @@ package _1Fundamentals;
  *
  ******************************************************************************/
 
-import base.stdlib.StdIn;
 import base.stdlib.StdOut;
 import base.stdlib.StdRandom;
 
@@ -84,6 +83,7 @@ public class Knuth {
         for (int i = 0; i < n; i++) {
             // choose index uniformly in [0, i]
             int r = (int) (Math.random() * (i + 1));
+            //StdOut.println("i : " + i + " r " + r + " equal : " + (i == r));
             Object swap = a[r];
             a[r] = a[i];
             a[i] = swap;
@@ -102,6 +102,7 @@ public class Knuth {
         for (int i = 0; i < n; i++) {
             // choose index uniformly in [i, n-1]
             int r = i + (int) (Math.random() * (n - i));
+            //StdOut.println("i : " + i + " r " + r + " equal : " + (i == r));
             Object swap = a[r];
             a[r] = a[i];
             a[i] = swap;
@@ -116,16 +117,24 @@ public class Knuth {
      */
     public static void main(String[] args) {
 
-        // read in the data
-        String[] a = StdIn.readAllStrings();
+        Integer[] a = new Integer[50];
+        for (int i = 0; i < 50; ++i) {
+            a[i] = i;
+        }
 
-        // shuffle the array
-        Knuth.shuffle(a);
+        Knuth.shuffleAlternate(a);
 
-        // print results.
-        for (int i = 0; i < a.length; i++) {
-            StdOut.println(a[i]);
+        //// print results.
+        //for (int i = 0; i < a.length; i++) {
+        //    StdOut.println(a[i]);
+        //}
+    }
+
+    private static void testMathRan() {
+        for (int i = 0; i < 20; ++i) {
+            StdOut.println(Math.random());
         }
     }
+
 }
 

@@ -53,9 +53,11 @@ public class Cat {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        Out out = new Out(args[args.length - 1]);
-        for (int i = 0; i < args.length - 1; i++) {
-            In in = new In(args[i]);
+        final int len = 1;// this is fake
+        String[] paths = new String[len];
+        Out out = new Out(paths[len - 1]);
+        for (int i = 0; i < len - 1; i++) {
+            In in = new In(paths[i]);
             String s = in.readAll();
             out.println(s);
             in.close();
