@@ -1,4 +1,4 @@
-package _2Sort;
+package _2Sort.QuickSort;
 
 /******************************************************************************
  *  Compilation:  javac Quick.java
@@ -28,8 +28,8 @@ package _2Sort;
  *
  ******************************************************************************/
 
-import base.BaseSort;
-import base.StopwatchCPU;
+import base.stdlib.StdIn;
+import base.stdlib.StdOut;
 import base.stdlib.StdRandom;
 
 /**
@@ -43,7 +43,7 @@ import base.stdlib.StdRandom;
  * @author Robert Sedgewick
  * @author Kevin Wayne
  */
-public class Quick extends BaseSort {
+public class Quick {
 
     // This class should not be instantiated.
     private Quick() {
@@ -54,40 +54,45 @@ public class Quick extends BaseSort {
      *
      * @param a the array to be sorted
      */
-    public void sort(Comparable[] a) {
+    public static void sort(Comparable[] a) {
+        StdRandom.shuffle(a);
         sort(a, 0, a.length - 1);
+        //assert isSorted(a);
     }
 
     // quicksort the subarray from a[lo] to a[hi]
-    private void sort(Comparable[] a, int lo, int hi) {
+    private static void sort(Comparable[] a, int lo, int hi) {
         if (hi <= lo) {
             return;
         }
-        int p = partition(a, lo, hi);
-        sort(a, lo, p - 1);
-        sort(a, p + 1, hi);
+        int j = partition(a, lo, hi);
+        sort(a, lo, j - 1);
+        sort(a, j + 1, hi);
+        //assert isSorted(a, lo, hi);
     }
 
     // partition the subarray a[lo..hi] so that a[lo..j-1] <= a[j] <= a[j+1..hi]
     // and return the index j.
-    private int partition(Comparable[] a, int lo, int hi) {
+    private static int partition(Comparable[] a, int lo, int hi) {
         int i = lo;
         int j = hi + 1;
         Comparable v = a[lo];
         while (true) {
-
+            // find item on lo to swap
             while (less(a[++i], v)) {
                 if (i == hi) {
                     break;
                 }
             }
 
+            // find item on hi to swap
             while (less(v, a[--j])) {
                 if (j == lo) {
                     break;
-                }
+                }// redundant since a[lo] acts as sentinel
             }
 
+            // check if pointers cross
             if (i >= j) {
                 break;
             }
@@ -102,104 +107,6 @@ public class Quick extends BaseSort {
         return j;
     }
 
-
-    private void sort(int[] arr) {
-        sort(arr, 0, arr.length - 1);
-    }
-
-    private void sort(int[] arr, int lo, int hi) {
-        if (lo >= hi) {
-            return;
-        }
-        int p = partition1(arr, lo, hi);
-        sort(arr, lo, p - 1);
-        sort(arr, p + 1, hi);
-    }
-
-    private int partition1(int[] arr, int lo, int hi) {
-        int p = arr[lo];// 枢轴记录
-        int i = lo, j = hi;
-        while (i < j) {
-            while (i < j && arr[j] >= p) {
-                --j;
-            }
-            arr[i] = arr[j];// 交换比枢轴小的记录到左端
-            while (i < j && arr[i] <= p) {
-                ++i;
-            }
-            arr[j] = arr[i];// 交换比枢轴大的记录到右端
-        }
-        // 扫描完成，枢轴到位
-        arr[i] = p;
-        // 返回的是枢轴的位置
-        return i;
-    }
-
-    private int partition2(int[] a, int lo, int hi) {
-        int i = lo;
-        int j = hi + 1;
-        int v = a[lo];
-        while (true) {
-
-            while (v > a[++i]) {
-                if (i == hi) {
-                    break;
-                }
-            }
-
-            while (v < a[--j]) {
-                if (j == lo) {
-                    break;
-                }
-            }
-
-            if (i >= j) {
-                break;
-            }
-
-            swap(a, i, j);
-        }
-
-        swap(a, lo, j);
-
-        return j;
-    }
-
-    private int partition3(int[] nums, int lo, int hi) {
-        int v = nums[lo];
-        //i==lo 因为要剔除一个两个元素的情况，如果跳过第一个就没了。
-        int i = lo, j = hi;
-        while (i < j) {
-            while (nums[i] <= v) {
-                ++i;
-                if (i == hi) {
-                    break;
-                }
-            }
-            while (nums[j] >= v) {
-                --j;
-                if (j == lo) {
-                    break;
-                }
-            }
-
-            if (i >= j) {
-                break;
-            }
-            swap(nums, i, j);
-        }
-
-        swap(nums, j, lo);
-
-        return j;
-    }
-
-    private void swap(int[] nums, int i, int j) {
-        int t = nums[j];
-        nums[j] = nums[i];
-        nums[i] = t;
-    }
-
     /**
      * Rearranges the array so that {@code a[k]} contains the kth smallest key;
      * {@code a[0]} through {@code a[k-1]} are less than (or equal to) {@code a[k]}; and
@@ -210,7 +117,7 @@ public class Quick extends BaseSort {
      * @return the key of rank {@code k}
      * @throws IllegalArgumentException unless {@code 0 <= k < a.length}
      */
-    public Comparable select(Comparable[] a, int k) {
+    public static Comparable select(Comparable[] a, int k) {
         if (k < 0 || k >= a.length) {
             throw new IllegalArgumentException("index is not between 0 and " + a.length + ": " + k);
         }
@@ -229,6 +136,46 @@ public class Quick extends BaseSort {
         return a[lo];
     }
 
+
+    /***************************************************************************
+     *  Helper sorting functions.
+     ***************************************************************************/
+
+    // is v < w ?
+    private static boolean less(Comparable v, Comparable w) {
+        if (v == w) return false;   // optimization when reference equals
+        return v.compareTo(w) < 0;
+    }
+
+    // exchange a[i] and a[j]
+    private static void exch(Object[] a, int i, int j) {
+        Object swap = a[i];
+        a[i] = a[j];
+        a[j] = swap;
+    }
+
+
+    /***************************************************************************
+     *  Check if array is sorted - useful for debugging.
+     ***************************************************************************/
+    private static boolean isSorted(Comparable[] a) {
+        return isSorted(a, 0, a.length - 1);
+    }
+
+    private static boolean isSorted(Comparable[] a, int lo, int hi) {
+        for (int i = lo + 1; i <= hi; i++)
+            if (less(a[i], a[i - 1])) return false;
+        return true;
+    }
+
+
+    // print array to standard output
+    private static void show(Comparable[] a) {
+        for (int i = 0; i < a.length; i++) {
+            StdOut.println(a[i]);
+        }
+    }
+
     /**
      * Reads in a sequence of strings from standard input; quicksorts them;
      * and prints them to standard output in ascending order.
@@ -238,27 +185,20 @@ public class Quick extends BaseSort {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        int[] arr1 = new int[]{3, 2, 1, 5, 6, 4};
-        int[] arr2 = new int[]{3, 2, 3, 1, 2, 4, 5, 5, 6};
-        int[] arr3 = new int[]{99, 99};
-        int[] arr4 = new int[]{1};
-        int[] arr5 = new int[]{7, 6, 5, 4, 3, 2, 1};
-        int[] arr6 = new int[]{-1, 2, 0};
+        String[] a = StdIn.readAllStrings();
+        Quick.sort(a);
+        show(a);
+        assert isSorted(a);
 
-        StopwatchCPU cpu = new StopwatchCPU();
-        //new Quick().sort(arr1);
-        new Quick().sort(arr2);
-        new Quick().sort(arr3);
-        new Quick().sort(arr4);
-        new Quick().sort(arr5);
-        new Quick().sort(arr6);
-        //println(Arrays.toString(arr1));
-        //println(Arrays.toString(arr2));
-        //println(Arrays.toString(arr3));
-        //println(Arrays.toString(arr4));
-        //println(Arrays.toString(arr5));
-        //println(Arrays.toString(arr6));
-        println(cpu.elapsedTime2());
+        // shuffle
+        StdRandom.shuffle(a);
+
+        // display results again using select
+        StdOut.println();
+        for (int i = 0; i < a.length; i++) {
+            String ith = (String) Quick.select(a, i);
+            StdOut.println(ith);
+        }
     }
 
 }

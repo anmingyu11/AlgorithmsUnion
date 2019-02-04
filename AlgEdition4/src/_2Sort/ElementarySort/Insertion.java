@@ -1,4 +1,4 @@
-package _2Sort;
+package _2Sort.ElementarySort;
 
 /******************************************************************************
  *  Compilation:  javac Insertion.java
@@ -141,6 +141,10 @@ public class Insertion {
 
         return index;
     }
+
+    /***************************************************************************
+     *  Helper sorting functions.
+     ***************************************************************************/
 
     // is v < w ?
     private static boolean less(Comparable v, Comparable w) {
