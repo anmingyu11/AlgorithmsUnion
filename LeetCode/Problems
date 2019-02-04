@@ -1,12 +1,16 @@
-*Longest Consecutive Sequence
-*3Sum
-*4Sum
-**Next Permutation
-**Permutation Sequence
-**Trapping Rain Water
-**Rotate Image
-**Set Matrix Zeroes
-Gas Station
+**KthLargestElementinanArray 多种算法综合,很有价值
+**SerializeAndDeserializeBinaryTree 序列化和反序列化,有价值
+**EncodeAndDecodeTinyURL 这个很好玩
+**ShuffleAnArray 置乱算法,这个证明可以好好看下
+**Longest Consecutive Sequence 并查集
+**3Sum  夹逼
+**4Sum  剪枝
+**Next Permutation 这个实在是比较神奇,不知道如何形容,我觉得我也没有完全琢磨透
+**Permutation Sequence 康托
+**Trapping Rain Water 做到最后还是一个懵逼的状态
+**Rotate Image 少量线性代数知识,再加上模拟
+**Set Matrix Zeroes 状态机的改进.
+**Gas Station 此题的证明需要好好看下.
 Candy
 Majority Element
 Rotate Array
@@ -232,4 +236,3 @@ Spiral Matrix II
 ZigZag Conversion
 Divide Two Integers
 Text Justification
-Max Points on a Line
