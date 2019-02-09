@@ -261,7 +261,8 @@ public class _0215KthLargestElementinanArray extends Base {
                 }
                 while (nums[j] >= v) {
                     --j;
-                    if (j == lo) {
+                    //危险
+                    if (j < lo) {
                         break;
                     }
                 }
