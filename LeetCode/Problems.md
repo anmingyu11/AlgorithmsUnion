@@ -1,30 +1,31 @@
-### 有名字的技巧
-Permutation Sequence 康托
-Majority Element 摩尔投票法
-### 没有名字的技巧
-Rotate Array 技巧性太强 纯数学
-Candy 这个莫名其妙的做出来了，Solution写的很详细，需要好好的看一下．
-Gas Station 此题的证明需要好好看下.
-Rotate Image 少量线性代数知识,再加上模拟
-Next Permutation 这个实在是比较神奇,不知道如何形容,我觉得我也没有完全琢磨透
-### 魔改比较神奇
-4Sum  剪枝
-Set Matrix Zeroes 状态机的改进.
-### 价值很大
-KthLargestElementinanArray 多种算法综合,很有价值
-SerializeAndDeserializeBinaryTree 序列化和反序列化,有价值
-EncodeAndDecodeTinyURL 这个很好玩
-ShuffleAnArray 置乱算法,这个证明可以好好看下
-Longest Consecutive Sequence 并查集
-3Sum  夹逼
-Trapping Rain Water 做到最后还是一个懵逼的状态
+
+--------
+
+## 没坐上来的
+
+0015 ThreeSum                                             // 夹逼
+0018 FourSum                                              // 剪枝
+0031 Next Permutation                                     // 这个实在是比较神奇,不知道如何形容,我觉得我也没有完全琢磨透
+0042 Trapping Rain Water                                  // 做到最后还是一个懵逼的状态
+0048 Rotate Image                                         // 少量线性代数知识,再加上模拟
+0060 Permutation Sequence 				  // 康托
+0073 Set Matrix Zeroes                                    // 状态机的改进.
+0128 Longest Consecutive Sequence                         // 并查集
+0134 Gas Station                                          // 此题的证明需要好好看下.
+0135 Candy                                                // 这个莫名其妙的做出来了，Solution写的很详细，需要好好的看一下．
+0167 TwoSum2                                              // 双指针夹逼,二分查找
+0169 Majority Element                                     // 摩尔投票法
+0189 Rotate Array                                         // 技巧性太强了
+0215 KthLargestElementinanArray                           // 多种算法综合,很有价值
+0297 SerializeAndDeserializeBinaryTree                    // 序列化和反序列化,有价值
+0384 ShuffleAnArray                                       // 置乱算法,这个证明可以好好看下
+0535 EncodeAndDecodeTinyURL                               // 这个很好玩
 
 
-------
+TODO 
 
-### TODO
-LRU Cache
-Contains Duplicate II
+--------
+
 Contains Duplicate III
 Product of Array Except Self
 Game of Life
@@ -245,3 +246,26 @@ Spiral Matrix II
 ZigZag Conversion
 Divide Two Integers
 Text Justification
+
+---------------
+
+## 自己做出来的
+
+0001 Two Sum                                        // HashMap
+0002 Add Two Numbers                                // 俩数相加链表
+0016 Three Sum Closet                               // 夹逼
+0021 MergeTwoSortedLists                            // 归并
+0026 RemoveDuplicatesFromSortedArray                // 最长平台
+0027 RemoveElement                                  // 最长平台
+0036 ValidSudoku                                    // 数独
+0046 Permutations                                   // 排列
+0066 PlusOne					   // 加进位
+0070 ClimbingStairs                                 // 动态规划
+0080 RemoveDuplicatesFromSortedArray2               // 双指针
+0125 ValidPalindrome                                // 回文
+0149 MaxPointsOnALine                               // 数学,模拟,HashMap
+0200 Number of Islands                              // 连通性
+0217 ContainsDuplicate                              // HashMap
+0219 ContainsDuplicate2                             // HashMap,窗口
+0283 MoveZeros                                      // 快慢指针
+
