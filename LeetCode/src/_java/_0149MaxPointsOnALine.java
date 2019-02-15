@@ -2,7 +2,6 @@ package _java;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import base.Base;
 
@@ -144,8 +143,9 @@ public class _0149MaxPointsOnALine extends Base {
     // 最大公约数代替除法
     private static class Solution3 extends Solution {
 
-        public int hashCode(int dx, int dy) {
-            return Objects.hashCode(dx) ^ Objects.hashCode(dy);
+        public long hashCode(long dx, long dy) {
+            //return Objects.hashCode(dx) ^ Objects.hashCode(dy);
+            return (dx << 32) ^ dy;
         }
 
         public int maxPoints(Point[] points) {
@@ -156,7 +156,7 @@ public class _0149MaxPointsOnALine extends Base {
 
             int max = 0;
             for (int i = 0; i < len - 1; ++i) {
-                Map<Integer, Integer> map = new HashMap<>(len);
+                Map<Long, Integer> map = new HashMap<>(len);
                 int samePoint = 0;
                 int sameLine = 1;
                 for (int j = i + 1; j < len; ++j) {
@@ -169,7 +169,7 @@ public class _0149MaxPointsOnALine extends Base {
                     int gcd = gcd(dx, dy);
 
                     int commX = dx / gcd, commY = dy / gcd;
-                    int hash = hashCode(commX, commY);
+                    long hash = hashCode(commX, commY);
                     Integer val = map.get(hashCode(commX, commY));
                     if (val != null) {
                         map.put(hashCode(commX, commY), val + 1);
