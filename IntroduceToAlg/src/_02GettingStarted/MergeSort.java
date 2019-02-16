@@ -1,11 +1,47 @@
 package _02GettingStarted;
 
-import base.BaseSort;
+import java.util.LinkedList;
+import java.util.List;
+
+import base.Base;
 
 /**
  * 归并排序
+ * 对应2.3.1
  */
-public class MergeSort extends BaseSort {
+public class MergeSort extends Base {
+
+    private abstract static class Solution {
+        public abstract void sort(int[] A);
+
+        public void test() {
+            test(Testcases.getTestcases());
+        }
+
+        private void test(List<int[]> testcases) {
+            for (int[] t : testcases) {
+                println("----------------");
+                println("Before sort : ");
+                printArr(t);
+                sort(t);
+                println("After sort : ");
+                printArr(t);
+                println(check(t) ? "Correct" : "Incorrect");
+            }
+        }
+
+        private boolean check(int[] A) {
+            final int n = A.length;
+
+            for (int i = 0; i < n - 1; ++i) {
+                if (A[i + 1] < A[i]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+    }
 
     private static class Solution1 extends Solution {
 
@@ -25,7 +61,7 @@ public class MergeSort extends BaseSort {
             merge(A, p, q, r);
         }
 
-        // 这个方法并不好,如果数组里有元素也是那个无穷大的话就麻烦了,还是普林斯顿的版本更好一些,还省了点复杂度.
+        // 这个方法并不好,还是普林斯顿的版本更好一些, 更简短,且更容易理解.
         private void merge(int[] A, int p, int q, int r) {
             int n1 = q - p + 1;
             int n2 = r - q; // r - (q + 1) +1
@@ -95,9 +131,67 @@ public class MergeSort extends BaseSort {
         }
     }
 
+    /**
+     * 自底向上版的归并排序,不是分治法
+     * 来自于 <<算法4>>>
+     */
+    private static class Solution3 extends Solution {
+
+        @Override
+        public void sort(int[] A) {
+            final int n = A.length;
+            int[] aux = new int[n];
+            for (int sz = 1; sz < n; sz += sz) {
+                for (int lo = 0; lo < n - sz; lo += sz + sz) {
+                    merge(A, aux, lo, lo + sz - 1, Math.min(lo + sz + sz - 1, n - 1));
+                }
+            }
+
+        }
+
+        private void merge(int[] A, int[] aux, int lo, int mid, int hi) {
+            for (int k = lo; k <= hi; ++k) {
+                aux[k] = A[k];
+            }
+
+            int i = lo, j = mid + 1;
+            for (int k = lo; k <= hi; ++k) {
+                if (i > mid) {
+                    A[k] = aux[j++];
+                } else if (j > hi) {
+                    A[k] = aux[i++];
+                } else if (aux[i] < aux[j]) {
+                    A[k] = aux[i++];
+                } else {
+                    A[k] = aux[j++];
+                }
+            }
+        }
+    }
+
     public static void main(String[] args) {
 
-        test(new Solution2());
+        Solution s = new Solution3();
+
+        s.test();
 
     }
+
+    private static class Testcases {
+
+        static List<int[]> getTestcases() {
+            List<int[]> testcases = new LinkedList<>();
+            testcases.add(new int[]{3, 2, 1, 5, 6, 4});
+            testcases.add(new int[]{3, 2, 3, 1, 2, 4, 5, 5, 6});
+            testcases.add(new int[]{99, 99});
+            testcases.add(new int[]{1});
+            testcases.add(new int[]{7, 6, 5, 4, 3, 2, 1});
+            testcases.add(new int[]{1, 2, 3, 4, 5});
+            testcases.add(new int[]{1, 2, 3, 6, 5});
+            testcases.add(new int[]{-1, 2, 0});
+            return testcases;
+        }
+
+    }
+
 }
