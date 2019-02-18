@@ -1,25 +1,27 @@
 
 --------
 
-## 没坐上来的
+## 犹豫的
 
-0015 ThreeSum                                             // 夹逼
-0018 FourSum                                              // 剪枝
-0031 Next Permutation                                     // 这个实在是比较神奇,不知道如何形容,我觉得我也没有完全琢磨透
-0042 Trapping Rain Water                                  // 做到最后还是一个懵逼的状态
-0048 Rotate Image                                         // 少量线性代数知识,再加上模拟
-0060 Permutation Sequence 				  // 康托
-0073 Set Matrix Zeroes                                    // 状态机的改进.
-0128 Longest Consecutive Sequence                         // 并查集
-0134 Gas Station                                          // 此题的证明需要好好看下.
-0135 Candy                                                // 这个莫名其妙的做出来了，Solution写的很详细，需要好好的看一下．
-0167 TwoSum2                                              // 双指针夹逼,二分查找
-0169 Majority Element                                     // 摩尔投票法
-0189 Rotate Array                                         // 技巧性太强了
-0215 KthLargestElementinanArray                           // 多种算法综合,很有价值
-0297 SerializeAndDeserializeBinaryTree                    // 序列化和反序列化,有价值
-0384 ShuffleAnArray                                       // 置乱算法,这个证明可以好好看下
-0535 EncodeAndDecodeTinyURL                               // 这个很好玩
+0004 MedianOfTwoSortedArray                               // D-A-Q
+0015 ThreeSum                                             // TwoPointer
+0018 FourSum                                              // TwoPointer
+0023 MergeKSortedLists                                    // PQ,D-A-Q
+0031 Next Permutation                                     // Math
+0042 Trapping Rain Water                                  // Stack,DP,Array
+0048 Rotate Image                                         // Math,Simulation
+0060 Permutation Sequence 				  // Math
+0073 Set Matrix Zeroes                                    // Simulation
+0128 Longest Consecutive Sequence                         // UF
+0134 Gas Station                                          // Greedy,Math
+0135 Candy                                                // Greedy
+0167 TwoSum2                                              // TwoPointer,BinarySearch
+0169 Majority Element                                     // Math
+0189 Rotate Array                                         // Math
+0215 KthLargestElementinanArray                           // PQ,D-A-Q
+0297 SerializeAndDeserializeBinaryTree                    // Design
+0384 ShuffleAnArray                                       // Probability
+0535 EncodeAndDecodeTinyURL                               // Design
 
 
 TODO 
@@ -144,7 +146,6 @@ Search a 2D Matrix
 Search a 2D Matrix II
 Find Minimum in Rotated Sorted Array
 Find Minimum in Rotated Sorted Array II
-Median of Two Sorted Arrays
 H-Index II
 暴力枚举法
 Subsets
@@ -252,20 +253,21 @@ Text Justification
 ## 自己做出来的
 
 0001 Two Sum                                        // HashMap
-0002 Add Two Numbers                                // 俩数相加链表
-0016 Three Sum Closet                               // 夹逼
-0021 MergeTwoSortedLists                            // 归并
-0026 RemoveDuplicatesFromSortedArray                // 最长平台
-0027 RemoveElement                                  // 最长平台
-0036 ValidSudoku                                    // 数独
-0046 Permutations                                   // 排列
-0066 PlusOne					   // 加进位
-0070 ClimbingStairs                                 // 动态规划
-0080 RemoveDuplicatesFromSortedArray2               // 双指针
-0125 ValidPalindrome                                // 回文
-0149 MaxPointsOnALine                               // 数学,模拟,HashMap
-0200 Number of Islands                              // 连通性
+0002 Add Two Numbers                                // LinkedList
+0016 Three Sum Closet                               // TwoPointer
+0021 MergeTwoSortedLists                            // TwoPointer
+0026 RemoveDuplicatesFromSortedArray                // TwoPointer
+0027 RemoveElement                                  // TwoPointer
+0036 ValidSudoku                                    // Simulation
+0046 Permutations                                   // Math
+0066 PlusOne					    // Array
+0070 ClimbingStairs                                 // DP
+0080 RemoveDuplicatesFromSortedArray2               // TwoPointer
+0125 ValidPalindrome                                // TwoPointer
+0149 MaxPointsOnALine                               // Math,Simulation,HashMap
+0200 Number of Islands                              // UF
 0217 ContainsDuplicate                              // HashMap
-0219 ContainsDuplicate2                             // HashMap,窗口
-0283 MoveZeros                                      // 快慢指针
+0219 ContainsDuplicate2                             // HashMap,SlidingWindow
+0283 MoveZeros                                      // TwoPointer
+0904 FruitIntoBaskets                               // SlidingWindow
 
