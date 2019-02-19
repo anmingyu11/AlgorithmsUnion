@@ -15,6 +15,7 @@
 0128 Longest Consecutive Sequence                         // UF
 0134 Gas Station                                          // Greedy,Math
 0135 Candy                                                // Greedy
+0148 SortList                                             // LinkedList,D-A-Q
 0167 TwoSum2                                              // TwoPointer,BinarySearch
 0169 Majority Element                                     // Math
 0189 Rotate Array                                         // Math
@@ -270,4 +271,3 @@ Text Justification
 0219 ContainsDuplicate2                             // HashMap,SlidingWindow
 0283 MoveZeros                                      // TwoPointer
 0904 FruitIntoBaskets                               // SlidingWindow
-
