@@ -12,10 +12,9 @@
 0048 Rotate Image                                         // Math,Simulation
 0060 Permutation Sequence 				  // Math
 0073 Set Matrix Zeroes                                    // Simulation
+0090 Subsets2                                             // DFS
 0128 Longest Consecutive Sequence                         // UF
-0134 Gas Station                                          // Greedy,Math
-0135 Candy                                                // Greedy
-0148 SortList                                             // LinkedList,D-A-Q
+0134 Gas Station                                          // Greedy,Math 0135 Candy                                                // Greedy 0148 SortList                                             // LinkedList,D-A-Q
 0167 TwoSum2                                              // TwoPointer,BinarySearch
 0169 Majority Element                                     // Math
 0189 Rotate Array                                         // Math
@@ -123,12 +122,8 @@ Range Sum Query - Mutable
 Insertion Sort List
 归并排序
 Merge Two Sorted Arrays
-Merge Two Sorted Lists
-Merge k Sorted Lists
-Sort List
 快速排序
 Sort Colors
-Kth Largest Element in an Array
 桶排序
 First Missing Positive
 计数排序
@@ -148,12 +143,6 @@ Search a 2D Matrix II
 Find Minimum in Rotated Sorted Array
 Find Minimum in Rotated Sorted Array II
 H-Index II
-暴力枚举法
-Subsets
-Subsets II
-Permutations II
-Combinations
-Letter Combinations of a Phone Number
 广度优先搜索
 Word Ladder
 Word Ladder II
@@ -261,9 +250,11 @@ Text Justification
 0027 RemoveElement                                  // TwoPointer
 0036 ValidSudoku                                    // Simulation
 0046 Permutations                                   // Math
+0047 Permutations2                                  // DFS
 0066 PlusOne					    // Array
 0070 ClimbingStairs                                 // DP
 0080 RemoveDuplicatesFromSortedArray2               // TwoPointer
+0090 Subsets                                        // DFS
 0125 ValidPalindrome                                // TwoPointer
 0149 MaxPointsOnALine                               // Math,Simulation,HashMap
 0200 Number of Islands                              // UF

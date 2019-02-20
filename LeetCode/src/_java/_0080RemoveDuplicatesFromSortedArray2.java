@@ -52,7 +52,7 @@ public class _0080RemoveDuplicatesFromSortedArray2 extends Base {
     /**
      * StefanPochman的解法，这个简直天才。  开始怀疑我自己是不是傻逼
      */
-    static class Solution2 extends Solution {
+    private static class Solution2 extends Solution {
 
         @Override
         int removeDuplicates(int[] nums) {
