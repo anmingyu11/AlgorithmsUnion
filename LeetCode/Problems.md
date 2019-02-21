@@ -12,9 +12,11 @@
 0048 Rotate Image                                         // Math,Simulation
 0060 Permutation Sequence 				  // Math
 0073 Set Matrix Zeroes                                    // Simulation
-0090 Subsets2                                             // DFS
+0090 Subsets2                                             // BackTracking
 0128 Longest Consecutive Sequence                         // UF
-0134 Gas Station                                          // Greedy,Math 0135 Candy                                                // Greedy 0148 SortList                                             // LinkedList,D-A-Q
+0134 Gas Station                                          // Greedy,Math 
+0135 Candy                                                // Greedy 
+0148 SortList                                             // LinkedList,D-A-Q
 0167 TwoSum2                                              // TwoPointer,BinarySearch
 0169 Majority Element                                     // Math
 0189 Rotate Array                                         // Math
@@ -250,11 +252,11 @@ Text Justification
 0027 RemoveElement                                  // TwoPointer
 0036 ValidSudoku                                    // Simulation
 0046 Permutations                                   // Math
-0047 Permutations2                                  // DFS
+0047 Permutations2                                  // BackTracking
 0066 PlusOne					    // Array
 0070 ClimbingStairs                                 // DP
 0080 RemoveDuplicatesFromSortedArray2               // TwoPointer
-0090 Subsets                                        // DFS
+0090 Subsets                                        // BackTracking
 0125 ValidPalindrome                                // TwoPointer
 0149 MaxPointsOnALine                               // Math,Simulation,HashMap
 0200 Number of Islands                              // UF
