@@ -1,12 +1,19 @@
 
+ONGOING: 
+
+0312 BurstBallons                                         // D-A-C,DP
+0148 SortList                                             // LinkedList,D-A-C
+0169 MajorityElement                                      // Math
+0053 MaximumSubarray                                      // D-A-C,DP
+
 --------
 
 ## 犹豫的
 
-0004 MedianOfTwoSortedArray                               // D-A-Q
+0004 MedianOfTwoSortedArray                               // D-A-C
 0015 ThreeSum                                             // TwoPointer
 0018 FourSum                                              // TwoPointer
-0023 MergeKSortedLists                                    // PQ,D-A-Q
+0023 MergeKSortedLists                                    // PQ,D-A-C
 0031 Next Permutation                                     // Math
 0042 Trapping Rain Water                                  // Stack,DP,Array
 0048 Rotate Image                                         // Math,Simulation
@@ -16,14 +23,15 @@
 0128 Longest Consecutive Sequence                         // UF
 0134 Gas Station                                          // Greedy,Math 
 0135 Candy                                                // Greedy 
-0148 SortList                                             // LinkedList,D-A-Q
 0167 TwoSum2                                              // TwoPointer,BinarySearch
-0169 Majority Element                                     // Math
 0189 Rotate Array                                         // Math
-0215 KthLargestElementinanArray                           // PQ,D-A-Q
+0215 KthLargestElementinanArray                           // PQ,D-A-C
 0297 SerializeAndDeserializeBinaryTree                    // Design
 0384 ShuffleAnArray                                       // Probability
 0535 EncodeAndDecodeTinyURL                               // Design
+
+## 没做出来
+0179 LargestNumber                                        // Sort,String
 
 
 TODO 
@@ -132,16 +140,11 @@ First Missing Positive
 H-Index
 基数排序
 Maximum Gap
-其他
-Largest Number
-小结
 查找
 Search for a Range
 Search Insert Position
 Search in Rotated Sorted Array
 Search in Rotated Sorted Array II
-Search a 2D Matrix
-Search a 2D Matrix II
 Find Minimum in Rotated Sorted Array
 Find Minimum in Rotated Sorted Array II
 H-Index II
@@ -178,7 +181,6 @@ Container With Most Water
 Patching Array
 动态规划
 Triangle
-Maximum Subarray
 Maximum Product Subarray
 Longest Increasing Subsequence
 Palindrome Partitioning II
@@ -247,6 +249,7 @@ Text Justification
 0001 Two Sum                                        // HashMap
 0002 Add Two Numbers                                // LinkedList
 0016 Three Sum Closet                               // TwoPointer
+0017 LetterCombinationsOfAPhoneNumber               // BackTracking
 0021 MergeTwoSortedLists                            // TwoPointer
 0026 RemoveDuplicatesFromSortedArray                // TwoPointer
 0027 RemoveElement                                  // TwoPointer
@@ -255,6 +258,8 @@ Text Justification
 0047 Permutations2                                  // BackTracking
 0066 PlusOne					    // Array
 0070 ClimbingStairs                                 // DP
+0074 Search a 2D Matrix                             // BinarySearch,DFS
+0077 Combinations                                   // BackTracking
 0080 RemoveDuplicatesFromSortedArray2               // TwoPointer
 0090 Subsets                                        // BackTracking
 0125 ValidPalindrome                                // TwoPointer
@@ -262,5 +267,7 @@ Text Justification
 0200 Number of Islands                              // UF
 0217 ContainsDuplicate                              // HashMap
 0219 ContainsDuplicate2                             // HashMap,SlidingWindow
+0240 Search a 2D Matrix II                          // DFS, BinarySearch
 0283 MoveZeros                                      // TwoPointer
+0347 TopKFrequentElements                           // Heap
 0904 FruitIntoBaskets                               // SlidingWindow
