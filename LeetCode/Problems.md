@@ -3,8 +3,8 @@ ONGOING:
 
 0312 BurstBallons                                         // D-A-C,DP
 0148 SortList                                             // LinkedList,D-A-C
+0147 InsertionSort
 0169 MajorityElement                                      // Math
-0053 MaximumSubarray                                      // D-A-C,DP
 
 --------
 
@@ -17,7 +17,7 @@ ONGOING:
 0031 Next Permutation                                     // Math
 0042 Trapping Rain Water                                  // Stack,DP,Array
 0048 Rotate Image                                         // Math,Simulation
-0060 Permutation Sequence 				  // Math
+0060 Permutation Sequence 				                  // Math
 0073 Set Matrix Zeroes                                    // Simulation
 0090 Subsets2                                             // BackTracking
 0128 Longest Consecutive Sequence                         // UF
@@ -256,10 +256,11 @@ Text Justification
 0036 ValidSudoku                                    // Simulation
 0046 Permutations                                   // Math
 0047 Permutations2                                  // BackTracking
-0066 PlusOne					    // Array
+0066 PlusOne					                    // Array
 0070 ClimbingStairs                                 // DP
 0074 Search a 2D Matrix                             // BinarySearch,DFS
 0077 Combinations                                   // BackTracking
+0078 Subsets                                        // Subsets
 0080 RemoveDuplicatesFromSortedArray2               // TwoPointer
 0090 Subsets                                        // BackTracking
 0125 ValidPalindrome                                // TwoPointer
@@ -268,6 +269,7 @@ Text Justification
 0217 ContainsDuplicate                              // HashMap
 0219 ContainsDuplicate2                             // HashMap,SlidingWindow
 0240 Search a 2D Matrix II                          // DFS, BinarySearch
+0242 ValidAnagram                                   // String
 0283 MoveZeros                                      // TwoPointer
 0347 TopKFrequentElements                           // Heap
 0904 FruitIntoBaskets                               // SlidingWindow

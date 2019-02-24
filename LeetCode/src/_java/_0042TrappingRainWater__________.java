@@ -4,7 +4,7 @@ import java.util.Stack;
 
 import base.Base;
 
-public class _0042TrappingRainWater extends Base {
+public class _0042TrappingRainWater__________ extends Base {
     private abstract static class Solution {
         public abstract int trap(int[] height);
     }
