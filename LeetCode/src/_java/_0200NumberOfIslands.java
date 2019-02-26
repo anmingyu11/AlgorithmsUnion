@@ -13,7 +13,7 @@ public class _0200NumberOfIslands extends Base {
     // UF
     private static class Solution1 extends Solution {
 
-        private class UF {
+        class UF {
 
             final int[][] direct = new int[][]
                     {
@@ -95,7 +95,7 @@ public class _0200NumberOfIslands extends Base {
     // in-place 的 居然一点改进都没有,可能用例太小了,重新创建数组的方法不需要多少内存.
     private static class Solution2 extends Solution {
 
-        private class UF {
+        class UF {
 
             final int[][] direct = new int[][]
                     {
