@@ -208,7 +208,7 @@ public class _0904FruitIntoBaskets extends Base {
             return ans;
         }
 
-        class Counter extends HashMap<Integer, Integer> {
+        private class Counter extends HashMap<Integer, Integer> {
             public int get(int k) {
                 return containsKey(k) ? super.get(k) : 0;
             }

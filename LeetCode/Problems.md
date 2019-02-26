@@ -4,7 +4,6 @@ ONGOING:
 0312 BurstBallons                                         // D-A-C,DP
 0148 SortList                                             // LinkedList,D-A-C
 0147 InsertionSort
-0169 MajorityElement                                      // Math
 
 --------
 
@@ -12,19 +11,22 @@ ONGOING:
 
 0004 MedianOfTwoSortedArray                               // D-A-C
 0015 ThreeSum                                             // TwoPointer
-0018 FourSum                                              // TwoPointer
 0023 MergeKSortedLists                                    // PQ,D-A-C
 0031 Next Permutation                                     // Math
 0042 Trapping Rain Water                                  // Stack,DP,Array
 0048 Rotate Image                                         // Math,Simulation
-0060 Permutation Sequence 				                  // Math
-0073 Set Matrix Zeroes                                    // Simulation
-0090 Subsets2                                             // BackTracking
+0060 Permutation Sequence 				  // Math
 0128 Longest Consecutive Sequence                         // UF
 0134 Gas Station                                          // Greedy,Math 
 0135 Candy                                                // Greedy 
 0167 TwoSum2                                              // TwoPointer,BinarySearch
 0189 Rotate Array                                         // Math
+
+## 很有价值
+0018 FourSum                                              // TwoPointer
+0073 Set Matrix Zeroes                                    // Simulation
+0090 Subsets2                                             // BackTracking
+0169 MajorityElement                                      // Math
 0215 KthLargestElementinanArray                           // PQ,D-A-C
 0297 SerializeAndDeserializeBinaryTree                    // Design
 0384 ShuffleAnArray                                       // Probability
@@ -33,14 +35,13 @@ ONGOING:
 ## 没做出来
 0179 LargestNumber                                        // Sort,String
 0238 ProductOfArrayExceptSelf                             // DP,Array
-
+0961 NrepeatedElementinSize2NArray                        // Math
 
 TODO 
 
 --------
 
 Contains Duplicate III
-Product of Array Except Self
 Game of Life
 Increasing Triplet Subsequence
 单链表

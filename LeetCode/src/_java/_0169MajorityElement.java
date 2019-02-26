@@ -6,7 +6,7 @@ import java.util.Map;
 
 import base.Base;
 
-public class _0169MajorityElement__________ extends Base {
+public class _0169MajorityElement extends Base {
 
     private abstract static class Solution {
         public abstract int majorityElement(int[] nums);
@@ -165,6 +165,75 @@ public class _0169MajorityElement__________ extends Base {
                 }
             }
             return res;
+        }
+
+    }
+
+    // 分治法 O(nlgn)
+    // Runtime: 3 ms, faster than 100.00% of Java online submissions for Majority Element.
+    // Memory Usage: 39.6 MB, less than 93.04% of Java online submissions for Majority Element.
+    /**
+     * Here, we apply a classical divide & conquer approach that recurses on the left and right halves of an array until an answer can be trivially
+     * achieved for a length-1 array.
+     * Note that because actually passing copies of subarrays costs time and space,
+     * we instead pass lo and hi indices that describe the relevant slice of the overall array.
+     * In this case, the majority element for a length-1 slice is trivially its only element,
+     * so the recursion stops there.
+     * If the current slice is longer than length-1, we must combine the answers for the slice's left and right halves.
+     * If they agree on the majority element, then the majority element for the overall slice is obviously the same1.
+     * If they disagree, only one of them can be "right",
+     * so we need to count the occurrences of the left and right majority elements to determine which subslice's answer is globally correct.
+     * The overall answer for the array is thus the majority element between indices 0 and nn.
+     */
+    private static class Solution5 extends Solution {
+
+        /**
+         * 计算num在lo和hi之间出现的频率
+         *
+         * @param nums
+         * @param num
+         * @param lo
+         * @param hi
+         * @return
+         */
+        private int countInRange(int[] nums, int num, int lo, int hi) {
+            int count = 0;
+            for (int i = lo; i <= hi; i++) {
+                if (nums[i] == num) {
+                    ++count;
+                }
+            }
+            return count;
+        }
+
+        /**
+         * 当传入数组区间是1,直接返回nums[lo],因为这个是最主要的元素
+         * 折半在左右数组里查找,分别计算left和right的majority element
+         * 如果两边结果一样,直接返回.
+         * 如果不一样,从这两个数组中数一遍谁大.
+         *
+         * @param nums
+         * @param lo
+         * @param hi
+         * @return
+         */
+        private int majorityElementRec(int[] nums, int lo, int hi) {
+            if (lo == hi) {
+                return nums[lo];
+            }
+            int mid = (hi - lo) / 2 + lo;
+            int left = majorityElementRec(nums, lo, mid);
+            int right = majorityElementRec(nums, mid + 1, hi);
+            if (left == right) {
+                return left;
+            }
+            int leftCount = countInRange(nums, left, lo, hi);
+            int rightCount = countInRange(nums, right, lo, hi);
+            return leftCount > rightCount ? left : right;
+        }
+
+        public int majorityElement(int[] nums) {
+            return majorityElementRec(nums, 0, nums.length - 1);
         }
 
     }
