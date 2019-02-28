@@ -45,6 +45,8 @@ import base.stdlib.StdOut;
  * <p>
  * For additional documentation, see <a href="https://algs4.cs.princeton.edu/21elementary">Section 2.1</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * <p>
+ * 笨重的插入排序
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne
@@ -61,9 +63,9 @@ public class Insertion {
      * @param a the array to be sorted
      */
     public static void sort(Comparable[] a) {
-        int n = a.length;
-        for (int i = 1; i < n; i++) {
-            for (int j = i; j > 0 && less(a[j], a[j - 1]); j--) {
+        final int n = a.length;
+        for (int i = 1; i < n; ++i) {
+            for (int j = i; j > 0 && less(a[j], a[j - 1]); --j) {
                 exch(a, j, j - 1);
             }
         }
@@ -77,8 +79,8 @@ public class Insertion {
      * @param hi right endpoint (exclusive)
      */
     public static void sort(Comparable[] a, int lo, int hi) {
-        for (int i = lo + 1; i < hi; i++) {
-            for (int j = i; j > lo && less(a[j], a[j - 1]); j--) {
+        for (int i = lo + 1; i < hi; ++i) {
+            for (int j = i; j > lo && less(a[j], a[j - 1]); --j) {
                 exch(a, j, j - 1);
             }
         }
@@ -214,4 +216,3 @@ public class Insertion {
         show(a);
     }
 }
-

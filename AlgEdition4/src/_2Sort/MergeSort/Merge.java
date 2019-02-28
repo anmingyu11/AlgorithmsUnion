@@ -23,7 +23,9 @@ package _2Sort.MergeSort;
  *
  ******************************************************************************/
 
-import base.stdlib.StdIn;
+import java.util.List;
+
+import _2Sort.TestCases;
 import base.stdlib.StdOut;
 
 /**
@@ -43,43 +45,6 @@ public class Merge {
     private Merge() {
     }
 
-    // stably merge a[lo .. mid] with a[mid+1 ..hi] using aux[lo .. hi]
-    private static void merge(Comparable[] a, Comparable[] aux, int lo, int mid, int hi) {
-        // precondition: a[lo .. mid] and a[mid+1 .. hi] are sorted subarrays
-        // copy to aux[]
-        for (int k = lo; k <= hi; k++) {
-            aux[k] = a[k];
-        }
-
-        // merge back to a[]
-        int i = lo, j = mid + 1;
-        for (int k = lo; k <= hi; k++) {
-            if (i > mid) {
-                a[k] = aux[j++];
-            } else if (j > hi) {
-                a[k] = aux[i++];
-            } else if (less(aux[j], aux[i])) {
-                a[k] = aux[j++];
-            } else {
-                a[k] = aux[i++];
-            }
-        }
-
-        // postcondition: a[lo .. hi] is sorted
-        assert isSorted(a, lo, hi);
-    }
-
-    // mergesort a[lo..hi] using auxiliary array aux[lo..hi]
-    private static void sort(Comparable[] a, Comparable[] aux, int lo, int hi) {
-        if (hi <= lo) {
-            return;
-        }
-        int mid = (lo + hi) / 2;
-        sort(a, aux, lo, mid);
-        sort(a, aux, mid + 1, hi);
-        merge(a, aux, lo, mid, hi);
-    }
-
     /**
      * Rearranges the array in ascending order, using the natural order.
      *
@@ -90,6 +55,35 @@ public class Merge {
         sort(a, aux, 0, a.length - 1);
     }
 
+    private static void sort(Comparable[] a, Comparable[] aux, int lo, int hi) {
+        if (lo >= hi) {
+            return;
+        }
+        int mid = (lo + hi) / 2;
+        sort(a, aux, lo, mid);
+        sort(a, aux, mid + 1, hi);
+        merge(a, aux, lo, mid, hi);
+    }
+
+    private static void merge(Comparable[] a, Comparable[] aux, int lo, int mid, int hi) {
+        for (int k = lo; k <= hi; ++k) {
+            aux[k] = a[k];
+        }
+
+        int i = lo, j = mid + 1;
+        for (int k = lo; k <= hi; ++k) {
+            if (i > mid) {
+                a[k] = aux[j++];
+            } else if (j > hi) {
+                a[k] = aux[i++];
+            } else if (less(aux[i], aux[j])) {
+                a[k] = aux[i++];
+            } else {
+                a[k] = aux[j++];
+            }
+        }
+
+    }
 
     /***************************************************************************
      *  Helper sorting function.
@@ -176,8 +170,11 @@ public class Merge {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        String[] a = StdIn.readAllStrings();
-        Merge.sort(a);
-        show(a);
+        List<Integer[]> l = TestCases.getTestcases();
+        for (Integer[] a : l) {
+            Merge.sort(a);
+            StdOut.println(isSorted(a));
+        }
+
     }
 }

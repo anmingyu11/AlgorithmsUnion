@@ -28,9 +28,11 @@ package _2Sort.QuickSort;
  *
  ******************************************************************************/
 
-import base.stdlib.StdIn;
+import java.util.Arrays;
+import java.util.List;
+
+import _2Sort.TestCases;
 import base.stdlib.StdOut;
-import base.stdlib.StdRandom;
 
 /**
  * The {@code Quick} class provides static methods for sorting an
@@ -39,6 +41,8 @@ import base.stdlib.StdRandom;
  * For additional documentation,
  * see <a href="https://algs4.cs.princeton.edu/23quick">Section 2.3</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * <p>
+ * 快速排序
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne
@@ -55,9 +59,8 @@ public class Quick {
      * @param a the array to be sorted
      */
     public static void sort(Comparable[] a) {
-        StdRandom.shuffle(a);
+        // StdRandom.shuffle(a); 不做随机化处理了.
         sort(a, 0, a.length - 1);
-        //assert isSorted(a);
     }
 
     // quicksort the subarray from a[lo] to a[hi]
@@ -68,28 +71,33 @@ public class Quick {
         int j = partition(a, lo, hi);
         sort(a, lo, j - 1);
         sort(a, j + 1, hi);
-        //assert isSorted(a, lo, hi);
     }
 
     // partition the subarray a[lo..hi] so that a[lo..j-1] <= a[j] <= a[j+1..hi]
     // and return the index j.
     private static int partition(Comparable[] a, int lo, int hi) {
-        int i = lo;
-        int j = hi + 1;
+        // 这处必要
+        if (lo >= hi) {
+            return lo;
+        }
+        int i = lo, j = hi;
         Comparable v = a[lo];
         while (true) {
-            // find item on lo to swap
-            while (less(a[++i], v)) {
+
+            // a[i] <= a[lo]
+            while (!less(v, a[i])) {
+                ++i;
                 if (i == hi) {
                     break;
                 }
             }
 
-            // find item on hi to swap
-            while (less(v, a[--j])) {
+            // a[j] >= a[lo]
+            while (!less(a[j], a[lo])) {
+                --j;
                 if (j == lo) {
                     break;
-                }// redundant since a[lo] acts as sentinel
+                }// redundant since a[lo] acts as sentinel i = lo, j = hi+1
             }
 
             // check if pointers cross
@@ -121,19 +129,18 @@ public class Quick {
         if (k < 0 || k >= a.length) {
             throw new IllegalArgumentException("index is not between 0 and " + a.length + ": " + k);
         }
-        StdRandom.shuffle(a);
         int lo = 0, hi = a.length - 1;
-        while (hi > lo) {
-            int i = partition(a, lo, hi);
-            if (i > k) {
-                hi = i - 1;
-            } else if (i < k) {
-                lo = i + 1;
+        while (true) {
+            int p = partition(a, lo, hi);
+            if (p < k) {
+                lo = p + 1;
+            } else if (p > k) {
+                hi = p - 1;
             } else {
-                return a[i];
+                return a[p];
             }
         }
-        return a[lo];
+
     }
 
 
@@ -185,19 +192,39 @@ public class Quick {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        String[] a = StdIn.readAllStrings();
-        Quick.sort(a);
-        show(a);
-        assert isSorted(a);
+        //testSort();
+        testSelect();
+    }
 
-        // shuffle
-        StdRandom.shuffle(a);
+    private static void testSort() {
+        List<Integer[]> testcases = TestCases.getTestcases100Ran(20);
 
-        // display results again using select
-        StdOut.println();
-        for (int i = 0; i < a.length; i++) {
-            String ith = (String) Quick.select(a, i);
-            StdOut.println(ith);
+        boolean sort = false;
+        for (Integer[] arr : testcases) {
+            Integer[] before = arr.clone();
+            Quick.sort(arr);
+            sort = TestCases.checkSort(true, arr);
+            if (!sort) {
+                StdOut.println("sort failed at:");
+                StdOut.println(Arrays.toString(before));
+                break;
+            }
+        }
+        if (sort) {
+            StdOut.println("congratulations.your sort has passed.");
+        }
+    }
+
+    private static void testSelect() {
+        Integer[] arr = {5, 6, 1, 2, 3, 4, 8, 7, 10, 9, 0};
+        final int n = arr.length;
+        for (int i = 0; i < n; ++i) {
+            if (i < n - 1) {
+                StdOut.print(select(arr, i) + " , ");
+            } else {
+                StdOut.println(select(arr, i));
+            }
+
         }
     }
 

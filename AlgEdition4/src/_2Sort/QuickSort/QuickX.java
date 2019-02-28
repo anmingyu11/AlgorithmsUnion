@@ -12,8 +12,11 @@ package _2Sort.QuickSort;
  *
  ******************************************************************************/
 
+import java.util.Arrays;
+import java.util.List;
+
 import _2Sort.ElementarySort.Insertion;
-import base.stdlib.StdIn;
+import _2Sort.TestCases;
 import base.stdlib.StdOut;
 
 /**
@@ -54,14 +57,11 @@ public class QuickX {
         if (hi <= lo) {
             return;
         }
-
-        // cutoff to insertion sort (Insertion.sort() uses half-open intervals)
         int n = hi - lo + 1;
         if (n <= INSERTION_SORT_CUTOFF) {
             Insertion.sort(a, lo, hi + 1);
             return;
         }
-
         int j = partition(a, lo, hi);
         sort(a, lo, j - 1);
         sort(a, j + 1, hi);
@@ -73,11 +73,9 @@ public class QuickX {
         int n = hi - lo + 1;
         int m = median3(a, lo, lo + n / 2, hi);
         exch(a, m, lo);
-
         int i = lo;
         int j = hi + 1;
         Comparable v = a[lo];
-
         // a[lo] is unique largest element
         while (less(a[++i], v)) {
             if (i == hi) {
@@ -85,24 +83,20 @@ public class QuickX {
                 return hi;
             }
         }
-
         // a[lo] is unique smallest element
         while (less(v, a[--j])) {
             if (j == lo + 1) {
                 return lo;
             }
         }
-
         // the main loop
         while (i < j) {
             exch(a, i, j);
             while (less(a[++i], v)) ;
             while (less(v, a[--j])) ;
         }
-
         // put partitioning item v at a[j]
         exch(a, lo, j);
-
         // now, a[lo .. j-1] <= a[j] <= a[j+1 .. hi]
         return j;
     }
@@ -155,10 +149,22 @@ public class QuickX {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        String[] a = StdIn.readAllStrings();
-        QuickX.sort(a);
-        assert isSorted(a);
-        show(a);
+        List<Integer[]> testcases = TestCases.getTestcases100Ran(20);
+
+        boolean sort = false;
+        for (Integer[] arr : testcases) {
+            Integer[] before = arr.clone();
+            QuickX.sort(arr);
+            sort = TestCases.checkSort(true, arr);
+            if (!sort) {
+                StdOut.println("sort failed at:");
+                StdOut.println(Arrays.toString(before));
+                break;
+            }
+        }
+        if (sort) {
+            StdOut.println("congratulations.your sort has passed.");
+        }
     }
 
 }

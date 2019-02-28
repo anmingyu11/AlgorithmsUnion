@@ -30,7 +30,9 @@ package _2Sort.ElementarySort;
  *
  ******************************************************************************/
 
-import base.stdlib.StdIn;
+import java.util.List;
+
+import _2Sort.TestCases;
 import base.stdlib.StdOut;
 
 /**
@@ -51,21 +53,22 @@ public class Shell {
 
     /**
      * Rearranges the array in ascending order, using the natural order.
+     * <p>
+     * 3x+1 increment sequence:  1, 4, 13, 40, 121, 364, 1093, ...
+     * <p>
+     * h > 1 时希尔排序会尽量的让a有序,
+     * h = 1 时回归到插入排序.
      *
      * @param a the array to be sorted
      */
     public static void sort(Comparable[] a) {
-        int n = a.length;
-
-        // 3x+1 increment sequence:  1, 4, 13, 40, 121, 364, 1093, ...
+        final int n = a.length;
         int h = 1;
         while (h < n / 3) {
             h = 3 * h + 1;
         }
-
         while (h >= 1) {
-            // h-sort the array
-            for (int i = h; i < n; i++) {
+            for (int i = h; i < n; ++i) {
                 for (int j = i; j >= h && less(a[j], a[j - h]); j -= h) {
                     exch(a, j, j - h);
                 }
@@ -73,7 +76,6 @@ public class Shell {
             h /= 3;
         }
     }
-
 
     /***************************************************************************
      *  Helper sorting functions.
@@ -122,9 +124,13 @@ public class Shell {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        String[] a = StdIn.readAllStrings();
-        Shell.sort(a);
-        show(a);
+
+        List<Integer[]> cases = TestCases.getTestcases();
+        for (Integer[] a : cases) {
+            Shell.sort(a);
+            StdOut.println(isSorted(a));
+        }
+
     }
 
 }

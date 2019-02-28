@@ -24,7 +24,10 @@ package _2Sort.MergeSort;
  *
  ******************************************************************************/
 
-import base.stdlib.StdIn;
+import java.util.Arrays;
+import java.util.List;
+
+import _2Sort.TestCases;
 import base.stdlib.StdOut;
 
 /**
@@ -43,31 +46,6 @@ public class MergeBU {
     private MergeBU() {
     }
 
-    // stably merge a[lo..mid] with a[mid+1..hi] using aux[lo..hi]
-    private static void merge(Comparable[] a, Comparable[] aux, int lo, int mid, int hi) {
-
-        // copy to aux[]
-        for (int k = lo; k <= hi; k++) {
-            aux[k] = a[k];
-        }
-
-        // merge back to a[]
-        int i = lo, j = mid + 1;
-        for (int k = lo; k <= hi; k++) {
-            if (i > mid) {
-                a[k] = aux[j++];
-            }  // this copying is unneccessary
-            else if (j > hi) {
-                a[k] = aux[i++];
-            } else if (less(aux[j], aux[i])) {
-                a[k] = aux[j++];
-            } else {
-                a[k] = aux[i++];
-            }
-        }
-
-    }
-
     /**
      * Rearranges the array in ascending order, using the natural order.
      *
@@ -76,11 +54,29 @@ public class MergeBU {
     public static void sort(Comparable[] a) {
         int n = a.length;
         Comparable[] aux = new Comparable[n];
-        for (int len = 1; len < n; len *= 2) {
-            for (int lo = 0; lo < n - len; lo += len + len) {
-                int mid = lo + len - 1;
-                int hi = Math.min(lo + len + len - 1, n - 1);
-                merge(a, aux, lo, mid, hi);
+        for (int sz = 1; sz < n; sz += sz) {
+            for (int lo = 0; lo < n; lo += sz + sz) {
+                merge(a, aux, lo, lo + sz - 1, Math.min(lo + sz + sz - 1, n - 1));
+            }
+        }
+
+    }
+
+    private static void merge(Comparable[] a, Comparable[] aux, int lo, int mid, int hi) {
+        for (int k = lo; k <= hi; ++k) {
+            aux[k] = a[k];
+        }
+
+        int i = lo, j = mid + 1;
+        for (int k = lo; k <= hi; ++k) {
+            if (i > mid) {
+                a[k] = aux[j++];
+            } else if (j > hi) {
+                a[k] = aux[i++];
+            } else if (less(aux[i], aux[j])) {
+                a[k] = aux[i++];
+            } else {
+                a[k] = aux[j++];
             }
         }
     }
@@ -118,8 +114,20 @@ public class MergeBU {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        String[] a = StdIn.readAllStrings();
-        MergeBU.sort(a);
-        show(a);
+        List<Integer[]> testcases = TestCases.getTestcases100Ran(20);
+
+        boolean sort = false;
+        for (Integer[] arr : testcases) {
+            MergeBU.sort(arr);
+            sort = TestCases.checkSort(true, arr);
+            if (!sort) {
+                StdOut.println("sort failed at:");
+                StdOut.println(Arrays.toString(arr));
+                break;
+            }
+        }
+        if (sort) {
+            StdOut.println("congratulations.your sort has passed.");
+        }
     }
 }

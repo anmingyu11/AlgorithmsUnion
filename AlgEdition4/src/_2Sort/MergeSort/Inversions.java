@@ -9,7 +9,6 @@ package _2Sort.MergeSort;
  *
  ******************************************************************************/
 
-import base.stdlib.StdIn;
 import base.stdlib.StdOut;
 
 /**
@@ -131,7 +130,6 @@ public class Inversions {
         return inversions;
     }
 
-
     /**
      * Returns the number of inversions in the comparable array.
      * The argument array is not modified.
@@ -180,12 +178,8 @@ public class Inversions {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        int[] a = StdIn.readAllInts();
-        int n = a.length;
-        Integer[] b = new Integer[n];
-        for (int i = 0; i < n; i++)
-            b[i] = a[i];
-        StdOut.println(Inversions.count(a));
-        StdOut.println(Inversions.count(b));
+        StdOut.println(Inversions.count(new int[]{1, 2, 3, 4}));
+        StdOut.println(Inversions.count(new int[]{4, 3, 2, 1}));
+        StdOut.println(Inversions.count(new int[]{4, 3, 2, 1, 3, 2, 1, 3, 4, 5}));
     }
 }

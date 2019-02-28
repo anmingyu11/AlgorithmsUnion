@@ -25,8 +25,9 @@ package _2Sort.MergeSort;
  ******************************************************************************/
 
 import java.util.Comparator;
+import java.util.List;
 
-import base.stdlib.StdIn;
+import _2Sort.TestCases;
 import base.stdlib.StdOut;
 
 /**
@@ -35,6 +36,8 @@ import base.stdlib.StdOut;
  * <p>
  * For additional documentation, see <a href="https://algs4.cs.princeton.edu/22mergesort">Section 2.2</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * <p>
+ * Java特色归并排序,不过数组克隆有风险,使用需谨慎.
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne
@@ -47,11 +50,6 @@ public class MergeX {
     }
 
     private static void merge(Comparable[] src, Comparable[] dst, int lo, int mid, int hi) {
-
-        // precondition: src[lo .. mid] and src[mid+1 .. hi] are sorted subarrays
-        // assert isSorted(src, lo, mid);
-        // assert isSorted(src, mid + 1, hi);
-
         int i = lo, j = mid + 1;
         for (int k = lo; k <= hi; k++) {
             if (i > mid) {
@@ -65,13 +63,11 @@ public class MergeX {
                 dst[k] = src[i++];
             }
         }
-
-        // postcondition: dst[lo .. hi] is sorted subarray
-        // assert isSorted(dst, lo, hi);
     }
 
+    // using System.arraycopy() is a bit faster than the above loop
+    // 如果src[mid + 1] >= src[mid] 就不用归并了
     private static void sort(Comparable[] src, Comparable[] dst, int lo, int hi) {
-        // if (hi <= lo) return;
         if (hi <= lo + CUTOFF) {
             insertionSort(dst, lo, hi);
             return;
@@ -79,13 +75,6 @@ public class MergeX {
         int mid = (lo + hi) / 2;
         sort(dst, src, lo, mid);
         sort(dst, src, mid + 1, hi);
-
-        // if (!less(src[mid+1], src[mid])) {
-        //    for (int i = lo; i <= hi; i++) dst[i] = src[i];
-        //    return;
-        // }
-
-        // using System.arraycopy() is a bit faster than the above loop
         if (!less(src[mid + 1], src[mid])) {
             System.arraycopy(src, lo, dst, lo, hi - lo + 1);
             return;
@@ -102,17 +91,16 @@ public class MergeX {
     public static void sort(Comparable[] a) {
         Comparable[] aux = a.clone();
         sort(aux, a, 0, a.length - 1);
-        //assert isSorted(a);
     }
 
     // sort from a[lo] to a[hi] using insertion sort
     private static void insertionSort(Comparable[] a, int lo, int hi) {
-        for (int i = lo; i <= hi; i++)
+        for (int i = lo; i <= hi; i++) {
             for (int j = i; j > lo && less(a[j], a[j - 1]); j--) {
                 exch(a, j, j - 1);
             }
+        }
     }
-
 
     /*******************************************************************
      *  Utility methods.
@@ -236,8 +224,11 @@ public class MergeX {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        String[] a = StdIn.readAllStrings();
-        MergeX.sort(a);
-        show(a);
+        List<Integer[]> l = TestCases.getTestcases();
+        for (int i = 0; i < l.size(); ++i) {
+            Integer[] a = l.get(i);
+            MergeX.sort(a);
+            StdOut.println(isSorted(a));
+        }
     }
 }

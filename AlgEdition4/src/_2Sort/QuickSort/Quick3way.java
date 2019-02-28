@@ -23,9 +23,11 @@ package _2Sort.QuickSort;
  *
  ******************************************************************************/
 
-import base.stdlib.StdIn;
+import java.util.Arrays;
+import java.util.List;
+
+import _2Sort.TestCases;
 import base.stdlib.StdOut;
-import base.stdlib.StdRandom;
 
 /**
  * The {@code Quick3way} class provides static methods for sorting an
@@ -50,31 +52,30 @@ public class Quick3way {
      * @param a the array to be sorted
      */
     public static void sort(Comparable[] a) {
-        StdRandom.shuffle(a);
+        //StdRandom.shuffle(a);
         sort(a, 0, a.length - 1);
-        assert isSorted(a);
+        //assert isSorted(a);
     }
 
     // quicksort the subarray a[lo .. hi] using 3-way partitioning
+    // a[lo..lt-1] < v = a[lt..gt] < a[gt+1..hi].
     private static void sort(Comparable[] a, int lo, int hi) {
         if (hi <= lo) {
             return;
         }
         int lt = lo, gt = hi;
-        Comparable v = a[lo];
         int i = lo + 1;
+        Comparable v = a[lo];
         while (i <= gt) {
             int cmp = a[i].compareTo(v);
             if (cmp < 0) {
-                exch(a, lt++, i++);
+                exch(a, i++, lt++);
             } else if (cmp > 0) {
                 exch(a, i, gt--);
             } else {
-                i++;
+                ++i;
             }
         }
-
-        // a[lo..lt-1] < v = a[lt..gt] < a[gt+1..hi].
         sort(a, lo, lt - 1);
         sort(a, gt + 1, hi);
         //assert isSorted(a, lo, hi);
@@ -126,9 +127,22 @@ public class Quick3way {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        String[] a = StdIn.readAllStrings();
-        Quick3way.sort(a);
-        show(a);
+        List<Integer[]> testcases = TestCases.getTestcases100Ran(20);
+
+        boolean sort = false;
+        for (Integer[] arr : testcases) {
+            Integer[] before = arr.clone();
+            Quick3way.sort(arr);
+            sort = TestCases.checkSort(true, arr);
+            if (!sort) {
+                StdOut.println("sort failed at:");
+                StdOut.println(Arrays.toString(before));
+                break;
+            }
+        }
+        if (sort) {
+            StdOut.println("congratulations.your sort has passed.");
+        }
     }
 
 }

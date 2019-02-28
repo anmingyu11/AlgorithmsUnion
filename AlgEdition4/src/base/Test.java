@@ -1,13 +1,28 @@
+package base;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import base.stdlib.StdOut;
 
 public class Test {
 
     public static void main(String[] args) {
-        //ArrayTest();
+        genRandomArray();
     }
 
     private static void DrawTest() {
+    }
 
+    private static void genRandomArray() {
+        List<Integer> l = new ArrayList<>();
+        Random r = new Random();
+        for (int i = 0; i < 10; ++i) {
+            int num = r.nextInt(15);
+            l.add(num);
+        }
+        StdOut.println(l);
     }
 
     private static void ByteTest() {

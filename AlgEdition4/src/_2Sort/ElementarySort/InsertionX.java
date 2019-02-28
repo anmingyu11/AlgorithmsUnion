@@ -34,6 +34,8 @@ import base.stdlib.StdOut;
  * <p>
  * For additional documentation, see <a href="https://algs4.cs.princeton.edu/21elementary">Section 2.1</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * <p>
+ * 优化的插入排序
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne
@@ -47,9 +49,7 @@ public class InsertionX {
 
     /**
      * Rearranges the array in ascending order, using the natural order.
-     *
      * 先将较大的元素向右移动
-     *
      * 再从左向右, 以i为基准,如果i比前面的小,就一直挪动前面的元素,直到找到合适的位置,将i对应的元素替换进去
      *
      * @param a the array to be sorted
@@ -57,26 +57,23 @@ public class InsertionX {
     public static void sort(Comparable[] a) {
         int n = a.length;
 
-        // put smallest element in position to serve as sentinel
         int exchanges = 0;
-        for (int i = n - 1; i > 0; i--) {
+        for (int i = n - 1; i > 0; --i) {
             if (less(a[i], a[i - 1])) {
                 exch(a, i, i - 1);
-                exchanges++;
+                ++exchanges;
             }
         }
         if (exchanges == 0) {
             return;
         }
 
-
-        // insertion sort with half-exchanges
-        for (int i = 2; i < n; i++) {
+        for (int i = 2; i < n; ++i) {
             Comparable v = a[i];
             int j = i;
             while (less(v, a[j - 1])) {
                 a[j] = a[j - 1];
-                j--;
+                --j;
             }
             a[j] = v;
         }

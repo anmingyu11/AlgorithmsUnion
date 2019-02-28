@@ -54,13 +54,15 @@ public class BinaryInsertion {
 
     /**
      * Rearranges the array in ascending order, using the natural order.
+     * <p>
+     * lo是插入的结点.
+     * 每次循环将对[0..i]这个区间排好序,相对于插入排序优化了比较次数,交换次数不变.
      *
      * @param a the array to be sorted
      */
     public static void sort(Comparable[] a) {
         int n = a.length;
         for (int i = 1; i < n; i++) {
-            // binary search to determine index j at which to insert a[i]
             Comparable v = a[i];
             int lo = 0, hi = i;
             while (lo < hi) {
@@ -71,9 +73,6 @@ public class BinaryInsertion {
                     lo = mid + 1;
                 }
             }
-
-            // insetion sort with "half exchanges"
-            // (insert a[i] at index j and shift a[j], ..., a[i-1] to right)
             for (int j = i; j > lo; --j) {
                 a[j] = a[j - 1];
             }

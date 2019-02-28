@@ -95,17 +95,21 @@ public class MaxPQ<Key> implements Iterable<Key> {
     /**
      * Initializes a priority queue from the array of keys.
      * Takes time proportional to the number of keys, using sink-based heap construction.
+     * <p>
+     * 调整堆k  = n/2,k >=1,--k;
      *
      * @param keys the array of keys
      */
     public MaxPQ(Key[] keys) {
         n = keys.length;
         pq = (Key[]) new Object[keys.length + 1];
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++) {
             pq[i + 1] = keys[i];
-        for (int k = n / 2; k >= 1; k--)
+        }
+        for (int k = n / 2; k >= 1; k--) {
             sink(k);
-        assert isMaxHeap();
+        }
+        //assert isMaxHeap();
     }
 
 
@@ -135,13 +139,15 @@ public class MaxPQ<Key> implements Iterable<Key> {
      * @throws NoSuchElementException if this priority queue is empty
      */
     public Key max() {
-        if (isEmpty()) throw new NoSuchElementException("Priority queue underflow");
+        if (isEmpty()) {
+            throw new NoSuchElementException("Priority queue underflow");
+        }
         return pq[1];
     }
 
     // helper function to double the size of the heap array
     private void resize(int capacity) {
-        assert capacity > n;
+        //assert capacity > n;
         Key[] temp = (Key[]) new Object[capacity];
         for (int i = 1; i <= n; i++) {
             temp[i] = pq[i];
@@ -149,21 +155,20 @@ public class MaxPQ<Key> implements Iterable<Key> {
         pq = temp;
     }
 
-
     /**
      * Adds a new key to this priority queue.
      *
      * @param x the new key to add to this priority queue
      */
     public void insert(Key x) {
-
         // double size of array if necessary
-        if (n == pq.length - 1) resize(2 * pq.length);
-
+        if (n == pq.length - 1) {
+            resize(2 * pq.length);
+        }
         // add x, and percolate it up to maintain heap invariant
         pq[++n] = x;
         swim(n);
-        assert isMaxHeap();
+        // assert isMaxHeap();
     }
 
     /**
@@ -173,13 +178,17 @@ public class MaxPQ<Key> implements Iterable<Key> {
      * @throws NoSuchElementException if this priority queue is empty
      */
     public Key delMax() {
-        if (isEmpty()) throw new NoSuchElementException("Priority queue underflow");
+        if (isEmpty()) {
+            throw new NoSuchElementException("Priority queue underflow");
+        }
         Key max = pq[1];
         exch(1, n--);
         sink(1);
         pq[n + 1] = null;     // to avoid loiteing and help with garbage collection
-        if ((n > 0) && (n == (pq.length - 1) / 4)) resize(pq.length / 2);
-        assert isMaxHeap();
+        if ((n > 0) && (n == (pq.length - 1) / 4)) {
+            resize(pq.length / 2);
+        }
+        //assert isMaxHeap();
         return max;
     }
 
@@ -198,8 +207,12 @@ public class MaxPQ<Key> implements Iterable<Key> {
     private void sink(int k) {
         while (2 * k <= n) {
             int j = 2 * k;
-            if (j < n && less(j, j + 1)) j++;
-            if (!less(k, j)) break;
+            if (j < n && less(j, j + 1)) {
+                j++;
+            }
+            if (!less(k, j)) {
+                break;
+            }
             exch(k, j);
             k = j;
         }

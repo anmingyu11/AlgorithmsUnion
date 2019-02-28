@@ -17,7 +17,10 @@ package _2Sort.QuickSort;
  *
  ******************************************************************************/
 
-import base.stdlib.StdIn;
+import java.util.Arrays;
+import java.util.List;
+
+import _2Sort.TestCases;
 import base.stdlib.StdOut;
 
 /**
@@ -53,19 +56,24 @@ public class QuickBentleyMcIlroy {
         sort(a, 0, a.length - 1);
     }
 
+    /**
+     * 小于CUTOFF部分,数组长度为8的时候用快速排序
+     * 取中值cut 40,能大概率取到中值?将这个中间值切换到头,作为被切分的元素
+     * use Tukey ninther as partitioning element
+     * @param a
+     * @param lo
+     * @param hi
+     */
     private static void sort(Comparable[] a, int lo, int hi) {
         int n = hi - lo + 1;
 
-        // cutoff to insertion sort
         if (n <= INSERTION_SORT_CUTOFF) {
             insertionSort(a, lo, hi);
             return;
         } else if (n <= MEDIAN_OF_3_CUTOFF) {
-            // use median-of-3 as partitioning element
             int m = median3(a, lo, lo + n / 2, hi);
             exch(a, m, lo);
         } else {
-            // use Tukey ninther as partitioning element
             int eps = n / 8;
             int mid = lo + n / 2;
             int m1 = median3(a, lo, lo + eps, lo + eps + eps);
@@ -80,27 +88,42 @@ public class QuickBentleyMcIlroy {
         int p = lo, q = hi + 1;
         Comparable v = a[lo];
         while (true) {
-            while (less(a[++i], v))
-                if (i == hi) break;
-            while (less(v, a[--j]))
-                if (j == lo) break;
+            while (less(a[++i], v)) {
+                if (i == hi) {
+                    break;
+                }
+            }
+            while (less(v, a[--j])) {
+                if (j == lo) {
+                    break;
+                }
+            }
 
             // pointers cross
-            if (i == j && eq(a[i], v))
+            if (i == j && eq(a[i], v)) {
                 exch(a, ++p, i);
-            if (i >= j) break;
+            }
+            if (i >= j) {
+                break;
+            }
 
             exch(a, i, j);
-            if (eq(a[i], v)) exch(a, ++p, i);
-            if (eq(a[j], v)) exch(a, --q, j);
+            if (eq(a[i], v)) {
+                exch(a, ++p, i);
+            }
+            if (eq(a[j], v)) {
+                exch(a, --q, j);
+            }
         }
 
 
         i = j + 1;
-        for (int k = lo; k <= p; k++)
+        for (int k = lo; k <= p; k++) {
             exch(a, k, j--);
-        for (int k = hi; k >= q; k--)
+        }
+        for (int k = hi; k >= q; k--) {
             exch(a, k, i++);
+        }
 
         sort(a, lo, j);
         sort(a, i, hi);
@@ -109,9 +132,11 @@ public class QuickBentleyMcIlroy {
 
     // sort from a[lo] to a[hi] using insertion sort
     private static void insertionSort(Comparable[] a, int lo, int hi) {
-        for (int i = lo; i <= hi; i++)
-            for (int j = i; j > lo && less(a[j], a[j - 1]); j--)
+        for (int i = lo; i <= hi; i++) {
+            for (int j = i; j > lo && less(a[j], a[j - 1]); j--) {
                 exch(a, j, j - 1);
+            }
+        }
     }
 
 
@@ -170,10 +195,22 @@ public class QuickBentleyMcIlroy {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        String[] a = StdIn.readAllStrings();
-        QuickBentleyMcIlroy.sort(a);
-        assert isSorted(a);
-        show(a);
+        List<Integer[]> testcases = TestCases.getTestcases100Ran(20);
+
+        boolean sort = false;
+        for (Integer[] arr : testcases) {
+            Integer[] before = arr.clone();
+            QuickBentleyMcIlroy.sort(arr);
+            sort = TestCases.checkSort(true, arr);
+            if (!sort) {
+                StdOut.println("sort failed at:");
+                StdOut.println(Arrays.toString(before));
+                break;
+            }
+        }
+        if (sort) {
+            StdOut.println("congratulations.your sort has passed.");
+        }
     }
 
 }
