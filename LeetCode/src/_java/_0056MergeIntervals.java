@@ -12,7 +12,7 @@ import java.util.Stack;
 
 import base.Base;
 
-public class _0056MergeIntervals_________ extends Base {
+public class _0056MergeIntervals extends Base {
 
     private static class Interval {
         int start;
@@ -92,16 +92,31 @@ public class _0056MergeIntervals_________ extends Base {
     }
 
     // 这个求强连通分量的做法很有启发性 复制粘贴的
+    // 无法AC, Memory Exceed
     private static class Solution2 extends Solution {
         private Map<Interval, List<Interval>> graph;
         private Map<Integer, List<Interval>> nodesInComp;
         private Set<Interval> visited;
 
+        /**
+         * 基础功能:判断overlap
+         * 这个判断overlap的方法简单而又优雅.
+         *
+         * @param a
+         * @param b
+         * @return
+         */
         private boolean overlap(Interval a, Interval b) {
             return a.start <= b.end && b.start <= a.end;
         }
 
-        // 构造无向的连通图
+        /**
+         * 构造无向图,每个interval都对应所有其他重合的结点
+         * 图的数据结构是简单的邻接表
+         * 其实这个步骤本身就是在构建连通分量
+         *
+         * @param intervals
+         */
         private void buildGraph(List<Interval> intervals) {
             graph = new HashMap<>();
             for (Interval interval : intervals) {
@@ -110,6 +125,7 @@ public class _0056MergeIntervals_________ extends Base {
             for (Interval interval1 : intervals) {
                 for (Interval interval2 : intervals) {
                     if (overlap(interval1, interval2)) {
+                        // 如果重合,加入到邻接表中 ,使 interval1 和interval2重合
                         graph.get(interval1).add(interval2);
                         graph.get(interval2).add(interval1);
                     }
@@ -117,7 +133,57 @@ public class _0056MergeIntervals_________ extends Base {
             }
         }
 
-        // merge所有在同一个连通分量里的
+        /**
+         * 构造连通分量,为每个连通分量标记编号,如果是连通分量.
+         *
+         * @param intervals
+         */
+        private void buildComponents(List<Interval> intervals) {
+            nodesInComp = new HashMap<>();
+            visited = new HashSet<>();
+            int compNumber = 0;
+            for (Interval interval : intervals) {
+                if (!visited.contains(interval)) {
+                    dfs(interval, compNumber);
+                    ++compNumber;
+                }
+            }
+        }
+
+        /**
+         * 非递归版的dfs
+         * @param start
+         * @param compNumber
+         */
+        private void dfs(Interval start, int compNumber) {
+            // 函数调用栈
+            Stack<Interval> stack = new Stack<>();
+            stack.push(start);
+            while (!stack.isEmpty()) {
+                Interval node = stack.pop();
+                // 未访问
+                if (!visited.contains(node)) {
+                    // 访问 标记
+                    visited.add(node);
+                    // 连通分量结点
+                    if (nodesInComp.get(compNumber) == null) {
+                        nodesInComp.put(compNumber, new LinkedList<>());
+                    }
+                    nodesInComp.get(compNumber).add(node);
+                    // 相当一dfs()
+                    for (Interval child : graph.get(node)) {
+                        stack.push(child);
+                    }
+                }
+            }
+        }
+
+        /**
+         * merge同一个连通分量中的所有顶点
+         *
+         * @param nodes
+         * @return
+         */
         private Interval mergeNodes(List<Interval> nodes) {
             int minStart = nodes.get(0).start;
             for (Interval node : nodes) {
@@ -130,41 +196,12 @@ public class _0056MergeIntervals_________ extends Base {
             return new Interval(minStart, maxEnd);
         }
 
-        // dfs遍历所有,标记所有连通的分量顶点,用外围的compNumber这个是迭代版的dfs,
-        private void markComponentDFS(Interval start, int compNumber) {
-            Stack<Interval> stack = new Stack<>();
-            stack.add(start);
-            while (!stack.isEmpty()) {
-                Interval node = stack.pop();
-                if (!visited.contains(node)) {
-                    visited.add(node);
-                    if (nodesInComp.get(compNumber) == null) {
-                        nodesInComp.put(compNumber, new LinkedList<>());
-                    }
-                    nodesInComp.get(compNumber).add(node);
-                    for (Interval child : graph.get(node)) {
-                        stack.add(child);
-                    }
-                }
-            }
-        }
-
-        // 构建连通分量,用compNumber标记,每个没被访问的结点标记一次.
-        private void buildComponents(List<Interval> intervals) {
-            nodesInComp = new HashMap<>();
-            visited = new HashSet<>();
-            int compNumber = 0;
-            for (Interval interval : intervals) {
-                if (!visited.contains(interval)) {
-                    markComponentDFS(interval, compNumber);
-                    ++compNumber;
-                }
-            }
-        }
-
         public List<Interval> merge(List<Interval> intervals) {
+            // 构建无向图,将所有overlap的部分连接到一起
             buildGraph(intervals);
+            // 遍历图,并将所有连通分量集中到一个顶点上,最后将所有的连通分量结点压缩归并成一个Interval
             buildComponents(intervals);
+            // 输出结果
             List<Interval> merged = new LinkedList<>();
             for (int comp = 0; comp < nodesInComp.size(); comp++) {
                 merged.add(mergeNodes(nodesInComp.get(comp)));
