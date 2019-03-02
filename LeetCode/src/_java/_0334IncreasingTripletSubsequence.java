@@ -9,6 +9,16 @@ public class _0334IncreasingTripletSubsequence extends Base {
         public abstract boolean increasingTriplet(int[] nums);
     }
 
+    /**
+     * 思想是维护一个长度为2的数组
+     * 条件1: 比e[0]小的,替换最小的元素e[0]
+     * 条件2: 比e[0]大且比e[1]小,替换e[1]
+     * 条件3: 如果找到既比e[0]大还比e[1]大的,那么说明已经找到了,
+     * <p>
+     * 特殊的情况:e1对应的是前一个e0的e1,如果此时你找到了一个e2,大于e1但是e0的index要小于e1的index,
+     * 那没关心,因为e1对应的是比e1小且index < e1的index 的e0,虽然这个e0已经不存在于数组之中,但是在逻辑上是存在的.
+     * 前面的条件保证了这一点.
+     **/
     // Runtime: 2 ms, faster than 100.00% of Java online submissions for Increasing Triplet Subsequence.
     // Memory Usage: 40.1 MB, less than 5.30% of Java online submissions for Increasing Triplet Subsequence.
     private static class Solution1 extends Solution {
