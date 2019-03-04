@@ -27,17 +27,20 @@ ONGOING:
 0056 Merge Intervals                                      // UF, Sort
 0073 Set Matrix Zeroes                                    // Simulation
 0090 Subsets2                                             // BackTracking
+0094 BinaryTreeInorderTraversal                           // Tree
+0144 BinaryTreePreorderTraversal                          // Tree
+0145 BinaryTreePostorderTraversal                         // Tree
 0148 SortList                                             // LinkedList
 0169 MajorityElement                                      // Math
 0215 KthLargestElementinanArray                           // PQ,D-A-C
 0297 SerializeAndDeserializeBinaryTree                    // Design
+0312 BurstBallons                                         // D-A-C,DP
 0384 ShuffleAnArray                                       // Probability
 0535 EncodeAndDecodeTinyURL                               // Design
 
 ## 没做出来
 0179 LargestNumber                                        // Sort,String
 0238 ProductOfArrayExceptSelf                             // DP,Array
-0312 BurstBallons                                         // D-A-C,DP
 0334 IncreasingTripletSubsequence                         // Math
 0961 NrepeatedElementinSize2NArray                        // Math
 
@@ -47,7 +50,6 @@ TODO
 
 Contains Duplicate III
 Game of Life
-Increasing Triplet Subsequence
 单链表
 Reverse Linked List
 Odd Even Linked List
@@ -96,9 +98,6 @@ Implement Stack using Queues
 Implement Queue using Stacks
 二叉树
 二叉树的遍历
-Binary Tree Preorder Traversal
-Binary Tree Inorder Traversal
-Binary Tree Postorder Traversal
 Binary Tree Level Order Traversal
 Binary Tree Level Order Traversal II
 Binary Tree Right Side View
