@@ -1,4 +1,4 @@
-package _3Searching;
+package _3Searching.ElementarySymbolTables;
 
 /******************************************************************************
  *  Compilation:  javac SequentialSearchST.java
@@ -26,7 +26,7 @@ package _3Searching;
  *
  ******************************************************************************/
 
-import _1Fundamentals.queue.Queue;
+import _1Fundamentals.Queue.Queue;
 import base.stdlib.StdIn;
 import base.stdlib.StdOut;
 

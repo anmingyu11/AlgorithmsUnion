@@ -1,4 +1,4 @@
-package _3Searching;
+package _3Searching.Applications;
 /******************************************************************************
  *  Compilation:  javac WhiteFilter.java
  *  Execution:    java WhiteFilter whitelist.txt < input.txt

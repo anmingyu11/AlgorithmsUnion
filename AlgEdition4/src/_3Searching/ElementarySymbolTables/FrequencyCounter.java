@@ -1,4 +1,4 @@
-package _3Searching;
+package _3Searching.ElementarySymbolTables;
 
 /******************************************************************************
  *  Compilation:  javac FrequencyCounter.java
@@ -26,6 +26,7 @@ package _3Searching;
  *
  ******************************************************************************/
 
+import _3Searching.Applications.ST;
 import base.stdlib.In;
 import base.stdlib.StdOut;
 

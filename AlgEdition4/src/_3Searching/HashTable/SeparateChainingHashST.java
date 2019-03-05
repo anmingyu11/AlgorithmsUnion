@@ -1,4 +1,4 @@
-package _3Searching;
+package _3Searching.HashTable;
 
 /******************************************************************************
  *  Compilation:  javac SeparateChainingHashST.java
@@ -10,7 +10,12 @@ package _3Searching;
  *
  ******************************************************************************/
 
-import _1Fundamentals.queue.Queue;
+import _1Fundamentals.Queue.Queue;
+import _3Searching.BST.BST;
+import _3Searching.BST.RedBlackBST;
+import _3Searching.ElementarySymbolTables.BinarySearchST;
+import _3Searching.ElementarySymbolTables.SequentialSearchST;
+import _3Searching.Applications.ST;
 import base.stdlib.StdIn;
 import base.stdlib.StdOut;
 

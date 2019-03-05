@@ -1,4 +1,4 @@
-package _3Searching;
+package _3Searching.BST;
 
 /******************************************************************************
  *  Compilation:  javac RedBlackBST.java
@@ -31,7 +31,12 @@ package _3Searching;
 
 import java.util.NoSuchElementException;
 
-import _1Fundamentals.queue.Queue;
+import _1Fundamentals.Queue.Queue;
+import _3Searching.ElementarySymbolTables.BinarySearchST;
+import _3Searching.ElementarySymbolTables.SequentialSearchST;
+import _3Searching.HashTable.LinearProbingHashST;
+import _3Searching.Applications.ST;
+import _3Searching.HashTable.SeparateChainingHashST;
 import base.stdlib.StdIn;
 import base.stdlib.StdOut;
 

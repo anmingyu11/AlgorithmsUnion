@@ -1,4 +1,4 @@
-package _3Searching;
+package _3Searching.Applications;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

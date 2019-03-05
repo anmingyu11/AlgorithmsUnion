@@ -1,4 +1,4 @@
-package _3Searching;
+package _3Searching.Applications;
 
 /******************************************************************************
  *  Compilation:  javac LookupIndex.java
@@ -35,7 +35,7 @@ package _3Searching;
  *
  ******************************************************************************/
 
-import _1Fundamentals.queue.Queue;
+import _1Fundamentals.Queue.Queue;
 import base.stdlib.In;
 import base.stdlib.StdIn;
 import base.stdlib.StdOut;
