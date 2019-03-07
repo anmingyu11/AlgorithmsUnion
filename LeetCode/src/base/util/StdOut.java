@@ -1,4 +1,4 @@
-package base;
+package base.util;
 
 /******************************************************************************
  *  Compilation:  javac StdOut.java

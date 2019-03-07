@@ -1,10 +1,3 @@
-
-ONGOING: 
-
-0312 BurstBallons                                         // D-A-C,DP
-0148 SortList                                             // LinkedList,D-A-C
-0147 InsertionSort
-
 --------
 
 ## 犹豫的
@@ -37,6 +30,7 @@ ONGOING:
 0312 BurstBallons                                         // D-A-C,DP
 0384 ShuffleAnArray                                       // Probability
 0535 EncodeAndDecodeTinyURL                               // Design
+0962 MaximumWidthRamp                                     // Sort, Heap, BinarySearch
 
 ## 没做出来
 0179 LargestNumber                                        // Sort,String
@@ -44,13 +38,9 @@ ONGOING:
 0334 IncreasingTripletSubsequence                         // Math
 0961 NrepeatedElementinSize2NArray                        // Math
 
-TODO 
-
 --------
 
-Contains Duplicate III
 Game of Life
-单链表
 Reverse Linked List
 Odd Even Linked List
 Add Two Numbers
@@ -68,7 +58,6 @@ Linked List Cycle II
 Reorder List
 LRU Cache
 Palindrome Linked List
-字符串
 Implement strStr()
 String to Integer (atoi)
 Add Binary
@@ -86,18 +75,13 @@ Simplify Path
 Length of Last Word
 Isomorphic Strings
 Word Pattern
-栈和队列
-栈
 Min Stack
 Valid Parentheses
 Longest Valid Parentheses
 Largest Rectangle in Histogram
 Evaluate Reverse Polish Notation
 Implement Stack using Queues
-队列
 Implement Queue using Stacks
-二叉树
-二叉树的遍历
 Binary Tree Level Order Traversal
 Binary Tree Level Order Traversal II
 Binary Tree Right Side View
@@ -110,10 +94,8 @@ Symmetric Tree
 Balanced Binary Tree
 Flatten Binary Tree to Linked List
 Populating Next Right Pointers in Each Node II
-二叉树的构建
 Construct Binary Tree from Preorder and Inorder Traversal
 Construct Binary Tree from Inorder and Postorder Traversal
-二叉查找树
 Unique Binary Search Trees
 Unique Binary Search Trees II
 Validate Binary Search Tree
@@ -121,7 +103,6 @@ Convert Sorted Array to Binary Search Tree
 Convert Sorted List to Binary Search Tree
 LCA of BST
 Kth Smallest Element in a BST
-二叉树的递归
 Minimum Depth of Binary Tree
 Maximum Depth of Binary Tree
 Path Sum
@@ -130,22 +111,13 @@ Binary Tree Maximum Path Sum
 Populating Next Right Pointers in Each Node
 Sum Root to Leaf Numbers
 LCA of Binary Tree
-线段树
 Range Sum Query - Mutable
-排序
-插入排序
 Insertion Sort List
-归并排序
 Merge Two Sorted Arrays
-快速排序
 Sort Colors
-桶排序
 First Missing Positive
-计数排序
 H-Index
-基数排序
 Maximum Gap
-查找
 Search for a Range
 Search Insert Position
 Search in Rotated Sorted Array
@@ -153,12 +125,9 @@ Search in Rotated Sorted Array II
 Find Minimum in Rotated Sorted Array
 Find Minimum in Rotated Sorted Array II
 H-Index II
-广度优先搜索
 Word Ladder
 Word Ladder II
 Surrounded Regions
-总结
-深度优先搜索
 Additive Number
 Palindrome Partitioning
 Unique Paths
@@ -172,11 +141,8 @@ Combination Sum III
 Generate Parentheses
 Sudoku Solver
 Word Search
-总结
-分治法
 Pow(x,n)
 Sqrt(x)
-贪心法
 Jump Game
 Jump Game II
 Best Time to Buy and Sell Stock
@@ -184,7 +150,6 @@ Best Time to Buy and Sell Stock II
 Longest Substring Without Repeating Characters
 Container With Most Water
 Patching Array
-动态规划
 Triangle
 Maximum Product Subarray
 Longest Increasing Subsequence
@@ -207,9 +172,7 @@ House Robber II
 House Robber III
 Range Sum Query - Immutable
 Range Sum Query 2D - Immutable
-图
 Clone Graph
-位操作
 Reverse Bits
 Repeated DNA Sequences
 Number of 1 Bits
@@ -223,7 +186,6 @@ Maximum Product of Word Lengths
 Bitwise AND of Numbers Range
 Power of Three
 Rectangle Area
-数论
 Happy Number
 Ugly Number
 Ugly Number II
@@ -231,7 +193,6 @@ Super Ugly Number
 Fraction to Recurring Decimal
 Factorial Trailing Zeroes
 Nim Game
-模拟
 Reverse Integer
 Palindrome Number
 Insert Interval
