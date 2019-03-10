@@ -104,6 +104,10 @@ public class Base {
         println(Arrays.toString(arr1));
     }
 
+    public static void printArr(double[] arr) {
+        println(Arrays.toString(arr));
+    }
+
     public static void printArr(int[] arr) {
         println(Arrays.toString(arr));
     }

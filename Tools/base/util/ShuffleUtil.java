@@ -12,7 +12,12 @@ import base.Base;
  * LeetCode原题:
  * https://leetcode.com/problems/shuffle-an-array/
  */
-public class ShuffleUtil extends Base {
+public class ShuffleUtil {
+
+    public static int randomPick(int lo, int hi) {
+        Random r = new Random();
+        return lo + (int) ((hi + 1 - lo) * r.nextDouble());
+    }
 
     public static void shuffle(int[] A) {
         shuffle(A, 1);
@@ -50,7 +55,7 @@ public class ShuffleUtil extends Base {
             final int n = A.length;
             for (int i = 0; i < n; ++i) {
                 // swap from [i , n-1]
-                swap(A, i, i + (int) ((n - i) * r.nextDouble()));
+                Base.swap(A, i, i + (int) ((n - i) * r.nextDouble()));
             }
         }
 
@@ -63,22 +68,26 @@ public class ShuffleUtil extends Base {
         public void shuffle(int[] A) {
             final int n = A.length;
             for (int i = 0; i < n; ++i) {
-                swap(A, i, (int) ((i + 1) * r.nextDouble()));
+                Base.swap(A, i, (int) ((i + 1) * r.nextDouble()));
             }
         }
 
     }
 
     public static void main(String[] args) {
-        int[] arr = new int[15];
-        for (int i = 0; i < 15; ++i) {
-            arr[i] = i;
+        for (int i = 0; i < 10; ++i) {
+            int j = randomPick(0, 10);
+            Base.print(j + " ");
         }
-
-        Solution s = new Solution2();
-
-        s.shuffle(arr);
-        printArr(arr);
+//        int[] arr = new int[15];
+//        for (int i = 0; i < 15; ++i) {
+//            arr[i] = i;
+//        }
+//
+//        Solution s = new Solution2();
+//
+//        s.shuffle(arr);
+//        printArr(arr);
 
     }
 }
