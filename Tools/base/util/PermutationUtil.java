@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import base.Base;
-import base.alg4stdlib.StdOut;
+import base.stdlib.StdOut;
 
 public class PermutationUtil {
 

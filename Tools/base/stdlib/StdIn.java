@@ -1,4 +1,4 @@
-package base.alg4stdlib;
+package base.stdlib;
 
 /******************************************************************************
  *  Compilation:  javac StdIn.java
@@ -36,7 +36,7 @@ import java.util.regex.Pattern;
  * To use this class, you must have {@code StdIn.class} in your
  * Java classpath. If you used our autoinstaller, you should be all set.
  * Otherwise, either download
- * <a href = "https://introcs.cs.princeton.edu/java/code/stdlib.jar">alg4stdlib.jar</a>
+ * <a href = "https://introcs.cs.princeton.edu/java/code/stdlib.jar">stdlib.jar</a>
  * and add to your Java classpath or download
  * <a href = "https://introcs.cs.princeton.edu/java/stdlib/StdIn.java">StdIn.java</a>
  * and put a copy in your working directory.

@@ -1,4 +1,4 @@
-package base.alg4stdlib;
+package base.stdlib;
 
 /******************************************************************************
  *  Compilation:  javac In.java
@@ -647,7 +647,7 @@ public final class In {
      */
     public static void main(String[] args) {
         In in;
-        String urlName = "https://introcs.cs.princeton.edu/alg4stdlib/InTest.txt";
+        String urlName = "https://introcs.cs.princeton.edu/stdlib/InTest.txt";
 
         // read from a URL
         System.out.println("readAll() from URL " + urlName);
@@ -708,7 +708,7 @@ public final class In {
         System.out.println("readLine() from relative path");
         System.out.println("---------------------------------------------------------------------------");
         try {
-            in = new In("../alg4stdlib/InTest.txt");
+            in = new In("../stdlib/InTest.txt");
             while (!in.isEmpty()) {
                 String s = in.readLine();
                 System.out.println(s);
@@ -736,7 +736,7 @@ public final class In {
         // read one line at a time from absolute OS X / Linux path
         System.out.println("readLine() from absolute OS X / Linux path");
         System.out.println("---------------------------------------------------------------------------");
-        in = new In("/n/fs/introcs/www/java/alg4stdlib/InTest.txt");
+        in = new In("/n/fs/introcs/www/java/stdlib/InTest.txt");
         try {
             while (!in.isEmpty()) {
                 String s = in.readLine();
@@ -752,7 +752,7 @@ public final class In {
         System.out.println("readLine() from absolute Windows path");
         System.out.println("---------------------------------------------------------------------------");
         try {
-            in = new In("G:\\www\\introcs\\alg4stdlib\\InTest.txt");
+            in = new In("G:\\www\\introcs\\stdlib\\InTest.txt");
             while (!in.isEmpty()) {
                 String s = in.readLine();
                 System.out.println(s);

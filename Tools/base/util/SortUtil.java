@@ -2,6 +2,7 @@ package base.util;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -13,17 +14,29 @@ import base.interfaces.ISortDouble;
 public class SortUtil {
 
     public static void testSort(ISort iSort) {
-        testSort(iSort, true);
+        testSort(iSort, true, 20);
+    }
+
+    public static void testSort(ISort iSort, int randomLen) {
+        testSort(iSort, true, randomLen);
     }
 
     public static void testSort(ISort iSort, boolean addNeg) {
+        testSort(iSort, addNeg, 20);
+    }
+
+    public static void testSort(ISort iSort, boolean addNeg, int randomArrLen) {
+        final boolean debug = false;
         // hiahia
         List<int[]> perms = PermutationUtil.permutations(5);
         addRest(perms, addNeg);
-        addRandom(perms, addNeg);
+        addRandom(perms, addNeg, randomArrLen);
         Base.println("Sort Test Start , number of array is : " + perms.size());
         for (int[] a : perms) {
             int[] origin = a.clone();
+            if (debug) {
+                Base.println("Sorting : " + Arrays.toString(origin));
+            }
             iSort.sort(a);
             if (!checkSorted(a)) {
                 Base.println("your sort has failed");
@@ -82,14 +95,13 @@ public class SortUtil {
         }
     }
 
-    private static void addRandom(List<int[]> l, boolean addNeg) {
+    private static void addRandom(List<int[]> l, boolean addNeg, int n) {
         // 正数
-        final int posSize = 30;
+        final int posSize = n * 3;
         // 负数
-        final int negSize = 30;
+        final int negSize = posSize * 3;
         // 混合
-        final int mixSize = 30;
-        final int n = 7;
+        final int mixSize = posSize;
         final int bound = 5;
         int[] arr = new int[n];
         for (int sz = 0; sz < posSize; ++sz) {

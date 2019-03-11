@@ -3,7 +3,7 @@ package base;
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
 
-import base.alg4stdlib.StdOut;
+import base.stdlib.StdOut;
 
 /**
  * The {@code StopwatchCPU} data type is for measuring
