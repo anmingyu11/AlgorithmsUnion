@@ -1,5 +1,13 @@
 package base.util;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+
+import base.Base;
+
 public class ArraysUtil {
 
     public static int max(int[] A) {
@@ -18,6 +26,100 @@ public class ArraysUtil {
             min = Math.min(min, Math.min(A[i], A[n - 1 - i]));
         }
         return min;
+    }
+
+    public static List<int[]> generateRandom(boolean addNeg, int n) {
+        return generateRandom(addNeg, n, Integer.MAX_VALUE);
+    }
+
+    public static List<int[]> generateRandom(boolean addNeg, int n, int bound) {
+        List<int[]> l = new LinkedList<>();
+        // 正数
+        final int posSize = n * 3;
+        // 负数
+        final int negSize = posSize * 3;
+        // 混合
+        final int mixSize = posSize;
+        int[] arr = new int[n];
+        for (int sz = 0; sz < posSize; ++sz) {
+            Random r = new Random();
+            for (int i = 0; i < n; ++i) {
+                arr[i] = r.nextInt(bound);
+            }
+            l.add(arr.clone());
+        }
+        if (!addNeg) {
+            return l;
+        }
+        for (int sz = 0; sz < negSize; ++sz) {
+            Random r = new Random();
+            for (int i = 0; i < n; ++i) {
+                arr[i] = (-1) * r.nextInt(bound);
+            }
+            l.add(arr.clone());
+        }
+        for (int sz = 0; sz < mixSize; ++sz) {
+            Random r = new Random();
+            int flag = 1;
+            for (int i = 0; i < n; ++i) {
+                double d = r.nextDouble();
+                flag = r.nextDouble() < 0.5 ? -1 : 1;
+                arr[i] = flag * r.nextInt(bound);
+            }
+            l.add(arr.clone());
+        }
+        return l;
+    }
+
+    public static List<int[]> generateSpecial(boolean addNeg) {
+        List<int[]> l = new LinkedList<>();
+        l.add(new int[]{99, 99});
+        l.add(new int[]{1});
+        l.add(new int[]{1, 12, 123, 1234});
+        if (!addNeg) {
+            return l;
+        }
+        l.add(new int[]{-1, 2, 0});
+        l.add(new int[]{-1, 1, 1, 1, 1, 1, 1});
+        l.add(new int[]{-1, 1, -1, 1, -2, 1, 1, -1, 0});
+        l.add(new int[]{-1, 0, 0, 0, 0, 0, 0, -1, -2, 1, 1, 0, 0, 0, 1});
+        return l;
+    }
+
+    public static List<double[]> generateRandomUniform(double lo, double hi, int len, int size) {
+        List<double[]> l = new LinkedList<>();
+        final boolean debug = false;
+        Random r = new Random();
+        double[] arr = new double[len];
+        for (int i = 0; i < size; ++i) {
+            for (int j = 0; j < len; ++j) {
+                // The general contract of nextDouble is that one double value,
+                // chosen (approximately) uniformly from the range 0.0d (inclusive) to
+                // 1.0d (exclusive), is pseudorandomly generated and returned.
+                arr[j] = lo + r.nextDouble() * (hi - lo);
+                arr[j] = BigDecimal.valueOf(arr[j]).setScale(3, RoundingMode.FLOOR).doubleValue();
+            }
+            l.add(arr.clone());
+        }
+        if (!debug) {
+            return l;
+        }
+        for (double[] a : l) {
+            Base.printArr(a);
+        }
+        return l;
+    }
+
+    public static List<int[]> generatePermutation(int n) {
+        return PermutationUtil.permutations(n);
+    }
+
+    public static int[] generateFromTo(int lo, int hi) {
+        int[] a = new int[hi - lo + 1];
+        for (int i = lo; i <= hi; ++i) {
+            a[i] = i;
+        }
+        return a;
     }
 
 }
