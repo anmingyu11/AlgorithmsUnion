@@ -3,7 +3,7 @@ package base;
 public class Experiment extends Base {
 
     public static void main(String[] args) {
-        testShiftLeft();
+        //testShiftLeft();
     }
 
     private static void testShiftLeft() {
