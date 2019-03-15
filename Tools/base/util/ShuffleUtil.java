@@ -14,6 +14,12 @@ import base.Base;
  */
 public class ShuffleUtil {
 
+    /**
+     * Pick from [lo,hi]
+     * @param lo
+     * @param hi
+     * @return
+     */
     public static int randomPick(int lo, int hi) {
         Random r = new Random();
         return lo + (int) ((hi + 1 - lo) * r.nextDouble());

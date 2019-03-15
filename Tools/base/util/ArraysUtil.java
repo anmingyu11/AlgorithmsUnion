@@ -28,22 +28,33 @@ public class ArraysUtil {
         return min;
     }
 
-    public static List<int[]> generateRandom(boolean addNeg, int n) {
-        return generateRandom(addNeg, n, Integer.MAX_VALUE);
+    /**
+     * @param addNeg
+     * @param arrLen 随机数组的长度, 总共生成的数组数量为: 正数arrLen * 3, 负数为 arrLen * 3, 正负混合为 arrLen * 3
+     * @return
+     */
+    public static List<int[]> generateRandom(boolean addNeg, int arrLen) {
+        return generateRandom(addNeg, arrLen, Integer.MAX_VALUE);
     }
 
-    public static List<int[]> generateRandom(boolean addNeg, int n, int bound) {
+    /**
+     * @param addNeg
+     * @param arrLen 随机数组的长度, 总共生成的数组数量为: 正数arrLen * 3, 负数为 arrLen * 3, 正负混合为 arrLen * 3
+     * @param bound
+     * @return
+     */
+    public static List<int[]> generateRandom(boolean addNeg, int arrLen, int bound) {
         List<int[]> l = new LinkedList<>();
         // 正数
-        final int posSize = n * 3;
+        final int posSize = arrLen * 3;
         // 负数
-        final int negSize = posSize * 3;
+        final int negSize = arrLen * 3;
         // 混合
-        final int mixSize = posSize;
-        int[] arr = new int[n];
+        final int mixSize = arrLen * 6;
+        int[] arr = new int[arrLen];
         for (int sz = 0; sz < posSize; ++sz) {
             Random r = new Random();
-            for (int i = 0; i < n; ++i) {
+            for (int i = 0; i < arrLen; ++i) {
                 arr[i] = r.nextInt(bound);
             }
             l.add(arr.clone());
@@ -53,7 +64,7 @@ public class ArraysUtil {
         }
         for (int sz = 0; sz < negSize; ++sz) {
             Random r = new Random();
-            for (int i = 0; i < n; ++i) {
+            for (int i = 0; i < arrLen; ++i) {
                 arr[i] = (-1) * r.nextInt(bound);
             }
             l.add(arr.clone());
@@ -61,7 +72,7 @@ public class ArraysUtil {
         for (int sz = 0; sz < mixSize; ++sz) {
             Random r = new Random();
             int flag = 1;
-            for (int i = 0; i < n; ++i) {
+            for (int i = 0; i < arrLen; ++i) {
                 double d = r.nextDouble();
                 flag = r.nextDouble() < 0.5 ? -1 : 1;
                 arr[i] = flag * r.nextInt(bound);
@@ -116,8 +127,9 @@ public class ArraysUtil {
 
     public static int[] generateFromTo(int lo, int hi) {
         int[] a = new int[hi - lo + 1];
-        for (int i = lo; i <= hi; ++i) {
-            a[i] = i;
+        int j = 0;
+        for (int i = hi; i <= hi; ++i) {
+            a[j++] = i;
         }
         return a;
     }
