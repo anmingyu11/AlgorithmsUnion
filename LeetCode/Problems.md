@@ -11,7 +11,8 @@
 0060 Permutation Sequence 				                  // Math
 0128 Longest Consecutive Sequence                         // UF
 0134 Gas Station                                          // Greedy,Math 
-0135 Candy                                                // Greedy 
+0135 Candy                                                // Greedy
+0164 MaximumGap
 0167 TwoSum2                                              // TwoPointer,BinarySearch
 0189 Rotate Array                                         // Math
 
@@ -32,16 +33,20 @@
 0535 EncodeAndDecodeTinyURL                               // Design
 0962 MaximumWidthRamp                                     // Sort, Heap, BinarySearch
 
+## 优雅的技巧
+0206ReverseLinkedList
+
 ## 没做出来
+0137 SingleNumber2                                        // BitManipulation
 0179 LargestNumber                                        // Sort,String
 0238 ProductOfArrayExceptSelf                             // DP,Array
 0334 IncreasingTripletSubsequence                         // Math
 0961 NrepeatedElementinSize2NArray                        // Math
+0220 ContainsDuplicate3                                   // BinarySearchTree,
 
 --------
 
 Game of Life
-Reverse Linked List
 Odd Even Linked List
 Add Two Numbers
 Reverse Linked List II
@@ -117,7 +122,6 @@ Merge Two Sorted Arrays
 Sort Colors
 First Missing Positive
 H-Index
-Maximum Gap
 Search for a Range
 Search Insert Position
 Search in Rotated Sorted Array
@@ -177,8 +181,6 @@ Reverse Bits
 Repeated DNA Sequences
 Number of 1 Bits
 Gray Code
-Single Number
-Single Number II
 Single Number III
 Power of Two
 Missing Number
@@ -230,6 +232,7 @@ Text Justification
 0080 RemoveDuplicatesFromSortedArray2               // TwoPointer
 0090 Subsets                                        // BackTracking
 0125 ValidPalindrome                                // TwoPointer
+0136 SingleNumber                                   // BitManipulation,HashMap
 0149 MaxPointsOnALine                               // Math,Simulation,HashMap
 0200 Number of Islands                              // UF
 0217 ContainsDuplicate                              // HashMap
