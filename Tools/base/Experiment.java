@@ -4,6 +4,11 @@ public class Experiment extends Base {
 
     public static void main(String[] args) {
         //testShiftLeft();
+        testIntDivid();
+    }
+
+    private static void testIntDivid() {
+        println(-11 / 10 - 1);
     }
 
     private static void testShiftLeft() {

@@ -3,6 +3,8 @@ package base;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import base.util.TreeUtil;
+
 public class BaseTree extends Base {
     public static class TreeNode {
         public int val;
@@ -14,14 +16,8 @@ public class BaseTree extends Base {
         }
     }
 
-    /**
-     * With Full B Tree
-     *
-     * @param nodes
-     * @return
-     */
-    public static TreeNode makeATree(int[] nodes) {
-        return null;
+    public static void printTree(TreeNode root) {
+        TreeUtil.printTree(root);
     }
 
     public static TreeNode stringToTreeNode(String input) {
