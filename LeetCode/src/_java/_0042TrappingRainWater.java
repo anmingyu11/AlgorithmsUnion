@@ -4,7 +4,7 @@ import java.util.Stack;
 
 import base.Base;
 
-public class _0042TrappingRainWater__________ extends Base {
+public class _0042TrappingRainWater extends Base {
     private abstract static class Solution {
         public abstract int trap(int[] height);
     }
@@ -159,7 +159,9 @@ public class _0042TrappingRainWater__________ extends Base {
 
     }
 
-    // 栈 15ms 24% 太难以理解了 以后慢慢体会吧
+    // 栈
+    // 15ms 24%
+    // 用栈去算坑,可以一层一层的算
     private static class Solution4 extends Solution {
 
         public int trap(int[] height) {
