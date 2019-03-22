@@ -25,9 +25,7 @@ package _2Sort.MergeSort;
  ******************************************************************************/
 
 import java.util.Comparator;
-import java.util.List;
 
-import _2Sort.TestCases;
 import base.stdlib.StdOut;
 
 /**
@@ -37,7 +35,7 @@ import base.stdlib.StdOut;
  * For additional documentation, see <a href="https://algs4.cs.princeton.edu/22mergesort">Section 2.2</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
  * <p>
- * Java特色归并排序,不过数组克隆有风险,使用需谨慎.
+ * Java特色归并排序
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne
@@ -224,11 +222,5 @@ public class MergeX {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        List<Integer[]> l = TestCases.getTestcases();
-        for (int i = 0; i < l.size(); ++i) {
-            Integer[] a = l.get(i);
-            MergeX.sort(a);
-            StdOut.println(isSorted(a));
-        }
     }
 }

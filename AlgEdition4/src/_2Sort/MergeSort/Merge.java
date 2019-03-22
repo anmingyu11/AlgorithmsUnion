@@ -23,9 +23,6 @@ package _2Sort.MergeSort;
  *
  ******************************************************************************/
 
-import java.util.List;
-
-import _2Sort.TestCases;
 import base.stdlib.StdOut;
 
 /**
@@ -170,11 +167,5 @@ public class Merge {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        List<Integer[]> l = TestCases.getTestcases();
-        for (Integer[] a : l) {
-            Merge.sort(a);
-            StdOut.println(isSorted(a));
-        }
-
     }
 }

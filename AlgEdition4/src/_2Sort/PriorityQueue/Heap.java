@@ -23,10 +23,6 @@ package _2Sort.PriorityQueue;
  *
  ******************************************************************************/
 
-import java.util.Arrays;
-import java.util.List;
-
-import _2Sort.TestCases;
 import base.stdlib.StdOut;
 
 /**
@@ -125,22 +121,6 @@ public class Heap {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        List<Integer[]> testcases = TestCases.getTestcases100Ran(20);
-
-        boolean sort = false;
-        for (Integer[] arr : testcases) {
-            Integer[] before = arr.clone();
-            Heap.sort(arr);
-            sort = TestCases.checkSort(true, arr);
-            if (!sort) {
-                StdOut.println("sort failed at:");
-                StdOut.println(Arrays.toString(before));
-                break;
-            }
-        }
-        if (sort) {
-            StdOut.println("congratulations.your sort has passed.");
-        }
     }
 
 }

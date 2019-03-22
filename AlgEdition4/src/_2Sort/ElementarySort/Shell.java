@@ -30,9 +30,6 @@ package _2Sort.ElementarySort;
  *
  ******************************************************************************/
 
-import java.util.List;
-
-import _2Sort.TestCases;
 import base.stdlib.StdOut;
 
 /**
@@ -124,13 +121,6 @@ public class Shell {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-
-        List<Integer[]> cases = TestCases.getTestcases();
-        for (Integer[] a : cases) {
-            Shell.sort(a);
-            StdOut.println(isSorted(a));
-        }
-
     }
 
 }
