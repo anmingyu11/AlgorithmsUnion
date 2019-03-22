@@ -38,7 +38,9 @@ public class SortUtil {
         if (printTimeUsed) {
             cpu = new StopwatchCPU();
         }
+        int i = 0;
         for (int[] a : l) {
+            ++i;
             int[] origin = a.clone();
             if (debug) {
                 Base.println("Sorting : " + Arrays.toString(origin));
@@ -46,7 +48,7 @@ public class SortUtil {
             iSort.sort(a);
             if (!checkSorted(a)) {
                 Base.println("your sort has failed");
-                Base.println("failed at : ");
+                Base.println("failed at " + i + " testcase : ");
                 Base.printArr(origin);
                 Base.println("your is : ");
                 Base.printArr(a);
