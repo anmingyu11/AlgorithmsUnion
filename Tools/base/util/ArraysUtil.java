@@ -128,7 +128,7 @@ public class ArraysUtil {
     public static int[] generateFromTo(int lo, int hi) {
         int[] a = new int[hi - lo + 1];
         int j = 0;
-        for (int i = hi; i <= hi; ++i) {
+        for (int i = lo; i <= hi; ++i) {
             a[j++] = i;
         }
         return a;

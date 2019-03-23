@@ -1,95 +1,120 @@
 package base.util;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.LinkedList;
 
+import base.Base;
 import base.BaseTree;
 
 public class TreeUtil {
 
-    public static void printTree(BaseTree.TreeNode root) {
-        BTreePrinter.printNode(root);
+    /**
+     * 将一个数组转化成为完全二叉树.
+     *
+     * @param A
+     * @return
+     */
+    public static BaseTree.TreeNode generateACompleteBT(int[] A) {
+        final int n = A.length;
+        if (n == 0) {
+            return null;
+        }
+        BaseTree.TreeNode[] all = new BaseTree.TreeNode[n];
+        BaseTree.TreeNode node = null;
+        for (int i = 0; i < n; ++i) {
+            all[i] = new BaseTree.TreeNode(A[i]);
+        }
+        for (int i = 0; i <= n / 2; ++i) {
+            int left = 2 * i + 1, right = 2 * i + 2;
+            if (left < n) {
+                all[i].left = all[left];
+            }
+            if (right < n) {
+                all[i].right = all[right];
+            }
+        }
+
+        return all[0];
     }
 
-    public static int maxLevel(BaseTree.TreeNode root) {
-        if (root == null){
+    /**
+     * 将一个常规二叉树转换为完全二叉树
+     */
+    public static BaseTree.TreeNode convertBT2CompleteBT(BaseTree.TreeNode root) {
+        return null;
+    }
+
+    public static int level(BaseTree.TreeNode root) {
+        if (root == null) {
             return 0;
         }
-        return Math.max(maxLevel(root.left), maxLevel(root.right)) + 1;
+        return Math.max(level(root.left), level(root.right)) + 1;
     }
 
-    private static class BTreePrinter {
+    public static void printTree(BaseTree.TreeNode root) {
+//        if (root == null) {
+//            throw new IllegalArgumentException("Am i fucking playing with you?");
+//        }
+//        // 转换成完全二叉树
+//        root = TreeUtil.convertBT2CompleteBT(root);
+//        // 层次遍历
+//        LinkedList<BaseTree.TreeNode> q = new LinkedList<>();
+//        q.addLast(root);
+//        while (!q.isEmpty()) {
+//            LinkedList<BaseTree.TreeNode> nextLevel = new LinkedList<>();
+//            while (!q.isEmpty()) {
+//                BaseTree.TreeNode node = q.removeFirst();
+//                Base.print("[" + node.val + "]");
+//                if (node.left != null) {
+//                    nextLevel.addLast(node.left);
+//                }
+//                if (node.right != null) {
+//                    nextLevel.addLast(node.right);
+//                }
+//            }
+//            q = nextLevel;
+//            Base.println("");
+//        }
+    }
 
-        public static void printNode(BaseTree.TreeNode root) {
-            int maxLevel = maxLevel(root);
-
-            printNodeInternal(Collections.singletonList(root), 1, maxLevel);
+    public static void printTreeInLevel(BaseTree.TreeNode root) {
+        if (root == null) {
+            throw new IllegalArgumentException("Am i fucking playing with you?");
         }
-
-        private static void printNodeInternal(List<BaseTree.TreeNode> nodes, int level, int maxLevel) {
-            if (nodes.isEmpty() || isAllElementsNull(nodes)) {
-                return;
-            }
-
-            int floor = maxLevel - level;
-            int endLines = (int) Math.pow(2, (Math.max(floor - 1, 0)));
-            int firstSpaces = (int) Math.pow(2, (floor)) - 1;
-            int betweenSpaces = (int) Math.pow(2, (floor + 1)) - 1;
-
-            PrintUtil.printWhitespaces(firstSpaces);
-
-            List<BaseTree.TreeNode> newNodes = new ArrayList<>();
-            for (BaseTree.TreeNode node : nodes) {
-                if (node != null) {
-                    PrintUtil.print(node.val);
-                    newNodes.add(node.left);
-                    newNodes.add(node.right);
-                } else {
-                    newNodes.add(null);
-                    newNodes.add(null);
-                    PrintUtil.printWhitespaces(1);
-                }
-
-                PrintUtil.printWhitespaces(betweenSpaces);
-            }
-            PrintUtil.println("");
-
-            for (int i = 1; i <= endLines; i++) {
-                for (int j = 0; j < nodes.size(); j++) {
-                    PrintUtil.printWhitespaces(firstSpaces - i);
-                    if (nodes.get(j) == null) {
-                        PrintUtil.printWhitespaces(endLines + endLines + i + 1);
-                        continue;
-                    }
-                    if (nodes.get(j).left != null) {
-                        PrintUtil.print("/");
-                    } else {
-                        PrintUtil.printWhitespaces(1);
-                    }
-                    PrintUtil.printWhitespaces(i + i - 1);
-                    if (nodes.get(j).right != null) {
-                        PrintUtil.print("\\");
-                    } else {
-                        PrintUtil.printWhitespaces(1);
-                    }
-                    PrintUtil.printWhitespaces(endLines + endLines - i);
-                }
-                PrintUtil.printWhitespaces(1);
-            }
-
-            printNodeInternal(newNodes, level + 1, maxLevel);
+        // 总层数
+        int maxLevel = level(root);
+        if (maxLevel > 31) {
+            Base.println("only can print max level : " + maxLevel);
         }
-
-        private static boolean isAllElementsNull(List list) {
-            for (Object object : list) {
-                if (object != null) {
-                    return false;
+        // 最底层的结点数
+        int bottomNodes = 1 << 2 << (maxLevel - 1);
+        int curLevel = 1;
+        // 首结点加入队列
+        LinkedList<BaseTree.TreeNode> q = new LinkedList<>();
+        q.addLast(root);
+        // 迭代
+        while (!q.isEmpty()) {
+            LinkedList<BaseTree.TreeNode> nextLevel = new LinkedList<>();
+            StringBuilder levelStr = new StringBuilder();
+            StringBuilder pretty = new StringBuilder();
+            // 层迭代
+            while (!q.isEmpty()) {
+                BaseTree.TreeNode node = q.removeFirst();
+                levelStr.append(StringUtil.spaces((bottomNodes / (1 << curLevel)) - 2));
+                levelStr.append("[" + node.val + "]");
+                if (node.left != null) {
+                    pretty.append("/");
+                    nextLevel.addLast(node.left);
+                }
+                if (node.right != null) {
+                    pretty.append("\\");
+                    nextLevel.addLast(node.right);
                 }
             }
-            return true;
+            Base.println(levelStr);
+            //Base.println(pretty);
+            q = nextLevel;
+            ++curLevel;
         }
-
     }
 
 }

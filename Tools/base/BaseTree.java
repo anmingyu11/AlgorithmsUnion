@@ -3,8 +3,6 @@ package base;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import base.util.TreeUtil;
-
 public class BaseTree extends Base {
     public static class TreeNode {
         public int val;
@@ -14,10 +12,16 @@ public class BaseTree extends Base {
         public TreeNode(int x) {
             val = x;
         }
+
+        @Override
+        public String toString() {
+            return "val=" + val +
+                    ", left=" + left +
+                    ", right=" + right;
+        }
     }
 
     public static void printTree(TreeNode root) {
-        TreeUtil.printTree(root);
     }
 
     public static TreeNode stringToTreeNode(String input) {

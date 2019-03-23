@@ -114,9 +114,7 @@ public class PrintUtil {
     }
 
     public static void printWhitespaces(int count) {
-        for (int i = 0; i < count; i++) {
-            StdOut.print(" ");
-        }
+        StdOut.println(StringUtil.spaces(count));
     }
 
 }
