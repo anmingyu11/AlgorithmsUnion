@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import base.Base;
-import base.TestCases;
 
 public class _0347TopKFrequentElements extends Base {
     private abstract static class Solution {
@@ -138,12 +137,5 @@ public class _0347TopKFrequentElements extends Base {
     }
 
     private static void testSort() {
-        Solution1 s = new Solution1();
-
-        List<int[]> lists = TestCases.Sort.getTestcases();
-        for (int[] a : lists) {
-            s.heapSort(a);
-            println("correct : " + TestCases.Sort.checkSort(true, a));
-        }
     }
 }

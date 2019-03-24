@@ -5,7 +5,7 @@ import base.BaseLinkedList;
 public class _0002AddTwoNumbers extends BaseLinkedList {
 
     private abstract static class Solution {
-        abstract ListNode addTwoNumbers(ListNode l1, ListNode l2);
+        abstract ListNode addTwoNumbers(ListNode<Integer> l1, ListNode<Integer> l2);
     }
 
     // Runtime: 22 ms, faster than 80.77% of Java online submissions for Add Two Numbers.
@@ -13,9 +13,9 @@ public class _0002AddTwoNumbers extends BaseLinkedList {
     private static class Solution1 extends Solution {
 
         @Override
-        ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-            ListNode fake = new ListNode(0);
-            ListNode p = fake;
+        ListNode addTwoNumbers(ListNode<Integer> l1, ListNode<Integer> l2) {
+            ListNode<Integer> fake = new ListNode(0);
+            ListNode<Integer> p = fake;
 
             int carry = 0;
             while (l1 != null || l2 != null) {

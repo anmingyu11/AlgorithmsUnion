@@ -1,14 +1,11 @@
 package _java;
 
-import java.util.List;
-
 import base.BaseLinkedList;
-import base.TestCases;
 
 public class _0023MergeKSortedLists extends BaseLinkedList {
 
     private abstract static class Solution {
-        public abstract ListNode mergeKLists(ListNode[] lists);
+        public abstract ListNode mergeKLists(ListNode<Integer>[] lists);
     }
 
     // 归并,竟然一次编写一次通过了,奇迹
@@ -16,7 +13,7 @@ public class _0023MergeKSortedLists extends BaseLinkedList {
     // Memory Usage: 40.1 MB, less than 100.00% of Java online submissions for Merge k Sorted Lists.
     private static class Solution1 extends Solution {
         @Override
-        public ListNode mergeKLists(ListNode[] lists) {
+        public ListNode mergeKLists(ListNode<Integer>[] lists) {
             final int n = lists.length;
             ListNode h = new ListNode(-1);
             ListNode p = h;
@@ -132,7 +129,7 @@ public class _0023MergeKSortedLists extends BaseLinkedList {
 
         }
 
-        public ListNode mergeKLists(ListNode[] lists) {
+        public ListNode mergeKLists(ListNode<Integer>[] lists) {
             final int n = lists.length;
             PQ pq = new PQ(n);
             ListNode head = new ListNode(-1);
@@ -209,7 +206,7 @@ public class _0023MergeKSortedLists extends BaseLinkedList {
             return head;
         }
 
-        private ListNode merge(ListNode l1, ListNode l2) {
+        private ListNode merge(ListNode<Integer> l1, ListNode<Integer> l2) {
             ListNode head = new ListNode(-1);
             ListNode p = head;
             boolean hasNext = true;
@@ -249,13 +246,6 @@ public class _0023MergeKSortedLists extends BaseLinkedList {
     }
 
     private static void testSort() {
-        Solution2 s = new Solution2();
-
-        List<int[]> lists = TestCases.Sort.getTestcases();
-        for (int[] a : lists) {
-            s.heapSort(a);
-            println("correct : " + TestCases.Sort.checkSort(true, a));
-        }
     }
 
     private static ListNode[] lists2() {

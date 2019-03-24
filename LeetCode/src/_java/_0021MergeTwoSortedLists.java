@@ -5,13 +5,13 @@ import base.BaseLinkedList;
 public class _0021MergeTwoSortedLists extends BaseLinkedList {
 
     private abstract static class Solution {
-        abstract ListNode mergeTwoLists(ListNode l1, ListNode l2);
+        abstract ListNode mergeTwoLists(ListNode<Integer> l1, ListNode<Integer> l2);
     }
 
     // 归并排序 99.03%
     private static class Solution1 extends Solution {
 
-        ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode mergeTwoLists(ListNode<Integer> l1, ListNode<Integer> l2) {
             ListNode fake = new ListNode(Integer.MIN_VALUE);
             ListNode p = fake;
             while (l1 != null || l2 != null) {

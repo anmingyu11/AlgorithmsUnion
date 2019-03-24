@@ -7,7 +7,7 @@ import base.BaseLinkedList;
 public class _0148SortList extends BaseLinkedList {
 
     private abstract static class Solution {
-        public abstract ListNode sortList(ListNode head);
+        public abstract ListNode sortList(ListNode<Integer> head);
     }
 
     // 归并排序
@@ -25,7 +25,7 @@ public class _0148SortList extends BaseLinkedList {
          * @param head
          * @return
          */
-        public ListNode sortList(ListNode head) {
+        public ListNode sortList(ListNode<Integer> head) {
             if (head == null || head.next == null) {
                 return head;
             }
@@ -52,7 +52,7 @@ public class _0148SortList extends BaseLinkedList {
          * @param l2
          * @return
          */
-        ListNode merge(ListNode l1, ListNode l2) {
+        ListNode merge(ListNode<Integer> l1, ListNode<Integer> l2) {
             ListNode l = new ListNode(0), p = l;
 
             while (l1 != null && l2 != null) {
@@ -84,17 +84,17 @@ public class _0148SortList extends BaseLinkedList {
     private static class Solution2 extends Solution {
 
         @Override
-        public ListNode sortList(ListNode head) {
+        public ListNode sortList(ListNode<Integer> head) {
             return auxiliary(head);
         }
 
         // 不计算长度
         // 转化成合并k链表的问题.
-        private ListNode auxiliary(ListNode h) {
+        private ListNode auxiliary(ListNode<Integer> h) {
             ArrayList<ListNode> lists = new ArrayList<>();
 
             // 先将一条链表 转换成 k个合并的子数组
-            ListNode p = h;
+            ListNode<Integer> p = h;
             ListNode l1 = new ListNode(-1), l2 = new ListNode(-1);
             ListNode l1p = l1, l2p = l2;
 
@@ -181,7 +181,7 @@ public class _0148SortList extends BaseLinkedList {
             return head;
         }
 
-        private ListNode merge(ListNode l1, ListNode l2) {
+        private ListNode merge(ListNode<Integer> l1, ListNode<Integer> l2) {
             ListNode head = new ListNode(-1);
             ListNode p = head;
             boolean hasNext = true;
