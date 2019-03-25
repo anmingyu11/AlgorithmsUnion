@@ -73,9 +73,9 @@ public class BaseLinkedList extends Base {
         return head.next;
     }
 
-    public static ListNode generateASingleListNode(int[] nums) {
-        ListNode head = new ListNode(0);
-        ListNode cur = head;
+    public static ListNode<Integer> generateASingleListNode(int[] nums) {
+        ListNode<Integer> head = new ListNode(0);
+        ListNode<Integer> cur = head;
         for (int n : nums) {
             cur.next = new ListNode(n);
             cur = cur.next;

@@ -60,6 +60,10 @@ public class Base {
         PrintUtil.printArr(arr);
     }
 
+    public static void printArr(long[] arr) {
+        PrintUtil.printArr(arr);
+    }
+
     public static <T> void printArr(T[] arr) {
         PrintUtil.printArr(arr);
     }
