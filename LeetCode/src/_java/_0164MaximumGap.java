@@ -4,6 +4,12 @@ import java.util.Arrays;
 
 import base.Base;
 
+/**
+ * Given an unsorted array, find the maximum difference between the successive elements
+ * in its sorted form.
+ * <p>
+ * Return 0 if the array contains less than 2 elements.
+ */
 public class _0164MaximumGap extends Base {
     private abstract static class Solution {
         public abstract int maximumGap(int[] nums);
