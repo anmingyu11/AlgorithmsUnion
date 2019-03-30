@@ -28,6 +28,18 @@ public class ArraysUtil {
         return min;
     }
 
+    public static boolean equal(int[] a, int[] b) {
+        if (a.length != b.length) {
+            return false;
+        }
+        for (int i = 0; i < a.length; ++i) {
+            if (a[i] != b[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * @param addNeg
      * @param arrLen 随机数组的长度, 总共生成的数组数量为: 正数arrLen * 3, 负数为 arrLen * 3, 正负混合为 arrLen * 3
@@ -84,6 +96,7 @@ public class ArraysUtil {
 
     public static List<int[]> generateSpecial(boolean addNeg) {
         List<int[]> l = new LinkedList<>();
+        l.add(new int[]{});
         l.add(new int[]{99, 99});
         l.add(new int[]{1});
         l.add(new int[]{1, 12, 123, 1234});
