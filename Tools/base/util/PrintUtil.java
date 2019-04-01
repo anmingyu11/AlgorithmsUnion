@@ -121,4 +121,9 @@ public class PrintUtil {
         StdOut.println(StringUtil.spaces(count));
     }
 
+    public static void err(Object o) {
+        System.err.println(o);
+        System.err.flush();
+    }
+
 }
