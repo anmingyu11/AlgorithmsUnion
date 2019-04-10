@@ -1,6 +1,3 @@
-Partition List
-Remove Duplicates from Sorted List
-Remove Duplicates from Sorted List II
 Rotate List
 Remove Nth Node From End of List
 Swap Nodes in Pairs
