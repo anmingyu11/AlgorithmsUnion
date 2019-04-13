@@ -1,8 +1,4 @@
-Rotate List
-Remove Nth Node From End of List
-Swap Nodes in Pairs
 Reverse Nodes in k-Group
-Copy List with Random Pointer
 Linked List Cycle
 Linked List Cycle II
 Reorder List
