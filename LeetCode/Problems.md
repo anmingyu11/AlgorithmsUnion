@@ -1,6 +1,3 @@
-Reverse Nodes in k-Group
-Linked List Cycle
-Linked List Cycle II
 Reorder List
 LRU Cache
 Palindrome Linked List
