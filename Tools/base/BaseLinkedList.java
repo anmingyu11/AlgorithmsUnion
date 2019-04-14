@@ -2,6 +2,8 @@ package base;
 
 import java.util.Iterator;
 
+import base.util.ListNodeUtil;
+
 public class BaseLinkedList extends Base {
 
     public static class ListNode<T> implements Iterable<ListNode> {
@@ -40,48 +42,27 @@ public class BaseLinkedList extends Base {
     }
 
     public static void printSingleListNode(ListNode h) {
-        while (h != null && h.next != null) {
-            print(h.val + " -> ");
-            h = h.next;
-        }
-
-        if (h != null) {
-            print(h.val + " -> null\n");
-        } else {
-            print("null \n");
-        }
+        ListNodeUtil.printSingleListNode(h);
     }
 
     public static ListNode generateASingleListNodeFrom0To(int end) {
-        return generateASingleListNodeRange(0, end);
+        return ListNodeUtil.generateASingleListNodeRange(0, end);
     }
 
     public static ListNode generateASingleListNodeRange(int start, int end) {
-        if (start == end) {
-            return new ListNode(start);
-        }
-        ListNode head = new ListNode(0);
-        ListNode h = head;
-
-        int sign = start < end ? 1 : -1;
-        while (start != end) {
-            h.next = new ListNode(start);
-            start += sign;
-            h = h.next;
-        }
-
-        return head.next;
+        return ListNodeUtil.generateASingleListNodeRange(start, end);
     }
 
     public static ListNode<Integer> generateASingleListNode(int... nums) {
-        ListNode<Integer> head = new ListNode(0);
-        ListNode<Integer> cur = head;
-        for (int n : nums) {
-            cur.next = new ListNode(n);
-            cur = cur.next;
-        }
+        return ListNodeUtil.generateASingleListNode(nums);
+    }
 
-        return head.next;
+    public static boolean hasCycle(ListNode h) {
+        return ListNodeUtil.hasCycle(h);
+    }
+
+    public static ListNode getLast(ListNode l) {
+        return ListNodeUtil.getLast(l);
     }
 
     public static void main(String[] args) {
