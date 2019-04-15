@@ -23,6 +23,30 @@ public class _0334IncreasingTripletSubsequence extends Base {
     // Memory Usage: 40.1 MB, less than 5.30% of Java online submissions for Increasing Triplet Subsequence.
     private static class Solution1 extends Solution {
 
+        /**
+         * Intuitively what this solution does is keeps tracks of lower the bounds for the first and second element of the subsequence. Instead of small and big I will call it first and second initially we have first = INF and second = INF. Also I will simplify your test case to [1,0,2,0,-1,3]
+         * <p>
+         * Iteration One
+         * first = 1 second = INF
+         * Iteration Two
+         * first = 0 second = INF
+         * Iteration Three
+         * first = 0 second = 2
+         * Iteration Four (Nothing Changes)
+         * first = 0 second = 2
+         * Iteration Five (Confusing Part)
+         * first = -1 second = 2
+         * Iteration Six
+         * return true; Since 3 > 2 && 3 > -1
+         * Setting first = -1 is important,
+         * yet doesn't change the answer since second = 2 implies that their exist a value
+         * that was previously smaller than two, and if you find any value greater that two
+         * we know their exist in an increasing sub sequence, however if we had a test like
+         * this [1,0,2,0,-1,0,1] we need the updated lower bound for first, so we know to update the lower bound for second.
+         *
+         * @param nums
+         * @return
+         */
         @Override
         public boolean increasingTriplet(int[] nums) {
             // start with two largest values, as soon as we find a number bigger than both, while both have been updated, return true.

@@ -1,6 +1,4 @@
-Reorder List
 LRU Cache
-Palindrome Linked List
 Implement strStr()
 String to Integer (atoi)
 Add Binary
