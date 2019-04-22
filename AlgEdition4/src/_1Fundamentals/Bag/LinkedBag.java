@@ -125,5 +125,4 @@ public class LinkedBag<Item> implements Iterable<Item> {
         }
     }
 
-
 }
