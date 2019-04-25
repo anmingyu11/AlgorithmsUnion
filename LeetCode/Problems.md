@@ -1,6 +1,5 @@
 Implement strStr()
 String to Integer (atoi)
-Add Binary
 Longest Palindromic Substring
 Regular Expression Matching
 Wildcard Matching
