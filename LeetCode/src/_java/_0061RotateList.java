@@ -28,6 +28,8 @@ public class _0061RotateList extends BaseLinkedList {
         public abstract ListNode rotateRight(ListNode head, int k);
     }
 
+    // Runtime: 0 ms, faster than 100.00% of Java online submissions for Rotate List.
+    // Memory Usage: 40 MB, less than 5.18% of Java online submissions for Rotate List.
     private static class Solution1 extends Solution {
 
         @Override
@@ -47,6 +49,9 @@ public class _0061RotateList extends BaseLinkedList {
             }
 
             k = k % n;
+            if (k == 0) {
+                return head;
+            }
             i = 0;
             p = head;
             while (i < n - k + 1) {
@@ -65,28 +70,18 @@ public class _0061RotateList extends BaseLinkedList {
         }
     }
 
-    private static class Solution2 extends Solution {
-
-        @Override
-        public ListNode rotateRight(ListNode head, int k) {
-            ListNode p = head, pHead = head, tail;
-
-
-
-            return null;
-        }
-
-    }
-
     public static void main(String[] args) {
         ListNode<Integer> l1 = generateASingleListNode(1, 2, 3, 4, 5);
         int k1 = 2;
         ListNode<Integer> l2 = generateASingleListNode(0, 1, 2);
         int k2 = 4;
-        Solution s = new Solution2();
+        ListNode<Integer> l3 = generateASingleListNode(1);
+        int k3 = 0;
+        Solution s = new Solution1();
 
         printSingleListNode(s.rotateRight(l1, k1)); //Output: 4->5->1->2->3->NULL
         printSingleListNode(s.rotateRight(l2, k2)); //Output: 2->0->1->NULL
+        printSingleListNode(s.rotateRight(l3, k3)); // 1
 
     }
 
