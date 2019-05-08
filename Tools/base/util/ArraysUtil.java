@@ -147,4 +147,8 @@ public class ArraysUtil {
         return a;
     }
 
+    public static String[] stringList(String... strs) {
+        return strs;
+    }
+
 }
