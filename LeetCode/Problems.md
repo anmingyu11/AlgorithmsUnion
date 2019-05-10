@@ -3,10 +3,7 @@ String to Integer (atoi)
 Longest Palindromic Substring
 Regular Expression Matching
 Wildcard Matching
-Longest Common Prefix
 Valid Number
-Integer to Roman
-Roman to Integer
 Count and Say
 Anagrams
 Valid Anagram
