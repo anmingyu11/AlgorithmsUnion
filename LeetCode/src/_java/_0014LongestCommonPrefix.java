@@ -149,8 +149,8 @@ public class _0014LongestCommonPrefix extends Base {
     }
 
     public static void main(String[] args) {
-        String[] l1 = ArraysUtil.stringList("flower", "flow", "flight");
-        String[] l2 = ArraysUtil.stringList("dog", "racecar", "car");
+        String[] l1 = ArraysUtil.stringArr("flower", "flow", "flight");
+        String[] l2 = ArraysUtil.stringArr("dog", "racecar", "car");
 
         Solution s = new Solution4();
 

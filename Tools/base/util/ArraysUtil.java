@@ -2,6 +2,7 @@ package base.util;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -147,8 +148,13 @@ public class ArraysUtil {
         return a;
     }
 
-    public static String[] stringList(String... strs) {
+    public static String[] stringArr(String... strs) {
         return strs;
     }
 
+    public static List<String> stringList(String... strs) {
+        LinkedList<String> l = new LinkedList<>();
+        l.addAll(Arrays.asList(strs));
+        return l;
+    }
 }
