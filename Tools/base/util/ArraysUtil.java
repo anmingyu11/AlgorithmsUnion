@@ -148,13 +148,26 @@ public class ArraysUtil {
         return a;
     }
 
-    public static String[] stringArr(String... strs) {
+    public static String[] string2Arr(String... strs) {
         return strs;
     }
 
-    public static List<String> stringList(String... strs) {
+    public static List<String> string2List(String... strs) {
         LinkedList<String> l = new LinkedList<>();
         l.addAll(Arrays.asList(strs));
+        return l;
+    }
+
+    public static List<List<Integer>> int2List(int[][] A) {
+        List<List<Integer>> l = new LinkedList<>();
+        for (int[] a : A) {
+            List<Integer> subL = new LinkedList<>();
+            for (int b : a) {
+                subL.add(b);
+            }
+            l.add(subL);
+        }
+
         return l;
     }
 }
