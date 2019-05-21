@@ -79,12 +79,8 @@ Word Search
 Pow(x,n)
 Sqrt(x)
 -----------greedy------------
-Best Time to Buy and Sell Stock II
-Longest Substring Without Repeating Characters
-Container With Most Water
 Patching Array
 ------------dp-----------------
-Triangle
 Maximum Product Subarray
 Longest Increasing Subsequence
 Palindrome Partitioning II
@@ -104,7 +100,6 @@ Dungeon Game
 House Robber
 House Robber II
 House Robber III
-Range Sum Query - Immutable
 Range Sum Query 2D - Immutable
 -----------------------------graph------
 Clone Graph
