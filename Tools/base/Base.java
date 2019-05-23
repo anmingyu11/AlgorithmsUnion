@@ -64,6 +64,10 @@ public class Base {
         PrintUtil.printArr(arr);
     }
 
+    public static <T> void printArr(boolean[] arr) {
+        PrintUtil.printArr(arr);
+    }
+
     public static <T> void printArr(T[] arr) {
         PrintUtil.printArr(arr);
     }

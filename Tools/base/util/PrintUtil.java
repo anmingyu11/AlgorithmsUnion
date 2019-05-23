@@ -94,6 +94,10 @@ public class PrintUtil {
         println(Arrays.toString(arr));
     }
 
+    public static void printArr(boolean[] arr) {
+        println(Arrays.toString(arr));
+    }
+
     public static <T> void printArr(T[] arr1) {
         println(Arrays.toString(arr1));
     }
