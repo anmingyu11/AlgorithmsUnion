@@ -1,9 +1,8 @@
 package _02GettingStarted;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import base.Base;
+import base.interfaces.ISort;
+import base.util.TestUtil;
 
 /**
  * 归并排序
@@ -11,36 +10,7 @@ import base.Base;
  */
 public class MergeSort extends Base {
 
-    private abstract static class Solution {
-        public abstract void sort(int[] A);
-
-        public void test() {
-            test(Testcases.getTestcases());
-        }
-
-        private void test(List<int[]> testcases) {
-            for (int[] t : testcases) {
-                println("----------------");
-                println("Before sort : ");
-                printArr(t);
-                sort(t);
-                println("After sort : ");
-                printArr(t);
-                println(check(t) ? "Correct" : "Incorrect");
-            }
-        }
-
-        private boolean check(int[] A) {
-            final int n = A.length;
-
-            for (int i = 0; i < n - 1; ++i) {
-                if (A[i + 1] < A[i]) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
+    private abstract static class Solution implements ISort {
     }
 
     private static class Solution1 extends Solution {
@@ -173,25 +143,7 @@ public class MergeSort extends Base {
 
         Solution s = new Solution3();
 
-        s.test();
-
-    }
-
-    private static class Testcases {
-
-        static List<int[]> getTestcases() {
-            List<int[]> testcases = new LinkedList<>();
-            testcases.add(new int[]{3, 2, 1, 5, 6, 4});
-            testcases.add(new int[]{3, 2, 3, 1, 2, 4, 5, 5, 6});
-            testcases.add(new int[]{99, 99});
-            testcases.add(new int[]{1});
-            testcases.add(new int[]{7, 6, 5, 4, 3, 2, 1});
-            testcases.add(new int[]{1, 2, 3, 4, 5});
-            testcases.add(new int[]{1, 2, 3, 6, 5});
-            testcases.add(new int[]{-1, 2, 0});
-            return testcases;
-        }
-
+        TestUtil.testSort(s);
     }
 
 }
