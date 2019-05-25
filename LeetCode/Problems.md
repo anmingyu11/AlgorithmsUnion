@@ -100,7 +100,6 @@ Dungeon Game
 House Robber
 House Robber II
 House Robber III
-Range Sum Query 2D - Immutable
 -----------------------------graph------
 Clone Graph
 Reverse Bits
