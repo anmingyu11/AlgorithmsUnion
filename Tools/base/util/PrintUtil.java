@@ -32,11 +32,32 @@ public class PrintUtil {
             for (int i = 0; i < objarr.length; ++i) {
                 int val = objarr[i];
                 if (i == 0) {
-                    StdOut.printf("[ %d,", val);
+                    StdOut.printf("[ %c,", val);
                 } else if (i == objarr.length - 1) {
-                    StdOut.printf("%7d ]\n", val);
+                    StdOut.printf("%7c ]\n", val);
                 } else {
-                    StdOut.printf(" %7d,", val);
+                    StdOut.printf(" %7c,", val);
+                }
+            }
+        }
+        println("");
+    }
+
+    public static void print2DArr(float[][] arr2) {
+        for (float[] objarr : arr2) {
+            for (int i = 0; i < objarr.length; ++i) {
+                double val = objarr[i];
+                if (i == 0) {
+                    if (i != objarr.length - 1) {
+                        StdOut.printf("[ %8.2f,", val);
+                    } else {
+                        StdOut.printf("[ %8.2f", val);
+                        StdOut.printf(" ]\n");
+                    }
+                } else if (i == objarr.length - 1) {
+                    StdOut.printf(" %8.2f]\n", val);
+                } else {
+                    StdOut.printf(" %8.2f,", val);
                 }
             }
         }

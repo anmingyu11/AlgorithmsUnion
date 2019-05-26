@@ -30,11 +30,18 @@ public class ArraysUtil {
     }
 
     public static boolean equal(int[] a, int[] b) {
-        if (a.length != b.length) {
+        return Arrays.equals(a, b);
+    }
+
+    public static boolean equal(int[][] a, int[][] b) {
+        // Todo a.length or b.length could be 0
+        int ma = a.length, na = a[0].length;
+        int mb = b.length, nb = b[0].length;
+        if (ma != mb || mb != nb) {
             return false;
         }
-        for (int i = 0; i < a.length; ++i) {
-            if (a[i] != b[i]) {
+        for (int i = 0; i < ma; ++i) {
+            if (!Arrays.equals(a[i], b[i])) {
                 return false;
             }
         }

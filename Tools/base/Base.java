@@ -36,6 +36,10 @@ public class Base {
         PrintUtil.print2DArr(arr2);
     }
 
+    public static void print2DArr(float[][] arr2) {
+        PrintUtil.print2DArr(arr2);
+    }
+
     public static void print2DArr(double[][] arr2) {
         PrintUtil.print2DArr(arr2);
     }
