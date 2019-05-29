@@ -97,7 +97,6 @@ Distinct Subsequences
 Word Break
 Word Break II
 Dungeon Game
-House Robber
 House Robber II
 House Robber III
 -----------------------------graph------
