@@ -15,9 +15,11 @@ public class BaseTree extends Base {
 
         @Override
         public String toString() {
-            return "val=" + val +
+            return "TreeNode{" +
+                    "val=" + val +
                     ", left=" + left +
-                    ", right=" + right;
+                    ", right=" + right +
+                    '}';
         }
     }
 

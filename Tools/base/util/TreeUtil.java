@@ -36,6 +36,34 @@ public class TreeUtil {
         return all[0];
     }
 
+    public static BaseTree.TreeNode generateACompleteBT(Integer[] A) {
+        final int n = A.length;
+        if (n == 0) {
+            return null;
+        }
+        BaseTree.TreeNode[] all = new BaseTree.TreeNode[n];
+        BaseTree.TreeNode node = null;
+        for (int i = 0; i < n; ++i) {
+            if (A[i] != null) {
+                all[i] = new BaseTree.TreeNode(A[i]);
+            }
+        }
+        for (int i = 0; i <= n / 2; ++i) {
+            if (all[i] == null) {
+                continue;
+            }
+            int left = 2 * i + 1, right = 2 * i + 2;
+            if (left < n) {
+                all[i].left = all[left];
+            }
+            if (right < n) {
+                all[i].right = all[right];
+            }
+        }
+
+        return all[0];
+    }
+
     /**
      * 将一个常规二叉树转换为完全二叉树
      */
