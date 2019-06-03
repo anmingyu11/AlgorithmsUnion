@@ -56,6 +56,10 @@ public class Base {
         PrintUtil.printArr(arr1);
     }
 
+    public static void printArr(float[] arr1) {
+        PrintUtil.printArr(arr1);
+    }
+
     public static void printArr(double[] arr1) {
         PrintUtil.printArr(arr1);
     }

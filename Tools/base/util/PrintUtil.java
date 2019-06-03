@@ -103,6 +103,10 @@ public class PrintUtil {
         println(Arrays.toString(arr1));
     }
 
+    public static void printArr(float[] arr) {
+        println(Arrays.toString(arr));
+    }
+
     public static void printArr(double[] arr) {
         println(Arrays.toString(arr));
     }
