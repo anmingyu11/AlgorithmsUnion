@@ -11,6 +11,7 @@ Simplify Path
 Length of Last Word
 Isomorphic Strings
 Word Pattern
+--------Stack Queue
 Min Stack
 Valid Parentheses
 Longest Valid Parentheses
@@ -18,6 +19,7 @@ Largest Rectangle in Histogram
 Evaluate Reverse Polish Notation
 Implement Stack using Queues
 Implement Queue using Stacks
+--------------BST
 Binary Tree Level Order Traversal
 Binary Tree Level Order Traversal II
 Binary Tree Right Side View
@@ -32,8 +34,6 @@ Flatten Binary Tree to Linked List
 Populating Next Right Pointers in Each Node II
 Construct Binary Tree from Preorder and Inorder Traversal
 Construct Binary Tree from Inorder and Postorder Traversal
-Unique Binary Search Trees
-Unique Binary Search Trees II
 Validate Binary Search Tree
 Convert Sorted Array to Binary Search Tree
 Convert Sorted List to Binary Search Tree
@@ -48,11 +48,13 @@ Populating Next Right Pointers in Each Node
 Sum Root to Leaf Numbers
 LCA of Binary Tree
 Range Sum Query - Mutable
+--------Sort
 Insertion Sort List
 Merge Two Sorted Arrays
 Sort Colors
 First Missing Positive
 H-Index
+--------Search
 Search for a Range
 Search Insert Position
 Search in Rotated Sorted Array
@@ -60,9 +62,11 @@ Search in Rotated Sorted Array II
 Find Minimum in Rotated Sorted Array
 Find Minimum in Rotated Sorted Array II
 H-Index II
+----------BFS
 Word Ladder
 Word Ladder II
 Surrounded Regions
+----------- DFS
 Additive Number
 Palindrome Partitioning
 Unique Paths
@@ -76,6 +80,7 @@ Combination Sum III
 Generate Parentheses
 Sudoku Solver
 Word Search
+--------DAQ----------
 Pow(x,n)
 Sqrt(x)
 -----------greedy------------
@@ -85,20 +90,12 @@ Maximum Product Subarray
 Longest Increasing Subsequence
 Palindrome Partitioning II
 Maximal Rectangle
-Best Time to Buy and Sell Stock III
-Best Time to Buy and Sell Stock IV
-Best Time to Buy and Sell Stock with Cooldown
 Interleaving String
 Scramble String
-Minimum Path Sum
 Edit Distance
 Decode Ways
 Distinct Subsequences
-Word Break
-Word Break II
 Dungeon Game
-House Robber II
-House Robber III
 -----------------------------graph------
 Clone Graph
 Reverse Bits
