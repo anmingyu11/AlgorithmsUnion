@@ -23,8 +23,6 @@ Implement Queue using Stacks
 Binary Tree Level Order Traversal
 Binary Tree Level Order Traversal II
 Binary Tree Right Side View
-Invert Binary Tree
-Binary Search Tree Iterator
 Binary Tree Zigzag Level Order Traversal
 Recover Binary Search Tree
 Same Tree
@@ -35,12 +33,10 @@ Populating Next Right Pointers in Each Node II
 Construct Binary Tree from Preorder and Inorder Traversal
 Construct Binary Tree from Inorder and Postorder Traversal
 Validate Binary Search Tree
-Convert Sorted Array to Binary Search Tree
 Convert Sorted List to Binary Search Tree
 LCA of BST
 Kth Smallest Element in a BST
 Minimum Depth of Binary Tree
-Maximum Depth of Binary Tree
 Path Sum
 Path Sum II
 Binary Tree Maximum Path Sum
@@ -53,15 +49,12 @@ Insertion Sort List
 Merge Two Sorted Arrays
 Sort Colors
 First Missing Positive
-H-Index
 --------Search
-Search for a Range
 Search Insert Position
 Search in Rotated Sorted Array
 Search in Rotated Sorted Array II
 Find Minimum in Rotated Sorted Array
 Find Minimum in Rotated Sorted Array II
-H-Index II
 ----------BFS
 Word Ladder
 Word Ladder II
@@ -91,7 +84,6 @@ Longest Increasing Subsequence
 Palindrome Partitioning II
 Maximal Rectangle
 Interleaving String
-Scramble String
 Edit Distance
 Decode Ways
 Distinct Subsequences
