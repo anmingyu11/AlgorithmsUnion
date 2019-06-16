@@ -4,7 +4,7 @@ package _3Searching.ElementarySymbolTables;
  *  Compilation:  javac BinarySearchST.java
  *  Execution:    java BinarySearchST
  *  Dependencies: StdIn.java StdOut.java
- *  Data files:   https://algs4.cs.princeton.edu/31elementary/tinyST.txt
+ *  Data files:   https://algs4.cs.princeton.edu/31elementary/tinyST.txt  
  *
  *  Symbol table implementation with binary search in an ordered array.
  *
@@ -25,15 +25,17 @@ package _3Searching.ElementarySymbolTables;
  *
  ******************************************************************************/
 
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 import _1Fundamentals.Queue.Queue;
-import _3Searching.BST.BST;
-import _3Searching.HashTable.LinearProbingHashST;
-import _3Searching.BST.RedBlackBST;
 import _3Searching.Applications.ST;
+import _3Searching.BST.BST;
+import _3Searching.BST.RedBlackBST;
+import _3Searching.HashTable.LinearProbingHashST;
 import _3Searching.HashTable.SeparateChainingHashST;
-import base.stdlib.StdIn;
+import _3Searching.SearchTestResources;
+import base.stdlib.In;
 import base.stdlib.StdOut;
 
 /**
@@ -68,6 +70,19 @@ import base.stdlib.StdOut;
  * {@link SequentialSearchST}, {@link RedBlackBST},
  * {@link SeparateChainingHashST}, and {@link LinearProbingHashST},
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * <p>
+ * BST类表示通用键值对的有序符号表。它支持通用的put，get，contains，delete，size和is-empty方法。
+ * 它还提供了有序的方法来查找 minimum，maximum，floor，select和ceiling。
+ * 它还提供了一种迭代所有键的键方法。
+ * 符号表实现关联数组抽象：当将值与已存在于符号表中的键相关联时，约定是将旧值替换为新值。
+ * 与java.util.Map不同，此类使用值不能为null的约定.
+ * - 将与键关联的值设置为null等效于从符号表中删除键。
+ * <p>
+ * 此实现使用排序数组。
+ * 它要求key类型实现Comparable接口并调用compareTo（）方法来比较两个key。
+ * 它不会调用equals（）或hashCode（）。
+ * 在最坏的情况下，put()和remove()操作每个都需要线性时间; contains，ceiling，floor和rank操作采用对数时间;
+ * size，is-empty，minimum，maximum和select操作需要常数的时间。 构造需要常数的时间。
  */
 public class BinarySearchST<Key extends Comparable<Key>, Value> {
     private static final int INIT_CAPACITY = 2;
@@ -77,6 +92,8 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
 
     /**
      * Initializes an empty symbol table.
+     * <p>
+     * 初始化新的符号表
      */
     public BinarySearchST() {
         this(INIT_CAPACITY);
@@ -84,6 +101,8 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
 
     /**
      * Initializes an empty symbol table with the specified initial capacity.
+     * <p>
+     * 用指定的容量初始化新的符号表.
      *
      * @param capacity the maximum capacity
      */
@@ -97,7 +116,7 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
         assert capacity >= n;
         Key[] tempk = (Key[]) new Comparable[capacity];
         Value[] tempv = (Value[]) new Object[capacity];
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; ++i) {
             tempk[i] = keys[i];
             tempv[i] = vals[i];
         }
@@ -107,6 +126,8 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
 
     /**
      * Returns the number of key-value pairs in this symbol table.
+     * <p>
+     * 返回符号表中的键值对的数量
      *
      * @return the number of key-value pairs in this symbol table
      */
@@ -116,6 +137,8 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
 
     /**
      * Returns true if this symbol table is empty.
+     * <p>
+     * 如果符号表是空的,返回true
      *
      * @return {@code true} if this symbol table is empty;
      * {@code false} otherwise
@@ -127,6 +150,8 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
 
     /**
      * Does this symbol table contain the given key?
+     * <p>
+     * 这个符号表包含对应的Key吗?
      *
      * @param key the key
      * @return {@code true} if this symbol table contains {@code key} and
@@ -134,12 +159,16 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
      * @throws IllegalArgumentException if {@code key} is {@code null}
      */
     public boolean contains(Key key) {
-        if (key == null) throw new IllegalArgumentException("argument to contains() is null");
+        if (key == null) {
+            throw new IllegalArgumentException("argument to contains() is null");
+        }
         return get(key) != null;
     }
 
     /**
      * Returns the value associated with the given key in this symbol table.
+     * <p>
+     * 返回在符号表中key对应的值
      *
      * @param key the key
      * @return the value associated with the given key if the key is in the symbol table
@@ -153,8 +182,8 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
         if (isEmpty()) {
             return null;
         }
-
         int i = rank(key);
+        // 这里这么做比较蠢,可以重写rank,像Java工具类里一样,效果更好.
         if (i < n && keys[i].compareTo(key) == 0) {
             return vals[i];
         }
@@ -163,6 +192,11 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
 
     /**
      * Returns the number of keys in this symbol table strictly less than {@code key}.
+     * <p>
+     * 返回此符号表中小于key的其他键的个数(二分查找).
+     * <p>
+     * Note: Java工具类中的{@link Arrays#binarySearch}做了很多优化,非常值得借鉴.
+     * <p>
      *
      * @param key the key
      * @return the number of keys in the symbol table strictly less than {@code key}
@@ -172,7 +206,6 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
         if (key == null) {
             throw new IllegalArgumentException("argument to rank() is null");
         }
-
         int lo = 0, hi = n - 1;
         while (lo <= hi) {
             int mid = lo + (hi - lo) / 2;
@@ -185,52 +218,54 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
                 return mid;
             }
         }
-        //返回-lo就好
         return lo;
     }
-
 
     /**
      * Inserts the specified key-value pair into the symbol table, overwriting the old
      * value with the new value if the symbol table already contains the specified key.
      * Deletes the specified key (and its associated value) from this symbol table
      * if the specified value is {@code null}.
+     * <p>
+     * 将指定的key-value插入符号表，如果符号表已包含指定的key，则使用新值覆盖旧值。
+     * 如果指定的值为null，则从此符号表中删除指定的键（及其关联值）。
      *
      * @param key the key
      * @param val the value
      * @throws IllegalArgumentException if {@code key} is {@code null}
      */
     public void put(Key key, Value val) {
-        if (key == null) throw new IllegalArgumentException("first argument to put() is null");
-
+        if (key == null) {
+            throw new IllegalArgumentException("first argument to put() is null");
+        }
         if (val == null) {
             delete(key);
             return;
         }
-
         int i = rank(key);
-
         if (i < n && keys[i].compareTo(key) == 0) {
+            // compareTo 和 equals 似乎效果都一样,但是真的一样吗?
             vals[i] = val;
             return;
         }
-
         if (n == keys.length) {
             resize(2 * keys.length);
         }
-
         for (int j = n; j > i; j--) {
             keys[j] = keys[j - 1];
             vals[j] = vals[j - 1];
         }
         keys[i] = key;
         vals[i] = val;
-        n++;
+        ++n;
+        assert check();
     }
 
     /**
      * Removes the specified key and associated value from this symbol table
      * (if the key is in the symbol table).
+     * <p>
+     * 从此符号表中删除指定的key和关联value（如果key位于符号表中）。
      *
      * @param key the key
      * @throws IllegalArgumentException if {@code key} is {@code null}
@@ -242,29 +277,30 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
         if (isEmpty()) {
             return;
         }
-
+        // compute rank
         int i = rank(key);
-
+        // 这个虽然对,rank()方法返回的是少于key的值的数量,但是否contains更舒服一些.
         if (i == n || keys[i].compareTo(key) != 0) {
             return;
         }
-
         for (int j = i; j < n - 1; j++) {
             keys[j] = keys[j + 1];
             vals[j] = vals[j + 1];
         }
-
-        n--;
+        --n;
         keys[n] = null;  // to avoid loitering
         vals[n] = null;
-
+        // resize if 1/4 full
         if (n > 0 && n == keys.length / 4) {
             resize(keys.length / 2);
         }
+        assert check();
     }
 
     /**
      * Removes the smallest key and associated value from this symbol table.
+     * <p>
+     * 从此符号表中删除最小的key和关联value。
      *
      * @throws NoSuchElementException if the symbol table is empty
      */
@@ -277,6 +313,8 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
 
     /**
      * Removes the largest key and associated value from this symbol table.
+     * <p>
+     * 从此符号表中删除最大的键和关联值。
      *
      * @throws NoSuchElementException if the symbol table is empty
      */
@@ -294,6 +332,8 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
 
     /**
      * Returns the smallest key in this symbol table.
+     * <p>
+     * 返回此符号表中的最小键。
      *
      * @return the smallest key in this symbol table
      * @throws NoSuchElementException if this symbol table is empty
@@ -307,6 +347,8 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
 
     /**
      * Returns the largest key in this symbol table.
+     * <p>
+     * 返回此符号表中的最大键。
      *
      * @return the largest key in this symbol table
      * @throws NoSuchElementException if this symbol table is empty
@@ -320,6 +362,8 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
 
     /**
      * Return the kth smallest key in this symbol table.
+     * <p>
+     * 返回此符号表中的第k个最小键。
      *
      * @param k the order statistic
      * @return the {@code k}th smallest key in this symbol table
@@ -335,6 +379,8 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
 
     /**
      * Returns the largest key in this symbol table less than or equal to {@code key}.
+     * <p>
+     * 返回此符号表中小于或等于key的最大键。
      *
      * @param key the key
      * @return the largest key in this symbol table less than or equal to {@code key}
@@ -358,6 +404,8 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
 
     /**
      * Returns the smallest key in this symbol table greater than or equal to {@code key}.
+     * <p>
+     * 返回此符号表中大于或等于key的最小键。
      *
      * @param key the key
      * @return the smallest key in this symbol table greater than or equal to {@code key}
@@ -378,6 +426,8 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
 
     /**
      * Returns the number of keys in this symbol table in the specified range.
+     * <p>
+     * 返回指定范围内此符号表中的key的数量。
      *
      * @param lo minimum endpoint
      * @param hi maximum endpoint
@@ -393,7 +443,6 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
         if (hi == null) {
             throw new IllegalArgumentException("second argument to size() is null");
         }
-
         if (lo.compareTo(hi) > 0) {
             return 0;
         }
@@ -408,6 +457,9 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
      * Returns all keys in this symbol table as an {@code Iterable}.
      * To iterate over all of the keys in the symbol table named {@code st},
      * use the foreach notation: {@code for (Key key : st.keys())}.
+     * <p>
+     * 将此符号表中的所有键作为一个Iterable对象返回。
+     * 要迭代名为st的符号表中的所有键，请使用foreach表示法：for（key：st.keys（））。
      *
      * @return all keys in this symbol table
      */
@@ -418,6 +470,8 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
     /**
      * Returns all keys in this symbol table in the given range,
      * as an {@code Iterable}.
+     * <p>
+     * 返回给定范围内此符号表中的所有键，作为一个Iterable对象。
      *
      * @param lo minimum endpoint
      * @param hi maximum endpoint
@@ -427,13 +481,18 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
      *                                  is {@code null}
      */
     public Iterable<Key> keys(Key lo, Key hi) {
-        if (lo == null) throw new IllegalArgumentException("first argument to keys() is null");
-        if (hi == null) throw new IllegalArgumentException("second argument to keys() is null");
+        if (lo == null) {
+            throw new IllegalArgumentException("first argument to keys() is null");
+        }
+        if (hi == null) {
+            throw new IllegalArgumentException("second argument to keys() is null");
+        }
 
         Queue<Key> queue = new Queue<Key>();
         if (lo.compareTo(hi) > 0) {
             return queue;
         }
+        // 这个rank会被调用几次?
         for (int i = rank(lo); i < rank(hi); i++) {
             queue.enqueue(keys[i]);
         }
@@ -441,6 +500,7 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
             queue.enqueue(keys[rank(hi)]);
         }
         return queue;
+
     }
 
 
@@ -484,12 +544,15 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        BinarySearchST<String, Integer> st = new BinarySearchST<String, Integer>();
-        for (int i = 0; !StdIn.isEmpty(); i++) {
-            String key = StdIn.readString();
+        In in = new In(SearchTestResources.Local.tinyST);
+        BinarySearchST<String, Integer> st = new BinarySearchST<>();
+        for (int i = 0; !in.isEmpty(); i++) {
+            String key = in.readString();
             st.put(key, i);
         }
-        for (String s : st.keys())
+        for (String s : st.keys()) {
             StdOut.println(s + " " + st.get(s));
+        }
     }
+
 }

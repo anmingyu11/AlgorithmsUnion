@@ -27,6 +27,7 @@ package _3Searching.ElementarySymbolTables;
  ******************************************************************************/
 
 import _3Searching.Applications.ST;
+import _3Searching.SearchTestResources;
 import base.stdlib.In;
 import base.stdlib.StdOut;
 
@@ -38,6 +39,10 @@ import base.stdlib.StdOut;
  * <p>
  * For additional documentation, see <a href="https://algs4.cs.princeton.edu/31elementary">Section 3.1</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * <p>
+ * FrequencyCounter类提供了一个client，
+ * 用于读取一系列单词并打印最常出现的单词（超过给定长度）。
+ * 它可用作各种符号表实现的测试client。
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne
@@ -62,7 +67,7 @@ public class FrequencyCounter {
         final int minlen = 1;//Integer.parseInt(args[0]);
         ST<String, Integer> st = new ST<>();
 
-        String path = "/home/amy/github/AlgEssentialsSRC/AlgEdition4/resources/tale.txt";
+        String path = SearchTestResources.Local.tale;
         In in = new In(path);
         // compute frequency counts
         while (!in.isEmpty()) {
@@ -92,4 +97,5 @@ public class FrequencyCounter {
         StdOut.println("distinct = " + distinct);
         StdOut.println("words    = " + words);
     }
+
 }
