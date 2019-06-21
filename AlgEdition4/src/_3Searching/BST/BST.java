@@ -4,7 +4,7 @@ package _3Searching.BST;
  *  Compilation:  javac BST.java
  *  Execution:    java BST
  *  Dependencies: StdIn.java StdOut.java Queue.java
- *  Data files:   https://algs4.cs.princeton.edu/32bst/tinyST.txt
+ *  Data files:   https://algs4.cs.princeton.edu/32bst/tinyST.txt  
  *
  *  A symbol table implemented with a binary search tree.
  *
@@ -28,12 +28,13 @@ package _3Searching.BST;
 import java.util.NoSuchElementException;
 
 import _1Fundamentals.Queue.Queue;
+import _3Searching.Applications.ST;
 import _3Searching.ElementarySymbolTables.BinarySearchST;
 import _3Searching.ElementarySymbolTables.SequentialSearchST;
 import _3Searching.HashTable.LinearProbingHashST;
-import _3Searching.Applications.ST;
 import _3Searching.HashTable.SeparateChainingHashST;
-import base.stdlib.StdIn;
+import _3Searching.SearchTestResources;
+import base.stdlib.In;
 import base.stdlib.StdOut;
 
 /**
@@ -68,6 +69,18 @@ import base.stdlib.StdOut;
  * For other implementations, see {@link ST}, {@link BinarySearchST},
  * {@link SequentialSearchST}, {@link RedBlackBST},
  * {@link SeparateChainingHashST}, and {@link LinearProbingHashST},
+ * <p>
+ * <p>
+ * BST类表示通用键值对的有序符号表。它支持通用的put，get，contains，delete，size和is-empty方法。
+ * 它还提供有序的方法来查找minimum, maximum, floor, select, ceiling。
+ * 它还提供了一种迭代所有键的key方法。
+ * 符号表实现关联数组抽象：当将值与已存在于符号表中的键相关联时，约定是将旧值替换为新值。
+ * 与java.util.Map不同，此类使用值不能为null的约定 u
+ * - 将与键关联的值设置为null等效于从符号表中删除键。
+ * <p>
+ * 此实现使用（非平衡）二进制搜索树。它要求key类型实现Comparable接口并调用compareTo（）和方法来比较两个密钥。
+ * 它不会调用equals（）或hashCode（）。如果树变得不平衡，则在最坏的情况下，put，contains，remove，minimum，maximum
+ * ，ceiling，floor，select和rank操作都会花费线性时间。size()和is-empty()操作需要常数时间。构造需要常数的时间。
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne
@@ -90,12 +103,16 @@ public class BST<Key extends Comparable<Key>, Value> {
 
     /**
      * Initializes an empty symbol table.
+     * <p>
+     * 初始化一个空符号表。
      */
     public BST() {
     }
 
     /**
      * Returns true if this symbol table is empty.
+     * <p>
+     * 如果此符号表为空，则返回true。
      *
      * @return {@code true} if this symbol table is empty; {@code false} otherwise
      */
@@ -105,6 +122,8 @@ public class BST<Key extends Comparable<Key>, Value> {
 
     /**
      * Returns the number of key-value pairs in this symbol table.
+     * <p>
+     * 返回此符号表中key - value对的数量。
      *
      * @return the number of key-value pairs in this symbol table
      */
@@ -116,13 +135,14 @@ public class BST<Key extends Comparable<Key>, Value> {
     private int size(Node x) {
         if (x == null) {
             return 0;
-        } else {
-            return x.size;
         }
+        return x.size;
     }
 
     /**
      * Does this symbol table contain the given key?
+     * <p>
+     * 此符号表是否包含给定的key？
      *
      * @param key the key
      * @return {@code true} if this symbol table contains {@code key} and
@@ -138,6 +158,8 @@ public class BST<Key extends Comparable<Key>, Value> {
 
     /**
      * Returns the value associated with the given key.
+     * <p>
+     * 返回与给定key关联的value。
      *
      * @param key the key
      * @return the value associated with the given key if the key is in the symbol table
@@ -170,6 +192,9 @@ public class BST<Key extends Comparable<Key>, Value> {
      * value with the new value if the symbol table already contains the specified key.
      * Deletes the specified key (and its associated value) from this symbol table
      * if the specified value is {@code null}.
+     * <p>
+     * 将指定的key-value对插入符号表，如果符号表已包含指定的键，则使用新值覆盖旧值。
+     * 如果指定的值为null，则从此符号表中删除指定的键（及其关联值）。
      *
      * @param key the key
      * @param val the value
@@ -184,6 +209,7 @@ public class BST<Key extends Comparable<Key>, Value> {
             return;
         }
         root = put(root, key, val);
+        assert check();
     }
 
     private Node put(Node x, Key key, Value val) {
@@ -198,13 +224,14 @@ public class BST<Key extends Comparable<Key>, Value> {
         } else {
             x.val = val;
         }
-        x.size = 1 + size(x.left) + size(x.right);
+        x.size = size(x.left) + size(x.right) + 1;
         return x;
     }
 
-
     /**
      * Removes the smallest key and associated value from the symbol table.
+     * <p>
+     * 从符号表中删除最小的键和关联值。
      *
      * @throws NoSuchElementException if the symbol table is empty
      */
@@ -213,6 +240,7 @@ public class BST<Key extends Comparable<Key>, Value> {
             throw new NoSuchElementException("Symbol table underflow");
         }
         root = deleteMin(root);
+        assert check();
     }
 
     private Node deleteMin(Node x) {
@@ -226,6 +254,8 @@ public class BST<Key extends Comparable<Key>, Value> {
 
     /**
      * Removes the largest key and associated value from the symbol table.
+     * <p>
+     * 从符号表中删除最大的键和关联值。
      *
      * @throws NoSuchElementException if the symbol table is empty
      */
@@ -234,6 +264,7 @@ public class BST<Key extends Comparable<Key>, Value> {
             throw new NoSuchElementException("Symbol table underflow");
         }
         root = deleteMax(root);
+        assert check();
     }
 
     private Node deleteMax(Node x) {
@@ -248,6 +279,8 @@ public class BST<Key extends Comparable<Key>, Value> {
     /**
      * Removes the specified key and its associated value from this symbol table
      * (if the key is in this symbol table).
+     * <p>
+     * 从此符号表中移除指定的键及其关联值（如果键位于此符号表中）。
      *
      * @param key the key
      * @throws IllegalArgumentException if {@code key} is {@code null}
@@ -257,13 +290,13 @@ public class BST<Key extends Comparable<Key>, Value> {
             throw new IllegalArgumentException("calls delete() with a null key");
         }
         root = delete(root, key);
+        assert check();
     }
 
     private Node delete(Node x, Key key) {
         if (x == null) {
             return null;
         }
-
         int cmp = key.compareTo(x.key);
         if (cmp < 0) {
             x.left = delete(x.left, key);
@@ -285,9 +318,10 @@ public class BST<Key extends Comparable<Key>, Value> {
         return x;
     }
 
-
     /**
      * Returns the smallest key in the symbol table.
+     * <p>
+     * 返回符号表中的最小键。
      *
      * @return the smallest key in the symbol table
      * @throws NoSuchElementException if the symbol table is empty
@@ -309,6 +343,8 @@ public class BST<Key extends Comparable<Key>, Value> {
 
     /**
      * Returns the largest key in the symbol table.
+     * <p>
+     * 返回符号表中的最大键。
      *
      * @return the largest key in the symbol table
      * @throws NoSuchElementException if the symbol table is empty
@@ -330,6 +366,8 @@ public class BST<Key extends Comparable<Key>, Value> {
 
     /**
      * Returns the largest key in the symbol table less than or equal to {@code key}.
+     * <p>
+     * 返回符号表中小于或等于key的最大键。
      *
      * @param key the key
      * @return the largest key in the symbol table less than or equal to {@code key}
@@ -390,6 +428,8 @@ public class BST<Key extends Comparable<Key>, Value> {
 
     /**
      * Returns the smallest key in the symbol table greater than or equal to {@code key}.
+     * <p>
+     * 返回符号表中大于或等于key的最小键。
      *
      * @param key the key
      * @return the smallest key in the symbol table greater than or equal to {@code key}
@@ -433,6 +473,8 @@ public class BST<Key extends Comparable<Key>, Value> {
     /**
      * Return the key in the symbol table whose rank is {@code k}.
      * This is the (k+1)st smallest key in the symbol table.
+     * <p>
+     * 返回排名为k的符号表中的key。 这是符号表中的第（k + 1）小键。
      *
      * @param k the order statistic
      * @return the key in the symbol table of rank {@code k}
@@ -464,6 +506,8 @@ public class BST<Key extends Comparable<Key>, Value> {
 
     /**
      * Return the number of keys in the symbol table strictly less than {@code key}.
+     * <p>
+     * 返回符号表中严格小于key的键的数量.
      *
      * @param key the key
      * @return the number of keys in the symbol table strictly less than {@code key}
@@ -495,12 +539,15 @@ public class BST<Key extends Comparable<Key>, Value> {
      * Returns all keys in the symbol table as an {@code Iterable}.
      * To iterate over all of the keys in the symbol table named {@code st},
      * use the foreach notation: {@code for (Key key : st.keys())}.
+     * <p>
+     * 将符号表中的所有键作为Iterable返回。
+     * 要迭代名为st的符号表中的所有键，请使用foreach表示法：for（Key key：st.keys（））。
      *
      * @return all keys in the symbol table
      */
     public Iterable<Key> keys() {
         if (isEmpty()) {
-            return new Queue<Key>();
+            return new Queue<>();
         }
         return keys(min(), max());
     }
@@ -508,6 +555,8 @@ public class BST<Key extends Comparable<Key>, Value> {
     /**
      * Returns all keys in the symbol table in the given range,
      * as an {@code Iterable}.
+     * <p>
+     * 返回给定范围内符号表中的所有键，作为Iterable。
      *
      * @param lo minimum endpoint
      * @param hi maximum endpoint
@@ -523,8 +572,7 @@ public class BST<Key extends Comparable<Key>, Value> {
         if (hi == null) {
             throw new IllegalArgumentException("second argument to keys() is null");
         }
-
-        Queue<Key> queue = new Queue<Key>();
+        Queue<Key> queue = new Queue<>();
         keys(root, queue, lo, hi);
         return queue;
     }
@@ -548,6 +596,8 @@ public class BST<Key extends Comparable<Key>, Value> {
 
     /**
      * Returns the number of keys in the symbol table in the given range.
+     * <p>
+     * 返回给定范围内符号表中的键数。
      *
      * @param lo minimum endpoint
      * @param hi maximum endpoint
@@ -563,7 +613,6 @@ public class BST<Key extends Comparable<Key>, Value> {
         if (hi == null) {
             throw new IllegalArgumentException("second argument to size() is null");
         }
-
         if (lo.compareTo(hi) > 0) {
             return 0;
         }
@@ -576,6 +625,8 @@ public class BST<Key extends Comparable<Key>, Value> {
 
     /**
      * Returns the height of the BST (for debugging).
+     * <p>
+     * 返回BST的高度（用于调试）。
      *
      * @return the height of the BST (a 1-node tree has height 0)
      */
@@ -592,12 +643,14 @@ public class BST<Key extends Comparable<Key>, Value> {
 
     /**
      * Returns the keys in the BST in level order (for debugging).
+     * <p>
+     * 以层次顺序返回BST中的键（用于调试）。
      *
      * @return the keys in the BST in level order traversal
      */
     public Iterable<Key> levelOrder() {
-        Queue<Key> keys = new Queue<Key>();
-        Queue<Node> queue = new Queue<Node>();
+        Queue<Key> keys = new Queue<>();
+        Queue<Node> queue = new Queue<>();
         queue.enqueue(root);
         while (!queue.isEmpty()) {
             Node x = queue.dequeue();
@@ -686,20 +739,27 @@ public class BST<Key extends Comparable<Key>, Value> {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        BST<String, Integer> st = new BST<String, Integer>();
-        for (int i = 0; !StdIn.isEmpty(); i++) {
-            String key = StdIn.readString();
-            if ((st.size() > 1) && (st.floor(key) != st.floor2(key)))
+        BST<String, Integer> st = new BST<>();
+        In in = new In(SearchTestResources.Local.tinyST);
+        StringBuilder origin = new StringBuilder();
+        for (int i = 0; !in.isEmpty(); i++) {
+            String key = in.readString();
+            if ((st.size() > 1) && (st.floor(key) != st.floor2(key))) {
                 throw new RuntimeException("floor() function inconsistent");
+            }
+            origin.append(key + " " + i);
+            origin.append("   ");
             st.put(key, i);
         }
-
-        for (String s : st.levelOrder())
-            StdOut.println(s + " " + st.get(s));
-
+        StdOut.println(origin.toString());
+        for (String s : st.levelOrder()) {
+            StdOut.print(s + " " + st.get(s));
+            StdOut.print("   ");
+        }
         StdOut.println();
-
-        for (String s : st.keys())
-            StdOut.println(s + " " + st.get(s));
+        for (String s : st.keys()) {
+            StdOut.print(s + " " + st.get(s));
+            StdOut.print("   ");
+        }
     }
 }

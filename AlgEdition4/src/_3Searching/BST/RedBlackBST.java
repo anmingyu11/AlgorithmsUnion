@@ -3,8 +3,8 @@ package _3Searching.BST;
 /******************************************************************************
  *  Compilation:  javac RedBlackBST.java
  *  Execution:    java RedBlackBST < input.txt
- *  Dependencies: StdIn.java StdOut.java
- *  Data files:   https://algs4.cs.princeton.edu/33balanced/tinyST.txt
+ *  Dependencies: StdIn.java StdOut.java  
+ *  Data files:   https://algs4.cs.princeton.edu/33balanced/tinyST.txt  
  *
  *  A symbol table implemented using a left-leaning red-black BST.
  *  This is the 2-3 version.
@@ -32,13 +32,16 @@ package _3Searching.BST;
 import java.util.NoSuchElementException;
 
 import _1Fundamentals.Queue.Queue;
+import _3Searching.Applications.ST;
 import _3Searching.ElementarySymbolTables.BinarySearchST;
 import _3Searching.ElementarySymbolTables.SequentialSearchST;
 import _3Searching.HashTable.LinearProbingHashST;
-import _3Searching.Applications.ST;
 import _3Searching.HashTable.SeparateChainingHashST;
-import base.stdlib.StdIn;
+import _3Searching.SearchTestResources;
+import base.stdlib.In;
 import base.stdlib.StdOut;
+import base.util.ArraysUtil;
+import base.util.ShuffleUtil;
 
 /**
  * The {@code BST} class represents an ordered symbol table of generic
@@ -70,7 +73,22 @@ import base.stdlib.StdOut;
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
  * For other implementations of the same API, see {@link ST}, {@link BinarySearchST},
  * {@link SequentialSearchST}, {@link BST},
- * {@link SeparateChainingHashST}, {@link LinearProbingHashST}, and {@link AVLTreeST}.
+ * {@link SeparateChainingHashST}, {@link LinearProbingHashST}
+ * <p>
+ * BST类表示通用键值对的有序符号表。
+ * 它支持通常的put，get，contains，delete，size和is-empty方法。
+ * 它还提供了有序的方法来查找minimum, maximum, floor, 和 ceiling。
+ * 它还提供了一种迭代所有键的键方法。
+ * 符号表实现关联数组抽象：当将值与已存在于符号表中的键相关联时，约定是将旧值替换为新值。
+ * 与java.util.Map不同，此类使用值不能为null的约定
+ * - 将与键关联的值设置为null等效于从符号表中删除键。
+ * <p>
+ * 此实现使用左倾红黑树。
+ * 它要求key实现Comparable接口并调用compareTo（）和方法来比较两个key。
+ * 它不会调用equals（）或hashCode（）。
+ * 如果树变得不平衡，则在最坏的情况下，
+ * put，contains，remove，minimum，maximum，ceiling和floor操作都采用对数时间。
+ * size和is-empty需要constant的时间。构造需要constant的时间。
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne
@@ -82,7 +100,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     private static final boolean BLACK = false;
 
     private Node root;     // root of the BST
-    private boolean mBoolean;
 
     // BST helper node data type
     private class Node {
@@ -102,6 +119,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
     /**
      * Initializes an empty symbol table.
+     * <p>
+     * 初始化一个空符号表。
      */
     public RedBlackBST() {
     }
@@ -113,8 +132,9 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     private boolean isRed(Node x) {
         if (x == null) {
             return BLACK;
+        } else {
+            return x.color;
         }
-        return x.color == RED;
     }
 
     // number of node in subtree rooted at x; 0 if x is null
@@ -127,6 +147,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
     /**
      * Returns the number of key-value pairs in this symbol table.
+     * <p>
+     * 返回此符号表中键 - 值对的数量。
      *
      * @return the number of key-value pairs in this symbol table
      */
@@ -136,6 +158,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
     /**
      * Is this symbol table empty?
+     * <p>
+     * 这个符号表是空的吗？
      *
      * @return {@code true} if this symbol table is empty and {@code false} otherwise
      */
@@ -149,6 +173,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
     /**
      * Returns the value associated with the given key.
+     * <p>
+     * 返回与给定键关联的值。
      *
      * @param key the key
      * @return the value associated with the given key if the key is in the symbol table
@@ -179,6 +205,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
     /**
      * Does this symbol table contain the given key?
+     * <p>
+     * 此符号表是否包含给定的键？
      *
      * @param key the key
      * @return {@code true} if this symbol table contains {@code key} and
@@ -198,6 +226,9 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
      * value with the new value if the symbol table already contains the specified key.
      * Deletes the specified key (and its associated value) from this symbol table
      * if the specified value is {@code null}.
+     * <p>
+     * 将指定的键值对插入符号表，如果符号表已包含指定的键，则使用新值覆盖旧值。
+     * 如果指定的值为null，则从此符号表中删除指定的键（及其关联值）。
      *
      * @param key the key
      * @param val the value
@@ -211,22 +242,16 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
             delete(key);
             return;
         }
-
         root = put(root, key, val);
         root.color = BLACK;
-
+        assert check();
     }
 
     // insert the key-value pair in the subtree rooted at h
-
-    /**
-     * 插入是第一部分操作,也就是收敛条件,关键是回溯的部分,回溯的部分会调整树的平衡性 balance().
-     */
     private Node put(Node h, Key key, Value val) {
         if (h == null) {
             return new Node(key, val, RED, 1);
         }
-
         int cmp = key.compareTo(h.key);
         if (cmp < 0) {
             h.left = put(h.left, key, val);
@@ -235,8 +260,18 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         } else {
             h.val = val;
         }
-
-        return balance(h);
+        // 此处与balanced是不同的请注意.
+        if (isRed(h.right) && !isRed(h.left)) {
+            h = rotateLeft(h);
+        }
+        if (isRed(h.left) && isRed(h.left.left)) {
+            h = rotateRight(h);
+        }
+        if (isRed(h.left) && isRed(h.right)) {
+            flipColors(h);
+        }
+        h.size = size(h.left) + size(h.right) + 1;
+        return h;
     }
 
     /***************************************************************************
@@ -245,7 +280,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
     /**
      * Removes the smallest key and associated value from the symbol table.
-     * 源代码有一部分多余,root.right不可能是红的
+     * <p>
+     * 从符号表中删除最小的键和关联值。
      *
      * @throws NoSuchElementException if the symbol table is empty
      */
@@ -253,16 +289,14 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (isEmpty()) {
             throw new NoSuchElementException("BST underflow");
         }
-
-        if (!isRed(root.left) && !isRed(root.right)) {//!isRed(root.root)这个是没有必要的
+        if (!isRed(root.left) && !isRed(root.right)) { // isRed(root.right) necessary?
             root.color = RED;
         }
-
         root = deleteMin(root);
-
         if (!isEmpty()) {
             root.color = BLACK;
         }
+        assert check();
     }
 
     // delete the key-value pair with the minimum key rooted at h
@@ -271,6 +305,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
      * 设h是当前结点.
      * 如果我们删除的是2-结点,则树会失去平衡,
      * 那么我们需要在向下递归查找最小值的过程中,将树配平,即不允许h的子结点存在2-结点,从而保证删除成功.
+     * 重点: 保证每次递归的结点h,h都是红的.
      * <p>
      * 如要删除,则有两种情况:
      * 1.要删除的结点是3-结点
@@ -293,16 +328,12 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (h.left == null) {
             return null;
         }
-
         if (!isRed(h.left) && !isRed(h.left.left)) {
             h = moveRedLeft(h);
         }
-
         h.left = deleteMin(h.left);
-
         return balance(h);
     }
-
 
     /**
      * Removes the largest key and associated value from the symbol table.
@@ -313,15 +344,14 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (isEmpty()) {
             throw new NoSuchElementException("BST underflow");
         }
-
         if (!isRed(root.left) && !isRed(root.right)) {
             root.color = RED;
         }
-
         root = deleteMax(root);
         if (!isEmpty()) {
             root.color = BLACK;
         }
+        assert check();
     }
 
     /**
@@ -336,17 +366,13 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (isRed(h.left)) {
             h = rotateRight(h);
         }
-
         if (h.right == null) {
             return null;
         }
-
         if (!isRed(h.right) && !isRed(h.right.left)) {
             h = moveRedRight(h);
         }
-
         h.right = deleteMax(h.right);
-
         return balance(h);
     }
 
@@ -354,7 +380,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
      * Removes the specified key and its associated value from this symbol table
      * (if the key is in this symbol table).
      * <p>
-     * contains操作很有必要,不然会做大量的操作去配平,并重新调整树.
+     * 从此符号表中移除指定的键及其关联值（如果键位于此符号表中）。
      *
      * @param key the key
      * @throws IllegalArgumentException if {@code key} is {@code null}
@@ -363,65 +389,65 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (key == null) {
             throw new IllegalArgumentException("argument to delete() is null");
         }
-        if (!contains(key)) {
+        if (!contains(key)) { // very useful
             return;
         }
-
-        if (!isRed(root.left) && isRed(root.right)) {
+        if (!isRed(root.left) && !isRed(root.right)) {
             root.color = RED;
         }
-
         root = delete(root, key);
         if (!isEmpty()) {
             root.color = BLACK;
         }
+        assert check();
     }
 
     /**
      * 删除操作所涉及的情况过多了,所以我们要用另一个方式去做:
-     *
+     * <p>
      * 如同删除最大值和最小值一样,在递归向下的过程中,依然去将向下过程中经过的结点配平,
-     *
+     * <p>
      * 当在左子树递归的时候,设当前结点为h
      * 用deleteMin()的配平方式不断向下递归
      * 当在右子树递归的时候,设当前结点为h
      * 用deleteMax()的配平方式不断向下递归
-     *
-     *
+     * <p>
+     * <p>
      * 如果h就是要查找的结点
-     *  1.如果h有左子节点并且左子节点是红,右旋,并继续向右子树遍历.
-     *  2.如果h没有左子节点或者左子结点是黑色结点,且没有右子结点,那么直接以删除最大结点的方式删除,返回0.
-     *  3.如果h的左子结点是黑,且右子结点是2-结点(h.right==black && h.right.left == black),那么进行配平,从左子节点借一个结点,
-     *  如果左子结点也是2-结点,那么将h,h.left,h.right配成一个3-结点, 将当前节点用她的右子树的最小结点进行覆盖,并删除她的右子树的最小结点.
-     *
+     * 1.如果h有左子节点并且左子节点是红,右旋,并继续向右子树遍历.
+     * 2.h一定是红的,如果h没有左子节点或者左子结点是黑色结点,且没有右子结点,那么直接以删除最大结点的方式删除,返回0.
+     * 3.如果h的左子结点是黑,且右子结点是2-结点(h.right==black && h.right.left == black),那么进行配平,从左子节点借一个结点,
+     * 如果左子结点也是2-结点,那么将h,h.left,h.right配成一个3-结点, 将当前节点用她的右子树的最小结点进行覆盖,并删除她的右子树的最小结点.
+     * <p>
      * 最后调整树
+     *
      * @param h
      * @param key
      * @return
      */
     private Node delete(Node h, Key key) {
-        // assert get(h, key) != null;
-
-        int cmp = key.compareTo(h.key);
-        if (cmp < 0) {
+        assert get(h, key) != null;
+        if (key.compareTo(h.key) < 0) {
             if (!isRed(h.left) && !isRed(h.left.left)) {
                 h = moveRedLeft(h);
             }
             h.left = delete(h.left, key);
         } else {
             if (isRed(h.left)) {
-                h = rotateRight(h);
+                h = rotateRight(h); // 向右配平
             }
-            if (cmp == 0 && (h.right == null)) {
-                return null;
+            if (key.compareTo(h.key) == 0 && (h.right == null)) {
+                return null; // Todo : 向右走走到了尽头?
             }
             if (!isRed(h.right) && !isRed(h.right.left)) {
-                h = moveRedRight(h);
+                h = moveRedRight(h); // 向右配平
             }
-            if (cmp == 0) {
+            if (key.compareTo(h.key) == 0) {
                 Node x = min(h.right);
                 h.key = x.key;
                 h.val = x.val;
+                // h.val = get(h.right, min(h.right).key);
+                // h.key = min(h.right).key;
                 h.right = deleteMin(h.right);
             } else {
                 h.right = delete(h.right, key);
@@ -436,11 +462,12 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
     /**
      * 右旋操作
+     *
      * @param h
      * @return
      */
     private Node rotateRight(Node h) {
-        // assert (h != null) && isRed(h.left);
+        assert (h != null) && isRed(h.left);
         Node x = h.left;
         h.left = x.right;
         x.right = h;
@@ -453,11 +480,12 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
     /**
      * 左旋操作.
+     *
      * @param h
      * @return
      */
     private Node rotateLeft(Node h) {
-        // assert (h != null) && isRed(h.right);
+        assert (h != null) && isRed(h.right);
         Node x = h.right;
         h.right = x.left;
         x.left = h;
@@ -477,13 +505,14 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
      * 且满足两者条件其一,
      * 1. h是黑色结点,两个子节点都是红色结点. 即这个结点是由h结点的父结点连接的4-结点,翻转颜色让她和她的父节点合并成一个结点,将她的两个子节点的颜色变黑
      * 2. h是红结点,两个子节点都是黑结点. 即这个结点是一个3-结点,将这个结点下沉,和她的两个子节点合并成一个4-结点,变成了h是一个由h的父节点连接的4-结点
+     *
      * @param h
      */
     private void flipColors(Node h) {
         // h must have opposite color of its two children
-        // assert (h != null) && (h.left != null) && (h.right != null);
-        // assert (!isRed(h) &&  isRed(h.left) &&  isRed(h.right))
-        //    || (isRed(h)  && !isRed(h.left) && !isRed(h.right));
+        assert (h != null) && (h.left != null) && (h.right != null);
+        assert (!isRed(h) && isRed(h.left) && isRed(h.right))
+                || (isRed(h) && !isRed(h.left) && !isRed(h.right));
         h.color = !h.color;
         h.left.color = !h.left.color;
         h.right.color = !h.right.color;
@@ -495,10 +524,10 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     /**
      * 设当前结点为h
      * 必须满足的条件是h!=null且h是红色结点,
-     *
+     * <p>
      * 翻转颜色
      * 这样可以将父节点下沉一个结点给左子节点,即将h结点和她的两个子节点合并,成为一个由其父结点连接的4-结点
-     *
+     * <p>
      * 但如果她的右子节点是3-结点,那么我们是直接从右子节点借一个结点到左子节点,
      * 翻转颜色过后,通过左旋她的右子节点,再左旋h结点,翻转颜色,这样左子节点就变成了3-结点
      *
@@ -506,26 +535,23 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
      * @return
      */
     private Node moveRedLeft(Node h) {
-        // assert (h != null);
-        // assert isRed(h) && !isRed(h.left) && !isRed(h.left.left);
+        assert (h != null);
+        assert isRed(h) && !isRed(h.left) && !isRed(h.left.left);
         flipColors(h);
-
         if (isRed(h.right.left)) {
             h.right = rotateRight(h.right);
             h = rotateLeft(h);
             flipColors(h);
         }
-
         return h;
     }
 
     /**
-     *
      * 设当前结点为h
      * 必须满足的条件是h!=null且h是红色结点,
-     *
+     * <p>
      * 翻转颜色,这个不必多说.
-     *
+     * <p>
      * 如果h结点的左子结点是一个3-结点,将她的左子节点借一个结点到右子节点
      * 先右旋h结点,然后翻转颜色即可做到.
      *
@@ -533,15 +559,13 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
      * @return
      */
     private Node moveRedRight(Node h) {
-        // assert (h != null);
-        // assert isRed(h) && !isRed(h.right) && !isRed(h.right.left);
+        assert (h != null);
+        assert isRed(h) && !isRed(h.right) && !isRed(h.right.left);
         flipColors(h);
-
         if (isRed(h.left.left)) {
             h = rotateRight(h);
             flipColors(h);
         }
-
         return h;
     }
 
@@ -557,9 +581,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
      * @return
      */
     private Node balance(Node h) {
-        // assert (h != null);
-
-        if (!isRed(h.left) && isRed(h.right)) {
+        assert (h != null);
+        if (isRed(h.right)) {
             h = rotateLeft(h);
         }
         if (isRed(h.left) && isRed(h.left.left)) {
@@ -568,9 +591,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (isRed(h.left) && isRed(h.right)) {
             flipColors(h);
         }
-
         h.size = size(h.left) + size(h.right) + 1;
-
         return h;
     }
 
@@ -614,7 +635,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
     // the smallest key in subtree rooted at x; null if no such key
     private Node min(Node x) {
-        // assert x != null;
+        assert x != null;
         if (x.left == null) {
             return x;
         } else {
@@ -637,7 +658,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
     // the largest key in the subtree rooted at x; null if no such key
     private Node max(Node x) {
-        // assert x != null;
+        assert x != null;
         if (x.right == null) {
             return x;
         } else {
@@ -647,6 +668,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
     /**
      * Returns the largest key in the symbol table less than or equal to {@code key}.
+     * <p>
+     * 返回符号表中小于或等于key的最大键。
      *
      * @param key the key
      * @return the largest key in the symbol table less than or equal to {@code key}
@@ -690,6 +713,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
     /**
      * Returns the smallest key in the symbol table greater than or equal to {@code key}.
+     * <p>
+     * 返回符号表中大于或等于key的最小键。
      *
      * @param key the key
      * @return the smallest key in the symbol table greater than or equal to {@code key}
@@ -734,6 +759,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     /**
      * Return the key in the symbol table whose rank is {@code k}.
      * This is the (k+1)st smallest key in the symbol table.
+     * <p>
+     * 返回排名为k的符号表中的key 这是符号表st中的第（k + 1）小键。
      *
      * @param k the order statistic
      * @return the key in the symbol table of rank {@code k}
@@ -744,14 +771,13 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (k < 0 || k >= size()) {
             throw new IllegalArgumentException("argument to select() is invalid: " + k);
         }
-        Node x = select(root, k);
-        return x.key;
+        return select(root, k).key;
     }
 
     // the key of rank k in the subtree rooted at x
     private Node select(Node x, int k) {
-        // assert x != null;
-        // assert k >= 0 && k < size(x);
+        assert x != null;
+        assert k >= 0 && k < size(x);
         int t = size(x.left);
         if (t > k) {
             return select(x.left, k);
@@ -764,6 +790,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
     /**
      * Return the number of keys in the symbol table strictly less than {@code key}.
+     * <p>
+     * 返回符号表中小于key的键的数量.
      *
      * @param key the key
      * @return the number of keys in the symbol table strictly less than {@code key}
@@ -799,6 +827,9 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
      * Returns all keys in the symbol table as an {@code Iterable}.
      * To iterate over all of the keys in the symbol table named {@code st},
      * use the foreach notation: {@code for (Key key : st.keys())}.
+     * <p>
+     * 将符号表中的所有键作为Iterable返回。
+     * 要迭代名为st的符号表中的所有键，请使用foreach表示法：for（Key key ： st.keys（））。
      *
      * @return all keys in the symbol table as an {@code Iterable}
      */
@@ -812,6 +843,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     /**
      * Returns all keys in the symbol table in the given range,
      * as an {@code Iterable}.
+     * <p>
+     * 返回给定范围内符号表中的所有键，作为Iterable。
      *
      * @param lo minimum endpoint
      * @param hi maximum endpoint
@@ -827,9 +860,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (hi == null) {
             throw new IllegalArgumentException("second argument to keys() is null");
         }
-
-        Queue<Key> queue = new Queue<Key>();
-        // if (isEmpty() || lo.compareTo(hi) > 0) return queue;
+        Queue<Key> queue = new Queue<>();
         keys(root, queue, lo, hi);
         return queue;
     }
@@ -837,7 +868,9 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     // add the keys between lo and hi in the subtree rooted at x
     // to the queue
     private void keys(Node x, Queue<Key> queue, Key lo, Key hi) {
-        if (x == null) return;
+        if (x == null) {
+            return;
+        }
         int cmplo = lo.compareTo(x.key);
         int cmphi = hi.compareTo(x.key);
         if (cmplo < 0) {
@@ -853,6 +886,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
     /**
      * Returns the number of keys in the symbol table in the given range.
+     * <p>
+     * 返回给定范围内符号表中的键数。
      *
      * @param lo minimum endpoint
      * @param hi maximum endpoint
@@ -868,7 +903,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (hi == null) {
             throw new IllegalArgumentException("second argument to size() is null");
         }
-
         if (lo.compareTo(hi) > 0) {
             return 0;
         }
@@ -878,7 +912,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
             return rank(hi) - rank(lo);
         }
     }
-
 
     /***************************************************************************
      *  Check integrity of red-black tree data structure.
@@ -1003,11 +1036,38 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        RedBlackBST<String, Integer> st = new RedBlackBST<String, Integer>();
-        for (int i = 0; !StdIn.isEmpty(); i++) {
-            String key = StdIn.readString();
+        test2();
+    }
+
+    private static void test2() {
+        final char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+        int[] a = ArraysUtil.generateFromTo(1, 100);
+        ShuffleUtil.shuffle(a);
+        final int n = a.length;
+        final int nChars = chars.length;
+
+        RedBlackBST<Integer, Character> st = new RedBlackBST<>();
+        for (int i = 0; i < n; ++i) {
+            st.put(i, chars[i % nChars]);
+        }
+        assert st.check();
+//        for (Integer s : st.keys()) {
+//            StdOut.println(s + " " + st.get(s));
+//        }
+//        StdOut.println();
+        StdOut.println("size : " + st.size());
+        StdOut.println("height : " + st.height());
+        StdOut.println(Math.log(st.size()));// log_e
+    }
+
+    private static void test1() {
+        RedBlackBST<String, Integer> st = new RedBlackBST<>();
+        In in = new In(SearchTestResources.Local.tinyST);
+        for (int i = 0; !in.isEmpty(); i++) {
+            String key = in.readString();
             st.put(key, i);
         }
+        assert st.check();
         for (String s : st.keys())
             StdOut.println(s + " " + st.get(s));
         StdOut.println();
