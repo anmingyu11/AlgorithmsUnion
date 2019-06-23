@@ -106,7 +106,6 @@ public class _0099RecoverBinarySearchTree_Confuse extends BaseTree {
 
     public static void main(String[] args) {
         Solution s = new Solution1();
-
     }
 
 }
