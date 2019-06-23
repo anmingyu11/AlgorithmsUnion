@@ -42,6 +42,9 @@ import base.stdlib.StdOut;
  * <p>
  * For additional documentation, see <a href="https://algs4.cs.princeton.edu/35applications">Section 3.5</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * <p>
+ * DeDup类提供了一个客户端，用于从标准输入读取一系列单词并打印每个单词，删除任何重复项。
+ * 它可用作各种符号表实现的测试客户端
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne

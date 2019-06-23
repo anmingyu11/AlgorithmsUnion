@@ -46,6 +46,18 @@ import base.stdlib.StdOut;
  * <p>
  * For additional documentation, see <a href="https://algs4.cs.princeton.edu/35applications">Section 3.5</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * <p>
+ * ST类表示通用键值对的有序符号表。
+ * 它支持通常的put，get，contains，delete，size和is-empty方法。
+ * 它还提供了有序的方法来查找minimum, maximum, floor, and ceiling。
+ * 它还提供了一种迭代所有键的键方法。
+ * 符号表实现关联数组抽象：当将值与已存在于符号表中的键相关联时，约定是将旧值替换为新值。
+ * 与java.util.Map不同，此类使用值不能为null的约定 - 将与键关联的值设置为null等效于从符号表中删除键。
+ * <p>
+ * 此实现使用平衡二叉搜索树。它要求key类型实现Comparable接口并调用compareTo（）和方法来比较两个key。
+ * 它不会调用equals（）或hashCode（）。
+ * 在最坏的情况下，put，contains，remove，minimum，maximum，ceiling和floor操作都采用对数时间。
+ * size()和is-empty()操作需要constant的时间。construct需要constant的时间。
  *
  * @param <Key>   the generic type of keys in this symbol table
  * @param <Value> the generic type of values in this symbol table
@@ -58,14 +70,18 @@ public class ST<Key extends Comparable<Key>, Value> implements Iterable<Key> {
 
     /**
      * Initializes an empty symbol table.
+     * <p>
+     * 初始化一个空符号表。
      */
     public ST() {
-        st = new TreeMap<Key, Value>();
+        st = new TreeMap<>();
     }
 
 
     /**
      * Returns the value associated with the given key in this symbol table.
+     * <p>
+     * 返回与此符号表中给定键关联的值。
      *
      * @param key the key
      * @return the value associated with the given key if the key is in this symbol table;
@@ -84,6 +100,9 @@ public class ST<Key extends Comparable<Key>, Value> implements Iterable<Key> {
      * value with the new value if the symbol table already contains the specified key.
      * Deletes the specified key (and its associated value) from this symbol table
      * if the specified value is {@code null}.
+     * <p>
+     * 将指定的键值对插入符号表，如果符号表已包含指定的键，则使用新值覆盖旧值。
+     * 如果指定的值为null，则从此符号表中删除指定的键（及其关联值）。
      *
      * @param key the key
      * @param val the value
@@ -103,6 +122,8 @@ public class ST<Key extends Comparable<Key>, Value> implements Iterable<Key> {
     /**
      * Removes the specified key and its associated value from this symbol table
      * (if the key is in this symbol table).
+     * <p>
+     * 从此符号表中移除指定的键及其关联值（如果键位于此符号表中）。
      *
      * @param key the key
      * @throws IllegalArgumentException if {@code key} is {@code null}
@@ -116,6 +137,8 @@ public class ST<Key extends Comparable<Key>, Value> implements Iterable<Key> {
 
     /**
      * Returns true if this symbol table contain the given key.
+     * <p>
+     * 如果此符号表包含给定键，则返回true。
      *
      * @param key the key
      * @return {@code true} if this symbol table contains {@code key} and
@@ -131,6 +154,8 @@ public class ST<Key extends Comparable<Key>, Value> implements Iterable<Key> {
 
     /**
      * Returns the number of key-value pairs in this symbol table.
+     * <p>
+     * 返回此符号表中键 - 值对的数量。
      *
      * @return the number of key-value pairs in this symbol table
      */
@@ -140,6 +165,8 @@ public class ST<Key extends Comparable<Key>, Value> implements Iterable<Key> {
 
     /**
      * Returns true if this symbol table is empty.
+     * <p>
+     * 如果此符号表为空，则返回true。
      *
      * @return {@code true} if this symbol table is empty and {@code false} otherwise
      */
@@ -152,6 +179,9 @@ public class ST<Key extends Comparable<Key>, Value> implements Iterable<Key> {
      * <p>
      * To iterate over all of the keys in the symbol table named {@code st},
      * use the foreach notation: {@code for (Key key : st.keys())}.
+     * <p>
+     * 返回此符号表中的所有键。
+     * 要迭代名为st的符号表中的所有键，请使用foreach表示法：for（Key key：st.keys（））。
      *
      * @return all keys in this symbol table
      */
@@ -166,6 +196,9 @@ public class ST<Key extends Comparable<Key>, Value> implements Iterable<Key> {
      * <p>
      * This method is provided for backward compatibility with the version from
      * <em>Introduction to Programming in Java: An Interdisciplinary Approach.</em>
+     * <p>
+     * 返回此符号表中的所有键。 要迭代名为st的符号表中的所有键，请使用foreach表示法：for（Key key：st）。
+     * 提供此方法是为了向后兼容
      *
      * @return an iterator to all of the keys in this symbol table
      * @deprecated Replaced by {@link #keys()}.
@@ -177,28 +210,38 @@ public class ST<Key extends Comparable<Key>, Value> implements Iterable<Key> {
 
     /**
      * Returns the smallest key in this symbol table.
+     * <p>
+     * 返回此符号表中的最小键。
      *
      * @return the smallest key in this symbol table
      * @throws NoSuchElementException if this symbol table is empty
      */
     public Key min() {
-        if (isEmpty()) throw new NoSuchElementException("calls min() with empty symbol table");
+        if (isEmpty()) {
+            throw new NoSuchElementException("calls min() with empty symbol table");
+        }
         return st.firstKey();
     }
 
     /**
      * Returns the largest key in this symbol table.
+     * <p>
+     * 返回此符号表中的最大键。
      *
      * @return the largest key in this symbol table
      * @throws NoSuchElementException if this symbol table is empty
      */
     public Key max() {
-        if (isEmpty()) throw new NoSuchElementException("calls max() with empty symbol table");
+        if (isEmpty()) {
+            throw new NoSuchElementException("calls max() with empty symbol table");
+        }
         return st.lastKey();
     }
 
     /**
      * Returns the smallest key in this symbol table greater than or equal to {@code key}.
+     * <p>
+     * 返回此符号表中大于或等于key的最小键。
      *
      * @param key the key
      * @return the smallest key in this symbol table greater than or equal to {@code key}
@@ -218,6 +261,8 @@ public class ST<Key extends Comparable<Key>, Value> implements Iterable<Key> {
 
     /**
      * Returns the largest key in this symbol table less than or equal to {@code key}.
+     * <p>
+     * 返回此符号表中小于或等于key的最大键。
      *
      * @param key the key
      * @return the largest key in this symbol table less than or equal to {@code key}
@@ -241,7 +286,7 @@ public class ST<Key extends Comparable<Key>, Value> implements Iterable<Key> {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        ST<String, Integer> st = new ST<String, Integer>();
+        ST<String, Integer> st = new ST<>();
         for (int i = 0; !StdIn.isEmpty(); i++) {
             String key = StdIn.readString();
             st.put(key, i);

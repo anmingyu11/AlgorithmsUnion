@@ -32,8 +32,8 @@ package _3Searching.Applications;
  *
  ******************************************************************************/
 
+import _3Searching.SearchTestResources;
 import base.stdlib.In;
-import base.stdlib.StdIn;
 import base.stdlib.StdOut;
 
 /**
@@ -44,6 +44,9 @@ import base.stdlib.StdOut;
  * <p>
  * For additional documentation, see <a href="https://algs4.cs.princeton.edu/35applications">Section 3.5</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * <p>
+ * LookupCSV类提供了一个数据驱动的客户端，用于从文件中读取键值对;
+ * 然后，打印与标准输入上找到的键对应的值。 键和值都是字符串。 用作键和值的字段被视为命令行参数。
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne
@@ -56,9 +59,8 @@ public class LookupCSV {
 
     public static void main(String[] args) {
         ST<String, String> st = new ST<>();
-
         // read in the data from csv file
-        In in = new In("/home/amy/github/AlgEssentialsSRC/AlgEdition4/resources/csv/ip.csv");
+        In in = new In(SearchTestResources.Local.ip);
         while (in.hasNextLine()) {
             String line = in.readLine();
             String[] tokens = line.split(",");
@@ -66,11 +68,16 @@ public class LookupCSV {
             String val = tokens[1];
             st.put(key, val);
         }
-
-        while (!StdIn.isEmpty()) {
-            String s = StdIn.readString();
-            if (st.contains(s)) {
-                StdOut.println(st.get(s));
+        String[] testAddr = {
+                "msn.com",
+                "baidu.com",
+                "qq.com",
+                "amazon.com",
+                "taobao.com"
+        };
+        for (String addr : testAddr) {
+            if (st.contains(addr)) {
+                StdOut.println("addr : " + addr + " -- " + st.get(addr));
             } else {
                 StdOut.println("Not found");
             }

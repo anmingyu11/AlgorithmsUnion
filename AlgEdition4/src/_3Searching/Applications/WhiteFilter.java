@@ -29,8 +29,8 @@ package _3Searching.Applications;
  *
  ******************************************************************************/
 
+import _3Searching.SearchTestResources;
 import base.stdlib.In;
-import base.stdlib.StdIn;
 import base.stdlib.StdOut;
 
 /**
@@ -41,6 +41,10 @@ import base.stdlib.StdOut;
  * <p>
  * For additional documentation, see <a href="https://algs4.cs.princeton.edu/35applications">Section 3.5</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * <p>
+ * WhiteFilter类提供了一个客户端，用于读取文件中的单词白名单;
+ * 然后，从标准输入中读取一系列单词，打印出文件中出现的每个单词。
+ * 它可用作各种符号表实现的测试客户端。
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne
@@ -55,15 +59,14 @@ public class WhiteFilter {
         SET<String> set = new SET<>();
 
         // read in strings and add to set
-        In in = new In(args[0]);
+        In in = new In(SearchTestResources.Local.tale);
         while (!in.isEmpty()) {
             String word = in.readString();
             set.add(word);
         }
-
         // read in string from standard input, printing out all exceptions
-        while (!StdIn.isEmpty()) {
-            String word = StdIn.readString();
+        String[] testString = {"do", "i", "fuck", "beauty", "mother"};
+        for (String word : testString) {
             if (set.contains(word))
                 StdOut.println(word);
         }

@@ -36,8 +36,8 @@ package _3Searching.Applications;
  ******************************************************************************/
 
 import _1Fundamentals.Queue.Queue;
+import _3Searching.SearchTestResources;
 import base.stdlib.In;
-import base.stdlib.StdIn;
 import base.stdlib.StdOut;
 
 /**
@@ -49,6 +49,10 @@ import base.stdlib.StdOut;
  * <p>
  * For additional documentation, see <a href="https://algs4.cs.princeton.edu/35applications">Section 3.5</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * <p>
+ * LookupIndex类提供了一个数据驱动的客户端，用于从文件中读取键值对;
+ * 然后，打印与标准输入上找到的键对应的值。
+ * 键是字符串; 值是字符串列表。 分隔定界符被视为命令行参数。 此客户端有时称为倒排索引。
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne
@@ -60,11 +64,9 @@ public class LookupIndex {
     }
 
     public static void main(String[] args) {
-        In in = new In("/home/amy/github/AlgEssentialsSRC/AlgEdition4/resources/csv/ip.csv");
-
+        In in = new In(SearchTestResources.Local.amino);
         ST<String, Queue<String>> st = new ST<>();
         ST<String, Queue<String>> ts = new ST<>();
-
         while (in.hasNextLine()) {
             String line = in.readLine();
             String[] fields = line.split(",");
@@ -81,22 +83,31 @@ public class LookupIndex {
                 ts.get(val).enqueue(key);
             }
         }
-
         StdOut.println("Done indexing");
-
         // read queries from standard input, one per line
-        while (!StdIn.isEmpty()) {
-            String query = StdIn.readLine();
+        String[] queries = {
+                "Serine",
+                "Leucine",
+                "Arginine",
+                "CTA",
+                "CGG",
+                "ATT",
+        };
+        for (String query : queries) {
             if (st.contains(query)) {
+                StdOut.println("Contains : " + query);
                 for (String vals : st.get(query)) {
-                    StdOut.println("  " + vals);
+                    StdOut.print("  " + vals);
                 }
             }
+            StdOut.println("");
             if (ts.contains(query)) {
+                StdOut.println("Contains : " + query);
                 for (String keys : ts.get(query)) {
-                    StdOut.println("  " + keys);
+                    StdOut.print("  " + keys);
                 }
             }
+            StdOut.println("");
         }
     }
 }
