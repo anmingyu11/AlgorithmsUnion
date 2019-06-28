@@ -23,6 +23,13 @@ public class BaseTree extends Base {
         }
     }
 
+    public static class TreeNode2 {
+        public int val;
+        public TreeNode2 left;
+        public TreeNode2 right;
+        public TreeNode2 next;
+    }
+
     public static void printTree(TreeNode root) {
     }
 
