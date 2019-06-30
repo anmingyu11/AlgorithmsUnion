@@ -45,7 +45,6 @@ public class _0121BestTimetoBuyandSellStock extends Base {
                 gain = Math.max(gain, A[i] - buy);
                 if (A[i] < buy) {
                     buy = A[i];
-
                 }
             }
             return gain;

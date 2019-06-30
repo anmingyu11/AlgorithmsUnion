@@ -61,6 +61,23 @@ public class _0122BestTimetoBuyandSellStock2 extends Base {
 
     }
 
+    /**
+     * 优化
+     */
+    private static class Solution2 extends Solution {
+
+        @Override
+        public int maxProfit(int[] prices) {
+            int max = 0;
+            for (int i = 1; i < prices.length; ++i) {
+                if (prices[i] > prices[i - 1]) {
+                    max += prices[i] - prices[i - 1];
+                }
+            }
+            return max;
+        }
+    }
+
     public static void main(String[] args) {
         int[] a1 = {7, 1, 5, 3, 6, 4};
         int[] a2 = {1, 2, 3, 4, 5};
