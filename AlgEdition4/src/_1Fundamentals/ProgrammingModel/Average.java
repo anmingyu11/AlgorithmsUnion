@@ -27,6 +27,8 @@ import base.stdlib.StdOut;
  * <p>
  * For additional documentation, see <a href="https://algs4.cs.princeton.edu/11model">Section 1.1</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * <p>
+ * Average类提供了一个客户端，用于读取一系列实数并打印出它们的平均值。
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne

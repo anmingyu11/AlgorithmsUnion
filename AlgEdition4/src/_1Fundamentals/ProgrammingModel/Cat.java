@@ -35,6 +35,8 @@ import base.stdlib.Out;
  * <p>
  * For additional documentation, see <a href="https://algs4.cs.princeton.edu/11model">Section 1.1</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * <p>
+ * Cat类提供了一个连接多个文本文件结果的客户端。
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne

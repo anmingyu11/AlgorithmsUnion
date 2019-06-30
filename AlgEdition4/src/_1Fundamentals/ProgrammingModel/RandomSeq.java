@@ -25,6 +25,8 @@ import base.stdlib.StdRandom;
  * <p>
  * For additional documentation, see <a href="https://algs4.cs.princeton.edu/11model">Section 1.1</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * <p>
+ * RandomSeq类是一个client，它在给定范围内打印出伪随机的实数序列。
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne
@@ -38,6 +40,8 @@ public class RandomSeq {
     /**
      * Reads in two command-line arguments lo and hi and prints n uniformly
      * random real numbers in [lo, hi) to standard output.
+     * <p>
+     * 读入两个命令行参数lo和hi，并将[lo，hi]中的n个均匀随机实数打印到标准输出。
      *
      * @param args the command-line arguments
      */
@@ -55,13 +59,11 @@ public class RandomSeq {
     }
 
     private static void generateNBetween(double lo, double hi, int n) {
-
         // generate and print n numbers between lo and hi
         for (int i = 0; i < n; i++) {
             double x = StdRandom.uniform(lo, hi);
             StdOut.printf("%.2f\n", x);
         }
-
     }
 
 }
