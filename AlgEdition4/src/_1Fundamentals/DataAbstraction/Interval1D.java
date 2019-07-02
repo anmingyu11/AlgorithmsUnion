@@ -1,5 +1,14 @@
 package _1Fundamentals.DataAbstraction;
 
+/******************************************************************************
+ *  Compilation:  javac Interval1D.java
+ *  Execution:    java Interval1D
+ *  Dependencies: StdOut.java
+ *
+ *  1-dimensional interval data type.
+ *
+ ******************************************************************************/
+
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -23,16 +32,22 @@ public class Interval1D {
 
     /**
      * Compares two intervals by min endpoint.
+     * <p>
+     * 通过最小端点比较两个间隔。
      */
     public static final Comparator<Interval1D> MIN_ENDPOINT_ORDER = new MinEndpointComparator();
 
     /**
      * Compares two intervals by max endpoint.
+     * <p>
+     * 按最大端点比较两个间隔。
      */
     public static final Comparator<Interval1D> MAX_ENDPOINT_ORDER = new MaxEndpointComparator();
 
     /**
      * Compares two intervals by length.
+     * <p>
+     * 按长度比较两个间隔。
      */
     public static final Comparator<Interval1D> LENGTH_ORDER = new LengthComparator();
 
@@ -41,6 +56,8 @@ public class Interval1D {
 
     /**
      * Initializes a closed interval [min, max].
+     * <p>
+     * 初始化闭区间[min，max]。
      *
      * @param min the smaller endpoint
      * @param max the larger endpoint
@@ -56,7 +73,6 @@ public class Interval1D {
         if (Double.isNaN(min) || Double.isNaN(max)) {
             throw new IllegalArgumentException("Endpoints cannot be NaN");
         }
-
         // convert -0.0 to +0.0
         if (min == 0.0) {
             min = 0.0;
@@ -64,7 +80,6 @@ public class Interval1D {
         if (max == 0.0) {
             max = 0.0;
         }
-
         if (min <= max) {
             this.min = min;
             this.max = max;
@@ -75,6 +90,8 @@ public class Interval1D {
 
     /**
      * Returns the left endpoint of this interval.
+     * <p>
+     * 返回此间隔的左端点。
      *
      * @return the left endpoint of this interval
      * @deprecated Replaced by {@link #min()}.
@@ -86,6 +103,8 @@ public class Interval1D {
 
     /**
      * Returns the right endpoint of this interval.
+     * <p>
+     * 返回此间隔的右端点。
      *
      * @return the right endpoint of this interval
      * @deprecated Replaced by {@link #max()}.
@@ -97,6 +116,8 @@ public class Interval1D {
 
     /**
      * Returns the min endpoint of this interval.
+     * <p>
+     * 返回此间隔的最小端点。
      *
      * @return the min endpoint of this interval
      */
@@ -106,6 +127,8 @@ public class Interval1D {
 
     /**
      * Returns the max endpoint of this interval.
+     * <p>
+     * 返回此间隔的最大端点。
      *
      * @return the max endpoint of this interval
      */
@@ -115,6 +138,8 @@ public class Interval1D {
 
     /**
      * Returns true if this interval intersects the specified interval.
+     * <p>
+     * 如果此间隔与指定的间隔相交，则返回true。
      *
      * @param that the other interval
      * @return {@code true} if this interval intersects the argument interval;
@@ -132,6 +157,8 @@ public class Interval1D {
 
     /**
      * Returns true if this interval contains the specified value.
+     * <p>
+     * 如果此时间间隔包含指定的值，则返回true。
      *
      * @param x the value
      * @return {@code true} if this interval contains the value {@code x};
@@ -143,6 +170,8 @@ public class Interval1D {
 
     /**
      * Returns the length of this interval.
+     * <p>
+     * 返回此间隔的长度。
      *
      * @return the length of this interval (max - min)
      */

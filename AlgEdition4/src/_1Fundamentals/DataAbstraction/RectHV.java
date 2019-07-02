@@ -1,15 +1,28 @@
 package _1Fundamentals.DataAbstraction;
 
+/******************************************************************************
+ *  Compilation:  javac RectHV.java
+ *  Execution:    none
+ *  Dependencies: Point2D.java
+ *
+ *  Immutable data type for 2D axis-aligned rectangle.
+ *
+ ******************************************************************************/
+
 import base.stdlib.StdDraw;
 
 /**
  * The {@code RectHV} class is an immutable data type to encapsulate a
- * two-dimensional axis-aligned rectagle with real-value coordinates.
+ * two-dimensional axis-aligned rectangle with real-value coordinates.
  * The rectangle is <em>closed</em>—it includes the points on the boundary.
  * <p>
  * For additional documentation,
  * see <a href="https://algs4.cs.princeton.edu/12oop">Section 1.2</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * <p>
+ * RectHV类是一个不可变的数据类型,
+ * 用于封装具有实值坐标的二维轴对齐 长方形.
+ * 矩形是封闭的 - 它包括边界上的点.
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne
@@ -22,6 +35,8 @@ public final class RectHV {
     /**
      * Initializes a new rectangle [<em>xmin</em>, <em>xmax</em>]
      * x [<em>ymin</em>, <em>ymax</em>].
+     * <p>
+     * 初始化一个新的矩形[xmin，xmax] x [ymin，ymax]。
      *
      * @param xmin the <em>x</em>-coordinate of the lower-left endpoint
      * @param xmax the <em>x</em>-coordinate of the upper-right endpoint
@@ -53,6 +68,8 @@ public final class RectHV {
 
     /**
      * Returns the minimum <em>x</em>-coordinate of any point in this rectangle.
+     * <p>
+     * 返回此矩形中任意点的最小x坐标。
      *
      * @return the minimum <em>x</em>-coordinate of any point in this rectangle
      */
@@ -62,6 +79,8 @@ public final class RectHV {
 
     /**
      * Returns the maximum <em>x</em>-coordinate of any point in this rectangle.
+     * <p>
+     * 返回此矩形中任意点的最大x坐标。
      *
      * @return the maximum <em>x</em>-coordinate of any point in this rectangle
      */
@@ -71,6 +90,8 @@ public final class RectHV {
 
     /**
      * Returns the minimum <em>y</em>-coordinate of any point in this rectangle.
+     * <p>
+     * 返回此矩形中任意点的最小y坐标。
      *
      * @return the minimum <em>y</em>-coordinate of any point in this rectangle
      */
@@ -80,6 +101,8 @@ public final class RectHV {
 
     /**
      * Returns the maximum <em>y</em>-coordinate of any point in this rectangle.
+     * <p>
+     * 返回此矩形中任意点的最大y坐标。
      *
      * @return the maximum <em>y</em>-coordinate of any point in this rectangle
      */
@@ -89,6 +112,8 @@ public final class RectHV {
 
     /**
      * Returns the width of this rectangle.
+     * <p>
+     * 返回此矩形的宽度。
      *
      * @return the width of this rectangle {@code xmax - xmin}
      */
@@ -98,6 +123,8 @@ public final class RectHV {
 
     /**
      * Returns the height of this rectangle.
+     * <p>
+     * 返回此矩形的高度。
      *
      * @return the height of this rectangle {@code ymax - ymin}
      */
@@ -110,30 +137,41 @@ public final class RectHV {
      * <em>improper intersections</em> (at points on the boundary
      * of each rectangle) and <em>nested intersctions</em>
      * (when one rectangle is contained inside the other)
+     * <p>
+     * 如果两个矩形相交，则返回true.
+     * 这包括不正确的交叉点（在每个矩形的边界上的点）和嵌套的交互（当一个矩形包含在另一个内部时）.
      *
      * @param that the other rectangle
      * @return {@code true} if this rectangle intersect the argument
      * rectangle at one or more points
      */
     public boolean intersects(RectHV that) {
-        return this.xmax >= that.xmin && this.ymax >= that.ymin
-                && that.xmax >= this.xmin && that.ymax >= this.ymin;
+        return this.xmax >= that.xmin
+                && this.ymax >= that.ymin
+                && that.xmax >= this.xmin
+                && that.ymax >= this.ymin;
     }
 
     /**
      * Returns true if this rectangle contain the point.
+     * <p>
+     * 如果此矩形包含该点，则返回true。
      *
      * @param p the point
      * @return {@code true} if this rectangle contain the point {@code p},
      * possibly at the boundary; {@code false} otherwise
      */
     public boolean contains(Point2D p) {
-        return (p.x() >= xmin) && (p.x() <= xmax)
-                && (p.y() >= ymin) && (p.y() <= ymax);
+        return (p.x() >= xmin)
+                && (p.x() <= xmax)
+                && (p.y() >= ymin)
+                && (p.y() <= ymax);
     }
 
     /**
      * Returns the Euclidean distance between this rectangle and the point {@code p}.
+     * <p>
+     * 返回此矩形与点p之间的欧几里德距离。
      *
      * @param p the point
      * @return the Euclidean distance between the point {@code p} and the closest point
@@ -145,6 +183,8 @@ public final class RectHV {
 
     /**
      * Returns the square of the Euclidean distance between this rectangle and the point {@code p}.
+     * <p>
+     * 返回此矩形与点p之间的欧几里德距离的平方。
      *
      * @param p the point
      * @return the square of the Euclidean distance between the point {@code p} and

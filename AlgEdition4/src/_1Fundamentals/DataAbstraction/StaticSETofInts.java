@@ -22,6 +22,11 @@ import java.util.Arrays;
  * <p>
  * For additional documentation, see <a href="https://algs4.cs.princeton.edu/12oop">Section 1.2</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * <p>
+ * StaticSETofInts类表示一组整数。
+ * 它支持在集合中搜索给定的整数。
+ * 它通过将整数数组排序后生成排序的整数集合并使用二分搜索来查找给定数来实现的。
+ * 在最坏的情况下，排名和包含操作需要对数时间。
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne
@@ -31,21 +36,20 @@ public class StaticSETofInts {
 
     /**
      * Initializes a set of integers specified by the integer array.
+     * <p>
+     * 以指定的整数数组初始化整数集合
      *
      * @param keys the array of integers
      * @throws IllegalArgumentException if the array contains duplicate integers
      */
     public StaticSETofInts(int[] keys) {
-
         // defensive copy
         a = new int[keys.length];
         for (int i = 0; i < keys.length; i++) {
             a[i] = keys[i];
         }
-
         // sort the integers
         Arrays.sort(a);
-
         // check for duplicates
         for (int i = 1; i < a.length; i++) {
             if (a[i] == a[i - 1]) {
@@ -56,6 +60,8 @@ public class StaticSETofInts {
 
     /**
      * Is the key in this set of integers?
+     * <p>
+     * key在整数集合中吗?
      *
      * @param key the search key
      * @return true if the set of integers contains the key; false otherwise
@@ -67,6 +73,8 @@ public class StaticSETofInts {
     /**
      * Returns either the index of the search key in the sorted array
      * (if the key is in the set) or -1 (if the key is not in the set).
+     * <p>
+     * 返回排序数组中搜索键的索引（如果键在集合中）或-1（如果键不在集合中）。
      *
      * @param key the search key
      * @return the number of keys in this set less than the key (if the key is in the set)

@@ -29,6 +29,8 @@ import base.stdlib.StdRandom;
  * For additional documentation,
  * see <a href="https://algs4.cs.princeton.edu/12oop">Section 1.2</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * <p>
+ * Counter类是用于封装计数器的可变数据类型。
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne
@@ -40,6 +42,8 @@ public class Counter implements Comparable<Counter> {
 
     /**
      * Initializes a new counter starting at 0, with the given id.
+     * <p>
+     * 使用给定的id初始化一个从0开始的新计数器。
      *
      * @param id the name of the counter
      */
@@ -49,13 +53,17 @@ public class Counter implements Comparable<Counter> {
 
     /**
      * Increments the counter by 1.
+     * <p>
+     * 将计数器递增1。
      */
     public void increment() {
-        count++;
+        ++count;
     }
 
     /**
      * Returns the current value of this counter.
+     * <p>
+     * 返回此计数器的当前值。
      *
      * @return the current value of this counter
      */
@@ -94,7 +102,6 @@ public class Counter implements Comparable<Counter> {
         }
     }
 
-
     /**
      * Reads two command-line integers n and trials; creates n counters;
      * increments trials counters at random; and prints results.
@@ -102,9 +109,9 @@ public class Counter implements Comparable<Counter> {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
+        int n = Integer.parseInt(args[0]);
+        int trials = Integer.parseInt(args[1]);
 
-        final int n = 5;
-        final int trials = 10;
         // create n counters
         Counter[] hits = new Counter[n];
         for (int i = 0; i < n; i++) {

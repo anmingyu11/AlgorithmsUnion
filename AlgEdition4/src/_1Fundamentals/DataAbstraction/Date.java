@@ -1,4 +1,5 @@
 package _1Fundamentals.DataAbstraction;
+
 /******************************************************************************
  *  Compilation:  javac Date.java
  *  Execution:    java Date
@@ -17,6 +18,8 @@ import base.stdlib.StdOut;
  * For additional documentation,
  * see <a href="https://algs4.cs.princeton.edu/12oop">Section 1.2</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * <p>
+ * Date类是一个不可变的数据类型，用于封装日期（日，月和年）。
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne
@@ -30,6 +33,8 @@ public class Date implements Comparable<Date> {
 
     /**
      * Initializes a new date from the month, day, and year.
+     * <p>
+     * 从月，日和年初始化新日期。
      *
      * @param month the month (between 1 and 12)
      * @param day   the day (between 1 and 28-31, depending on the month)
@@ -47,6 +52,8 @@ public class Date implements Comparable<Date> {
 
     /**
      * Initializes new date specified as a string in form MM/DD/YYYY.
+     * <p>
+     * 初始化以MM / DD / YYYY形式指定为字符串的新日期。
      *
      * @param date the string representation of this date
      * @throws IllegalArgumentException if this date is invalid
@@ -66,6 +73,8 @@ public class Date implements Comparable<Date> {
 
     /**
      * Return the month.
+     * <p>
+     * 返回月份。
      *
      * @return the month (an integer between 1 and 12)
      */
@@ -75,6 +84,8 @@ public class Date implements Comparable<Date> {
 
     /**
      * Returns the day.
+     * <p>
+     * 返回日期。
      *
      * @return the day (an integer between 1 and 31)
      */
@@ -84,13 +95,14 @@ public class Date implements Comparable<Date> {
 
     /**
      * Returns the year.
+     * <p>
+     * 返回年份。
      *
      * @return the year
      */
     public int year() {
         return year;
     }
-
 
     // is the given date valid?
     private static boolean isValid(int m, int d, int y) {
@@ -119,6 +131,8 @@ public class Date implements Comparable<Date> {
 
     /**
      * Returns the next date in the calendar.
+     * <p>
+     * 返回日历中的下一个日期。
      *
      * @return a date that represents the next day after this day
      */
@@ -134,6 +148,8 @@ public class Date implements Comparable<Date> {
 
     /**
      * Compares two dates chronologically.
+     * <p>
+     * 按时间顺序比较两个日期。
      *
      * @param that the other date
      * @return {@code true} if this date is after that date; {@code false} otherwise
@@ -144,6 +160,8 @@ public class Date implements Comparable<Date> {
 
     /**
      * Compares two dates chronologically.
+     * <p>
+     * 按时间顺序比较两个日期。
      *
      * @param that the other date
      * @return {@code true} if this date is before that date; {@code false} otherwise
@@ -154,6 +172,8 @@ public class Date implements Comparable<Date> {
 
     /**
      * Compares two dates chronologically.
+     * <p>
+     * 按时间顺序比较两个日期。
      *
      * @return the value {@code 0} if the argument date is equal to this date;
      * a negative integer if this date is chronologically less than

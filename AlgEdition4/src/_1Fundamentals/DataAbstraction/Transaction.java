@@ -21,6 +21,8 @@ import base.stdlib.StdOut;
  * For additional documentation,
  * see <a href="https://algs4.cs.princeton.edu/12oop">Section 1.2</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * <p>
+ * Transaction类是一种不可变的数据类型，用于封装具有客户名称，日期和金额的商业交易。
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne
@@ -33,6 +35,8 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Initializes a new transaction from the given arguments.
+     * <p>
+     * 用给定的参数初始化新交易.
      *
      * @param who    the person involved in this transaction
      * @param when   the date of this transaction
@@ -52,6 +56,8 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Initializes a new transaction by parsing a string of the form NAME DATE AMOUNT.
+     * <p>
+     * 通过解析 NAME DATE AMOUNT 形式的字符串来初始化新交易。
      *
      * @param transaction the string to parse
      * @throws IllegalArgumentException if {@code amount}
@@ -70,6 +76,8 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Returns the name of the customer involved in this transaction.
+     * <p>
+     * 返回此交易中涉及的客户的名称。
      *
      * @return the name of the customer involved in this transaction
      */
@@ -79,6 +87,8 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Returns the date of this transaction.
+     * <p>
+     * 返回此交易的日期。
      *
      * @return the date of this transaction
      */
@@ -88,6 +98,8 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Returns the amount of this transaction.
+     * <p>
+     * 返回此交易的金额。
      *
      * @return the amount of this transaction
      */
@@ -97,6 +109,8 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Returns a string representation of this transaction.
+     * <p>
+     * 返回此交易的字符串表示形式。
      *
      * @return a string representation of this transaction
      */
@@ -107,6 +121,8 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Compares two transactions by amount.
+     * <p>
+     * 按金额比较两笔交易。
      *
      * @param that the other transaction
      * @return { a negative integer, zero, a positive integer}, depending

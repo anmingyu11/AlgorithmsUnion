@@ -38,6 +38,10 @@ import base.stdlib.StdOut;
  * For additional documentation,
  * see <a href="https://algs4.cs.princeton.edu/12oop">Section 1.2</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * <p>
+ * Vector类表示d维欧几里德矢量。
+ * 向量是不可变的：它们的值在创建后无法更改。
+ * 它包括加法，减法，点积，标量积，单位向量，欧几里德范数和两个向量之间的欧几里德距离的方法。
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne
@@ -50,6 +54,8 @@ public class Vector {
 
     /**
      * Initializes a d-dimensional zero vector.
+     * <p>
+     * 初始化d维零向量。
      *
      * @param d the dimension of the vector
      */
@@ -62,12 +68,14 @@ public class Vector {
      * Initializes a vector from either an array or a vararg list.
      * The vararg syntax supports a constructor that takes a variable number of
      * arugments such as Vector x = new Vector(1.0, 2.0, 3.0, 4.0).
+     * <p>
+     * 从数组或vararg列表初始化向量。
+     * vararg语法支持一个构造函数，它采用可变数量的arugments，例如Vector x = new Vector（1.0,2.0,3.0,4.0）。
      *
      * @param a the array or vararg list
      */
     public Vector(double... a) {
         d = a.length;
-
         // defensive copy so that client can't alter our copy of data[]
         data = new double[d];
         for (int i = 0; i < d; i++) {
@@ -77,6 +85,8 @@ public class Vector {
 
     /**
      * Returns the length of this vector.
+     * <p>
+     * 返回此向量的长度。
      *
      * @return the dimension of this vector
      * @deprecated Replaced by {@link #dimension()}.
@@ -88,6 +98,8 @@ public class Vector {
 
     /**
      * Returns the dimension of this vector.
+     * <p>
+     * 返回此向量的维度。
      *
      * @return the dimension of this vector
      */
@@ -96,7 +108,9 @@ public class Vector {
     }
 
     /**
-     * Returns the do product of this vector with the specified vector.
+     * Returns the dot product of this vector with the specified vector.
+     * <p>
+     * 返回与指定向量的点积.
      *
      * @param that the other vector
      * @return the dot product of this vector and that vector
@@ -116,6 +130,8 @@ public class Vector {
     /**
      * Returns the magnitude of this vector.
      * This is also known as the L2 norm or the Euclidean norm.
+     * <p>
+     * 返回此向量的大小。 这也称为L2范数或欧几里德范数。
      *
      * @return the magnitude of this vector
      */
@@ -125,6 +141,8 @@ public class Vector {
 
     /**
      * Returns the Euclidean distance between this vector and the specified vector.
+     * <p>
+     * 返回此向量与指定向量之间的欧几里德距离。
      *
      * @param that the other vector
      * @return the Euclidean distance between this vector and that vector
@@ -139,6 +157,8 @@ public class Vector {
 
     /**
      * Returns the sum of this vector and the specified vector.
+     * <p>
+     * 返回此向量和指定向量的和。
      *
      * @param that the vector to add to this vector
      * @return the vector whose value is {@code (this + that)}
@@ -157,6 +177,8 @@ public class Vector {
 
     /**
      * Returns the difference between this vector and the specified vector.
+     * <p>
+     * 返回此向量与指定向量之间的差。
      *
      * @param that the vector to subtract from this vector
      * @return the vector whose value is {@code (this - that)}
@@ -175,6 +197,8 @@ public class Vector {
 
     /**
      * Returns the ith cartesian coordinate.
+     * <p>
+     * 返回第i个笛卡尔坐标。
      *
      * @param i the coordinate index
      * @return the ith cartesian coordinate
@@ -185,6 +209,8 @@ public class Vector {
 
     /**
      * Returns the scalar-vector product of this vector and the specified scalar
+     * <p>
+     * 返回此向量*标量的乘积,返回一个新的向量
      *
      * @param alpha the scalar
      * @return the vector whose value is {@code (alpha * this)}
@@ -201,6 +227,8 @@ public class Vector {
 
     /**
      * Returns the scalar-vector product of this vector and the specified scalar
+     * <p>
+     * 返回此向量*标量的乘积,返回一个新的向量
      *
      * @param alpha the scalar
      * @return the vector whose value is {@code (alpha * this)}
@@ -215,6 +243,8 @@ public class Vector {
 
     /**
      * Returns a unit vector in the direction of this vector.
+     * <p>
+     * 返回此向量方向的单位向量。
      *
      * @return a unit vector in the direction of this vector
      * @throws ArithmeticException if this vector is the zero vector
@@ -235,8 +265,9 @@ public class Vector {
      */
     public String toString() {
         StringBuilder s = new StringBuilder();
-        for (int i = 0; i < d; i++)
+        for (int i = 0; i < d; i++) {
             s.append(data[i] + " ");
+        }
         return s.toString();
     }
 
@@ -267,4 +298,3 @@ public class Vector {
 
     }
 }
-

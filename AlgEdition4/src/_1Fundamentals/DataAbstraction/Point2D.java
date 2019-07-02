@@ -1,5 +1,14 @@
 package _1Fundamentals.DataAbstraction;
 
+/******************************************************************************
+ *  Compilation:  javac Point2D.java
+ *  Execution:    java Point2D x0 y0 n
+ *  Dependencies: StdDraw.java StdRandom.java
+ *
+ *  Immutable point data type for points in the plane.
+ *
+ ******************************************************************************/
+
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -17,25 +26,34 @@ import base.stdlib.StdRandom;
  * For additional documentation,
  * see <a href="https://algs4.cs.princeton.edu/12oop">Section 1.2</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * <p>
+ * Point类是一种不可变的数据类型，用于封装具有实值坐标的二维点。
+ * <p>
+ * 注意：为了处理double和Double相对于-0.0和+0.0的差异行为，Point2D构造函数将任何坐标转换为-0.0到+0.0。
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne
  */
-
 public final class Point2D implements Comparable<Point2D> {
 
     /**
      * Compares two points by x-coordinate.
+     * <p>
+     * 通过x坐标比较两个点。
      */
     public static final Comparator<Point2D> X_ORDER = new XOrder();
 
     /**
      * Compares two points by y-coordinate.
+     * <p>
+     * 用y坐标比较两个点。
      */
     public static final Comparator<Point2D> Y_ORDER = new YOrder();
 
     /**
      * Compares two points by polar radius.
+     * <p>
+     * 通过极半径比较两个点。
      */
     public static final Comparator<Point2D> R_ORDER = new ROrder();
 
@@ -44,6 +62,8 @@ public final class Point2D implements Comparable<Point2D> {
 
     /**
      * Initializes a new point (x, y).
+     * <p>
+     * 初始化一个新点（x，y）。
      *
      * @param x the x-coordinate
      * @param y the y-coordinate
@@ -58,16 +78,13 @@ public final class Point2D implements Comparable<Point2D> {
         if (Double.isNaN(x) || Double.isNaN(y)) {
             throw new IllegalArgumentException("Coordinates cannot be NaN");
         }
-        if (x == 0.0) {
+        if (x == 0.0) { // convert -0.0 to +0.0
             this.x = 0.0;
-            // convert -0.0 to +0.0
         } else {
             this.x = x;
         }
-
-        if (y == 0.0) {
+        if (y == 0.0) { // convert -0.0 to +0.0
             this.y = 0.0;
-            // convert -0.0 to +0.0
         } else {
             this.y = y;
         }
@@ -75,6 +92,8 @@ public final class Point2D implements Comparable<Point2D> {
 
     /**
      * Returns the x-coordinate.
+     * <p>
+     * 返回x坐标。
      *
      * @return the x-coordinate
      */
@@ -84,6 +103,8 @@ public final class Point2D implements Comparable<Point2D> {
 
     /**
      * Returns the y-coordinate.
+     * <p>
+     * 返回y坐标。
      *
      * @return the y-coordinate
      */
@@ -93,6 +114,7 @@ public final class Point2D implements Comparable<Point2D> {
 
     /**
      * Returns the polar radius of this point.
+     * <p>
      * 返回此点的极坐标半径。
      *
      * @return the polar radius of this point in polar coordiantes: sqrt(x*x + y*y)
@@ -103,6 +125,7 @@ public final class Point2D implements Comparable<Point2D> {
 
     /**
      * Returns the angle of this point in polar coordinates.
+     * <p>
      * 返回极坐标中此点的角度。
      *
      * @return the angle (in radians) of this point in polar coordiantes (between –&pi; and &pi;)
@@ -113,6 +136,8 @@ public final class Point2D implements Comparable<Point2D> {
 
     /**
      * Returns the angle between this point and that point.
+     * <p>
+     * 返回此点与该点之间的角度。
      *
      * @return the angle in radians (between –&pi; and &pi;) between this point and that point (0 if equal)
      */
@@ -124,15 +149,17 @@ public final class Point2D implements Comparable<Point2D> {
 
     /**
      * Returns true if a→b→c is a counterclockwise turn.
+     * <p>
      * 如果a→b→c是逆时针转动，则返回true。
      *
      * @param a first point
      * @param b second point
      * @param c third point
-     * @return { -1, 0, +1 } if a→b→c is a { clockwise, collinear; counterclockwise } turn.
+     * @return { -1, 0, +1 } if a→b→c is a { clockwise, collinear; counterclocwise } turn.
      */
     public static int ccw(Point2D a, Point2D b, Point2D c) {
-        double area2 = (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
+        double area2 = (b.x - a.x) * (c.y - a.y)
+                - (b.y - a.y) * (c.x - a.x);
         if (area2 < 0) {
             return -1;
         } else if (area2 > 0) {
@@ -144,6 +171,8 @@ public final class Point2D implements Comparable<Point2D> {
 
     /**
      * Returns twice the signed area of the triangle a-b-c.
+     * <p>
+     * 返回三角形a-b-c的有符号区域的两倍。
      *
      * @param a first point
      * @param b second point
@@ -151,11 +180,14 @@ public final class Point2D implements Comparable<Point2D> {
      * @return twice the signed area of the triangle a-b-c
      */
     public static double area2(Point2D a, Point2D b, Point2D c) {
-        return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
+        return (b.x - a.x) * (c.y - a.y)
+                - (b.y - a.y) * (c.x - a.x);
     }
 
     /**
      * Returns the Euclidean distance between this point and that point.
+     * <p>
+     * 返回this点与that点之间的欧几里德距离。
      *
      * @param that the other point
      * @return the Euclidean distance between this point and that point
@@ -163,11 +195,13 @@ public final class Point2D implements Comparable<Point2D> {
     public double distanceTo(Point2D that) {
         double dx = this.x - that.x;
         double dy = this.y - that.y;
-        return Math.sqrt(distanceSquaredTo(that));
+        return Math.sqrt(dx * dx + dy * dy);
     }
 
     /**
      * Returns the square of the Euclidean distance between this point and that point.
+     * <p>
+     * 返回此点与该点之间的欧几里德距离的平方。
      *
      * @param that the other point
      * @return the square of the Euclidean distance between this point and that point
@@ -182,6 +216,10 @@ public final class Point2D implements Comparable<Point2D> {
      * Compares two points by y-coordinate, breaking ties by x-coordinate.
      * Formally, the invoking point (x0, y0) is less than the argument point (x1, y1)
      * if and only if either {@code y0 < y1} or if {@code y0 == y1} and {@code x0 < x1}.
+     * <p>
+     * 用y坐标比较两个点，用x坐标断开连接。
+     * 形式上，当且仅当y0 < y1 或 y0 == y1 且 x0 < x1 时，
+     * 调用点（x0，y0）小于参数点（x1，y1）。
      *
      * @param that the other point
      * @return the value {@code 0} if this string is equal to the argument
@@ -208,6 +246,8 @@ public final class Point2D implements Comparable<Point2D> {
 
     /**
      * Compares two points by polar angle (between 0 and 2&pi;) with respect to this point.
+     * <p>
+     * 相对于该点，通过极角（在0和2π之间）比较两个点。
      *
      * @return the comparator
      */
@@ -217,6 +257,8 @@ public final class Point2D implements Comparable<Point2D> {
 
     /**
      * Compares two points by atan2() angle (between –&pi; and &pi;) with respect to this point.
+     * <p>
+     * 相对于该点，通过atan2（）角度（在-π和π之间）比较两个点。
      *
      * @return the comparator
      */
@@ -226,6 +268,8 @@ public final class Point2D implements Comparable<Point2D> {
 
     /**
      * Compares two points by distance to this point.
+     * <p>
+     * 比较两个点之间的距离.
      *
      * @return the comparator
      */
@@ -236,12 +280,8 @@ public final class Point2D implements Comparable<Point2D> {
     // compare points according to their x-coordinate
     private static class XOrder implements Comparator<Point2D> {
         public int compare(Point2D p, Point2D q) {
-            if (p.x < q.x) {
-                return -1;
-            }
-            if (p.x > q.x) {
-                return +1;
-            }
+            if (p.x < q.x) return -1;
+            if (p.x > q.x) return +1;
             return 0;
         }
     }
@@ -249,12 +289,8 @@ public final class Point2D implements Comparable<Point2D> {
     // compare points according to their y-coordinate
     private static class YOrder implements Comparator<Point2D> {
         public int compare(Point2D p, Point2D q) {
-            if (p.y < q.y) {
-                return -1;
-            }
-            if (p.y > q.y) {
-                return +1;
-            }
+            if (p.y < q.y) return -1;
+            if (p.y > q.y) return +1;
             return 0;
         }
     }
@@ -263,12 +299,8 @@ public final class Point2D implements Comparable<Point2D> {
     private static class ROrder implements Comparator<Point2D> {
         public int compare(Point2D p, Point2D q) {
             double delta = (p.x * p.x + p.y * p.y) - (q.x * q.x + q.y * q.y);
-            if (delta < 0) {
-                return -1;
-            }
-            if (delta > 0) {
-                return +1;
-            }
+            if (delta < 0) return -1;
+            if (delta > 0) return +1;
             return 0;
         }
     }
@@ -278,13 +310,9 @@ public final class Point2D implements Comparable<Point2D> {
         public int compare(Point2D q1, Point2D q2) {
             double angle1 = angleTo(q1);
             double angle2 = angleTo(q2);
-            if (angle1 < angle2) {
-                return -1;
-            } else if (angle1 > angle2) {
-                return +1;
-            } else {
-                return 0;
-            }
+            if (angle1 < angle2) return -1;
+            else if (angle1 > angle2) return +1;
+            else return 0;
         }
     }
 
@@ -296,24 +324,13 @@ public final class Point2D implements Comparable<Point2D> {
             double dx2 = q2.x - x;
             double dy2 = q2.y - y;
 
-            if (dy1 >= 0 && dy2 < 0) {
-                return -1;
-            }// q1 above; q2 below
-            else if (dy2 >= 0 && dy1 < 0) {
-                return +1;
-            }// q1 below; q2 above
-            else if (dy1 == 0 && dy2 == 0) {
-                // 3-collinear and horizontal
-                if (dx1 >= 0 && dx2 < 0) {
-                    return -1;
-                } else if (dx2 >= 0 && dx1 < 0) {
-                    return +1;
-                } else {
-                    return 0;
-                }
-            } else {
-                return -ccw(Point2D.this, q1, q2);
-            }// both above or below
+            if (dy1 >= 0 && dy2 < 0) return -1;    // q1 above; q2 below
+            else if (dy2 >= 0 && dy1 < 0) return +1;    // q1 below; q2 above
+            else if (dy1 == 0 && dy2 == 0) {            // 3-collinear and horizontal
+                if (dx1 >= 0 && dx2 < 0) return -1;
+                else if (dx2 >= 0 && dx1 < 0) return +1;
+                else return 0;
+            } else return -ccw(Point2D.this, q1, q2);     // both above or below
 
             // Note: ccw() recomputes dx1, dy1, dx2, and dy2
         }
@@ -324,15 +341,12 @@ public final class Point2D implements Comparable<Point2D> {
         public int compare(Point2D p, Point2D q) {
             double dist1 = distanceSquaredTo(p);
             double dist2 = distanceSquaredTo(q);
-            if (dist1 < dist2) {
-                return -1;
-            } else if (dist1 > dist2) {
-                return +1;
-            } else {
-                return 0;
-            }
+            if (dist1 < dist2) return -1;
+            else if (dist1 > dist2) return +1;
+            else return 0;
         }
     }
+
 
     /**
      * Compares this point to the specified point.
@@ -343,15 +357,9 @@ public final class Point2D implements Comparable<Point2D> {
      */
     @Override
     public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-        if (other == null) {
-            return false;
-        }
-        if (other.getClass() != this.getClass()) {
-            return false;
-        }
+        if (other == this) return true;
+        if (other == null) return false;
+        if (other.getClass() != this.getClass()) return false;
         Point2D that = (Point2D) other;
         return this.x == that.x && this.y == that.y;
     }
@@ -401,7 +409,6 @@ public final class Point2D implements Comparable<Point2D> {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        args = new String[]{"10", "9", "3"};
         int x0 = Integer.parseInt(args[0]);
         int y0 = Integer.parseInt(args[1]);
         int n = Integer.parseInt(args[2]);

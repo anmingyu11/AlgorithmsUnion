@@ -1,5 +1,14 @@
 package _1Fundamentals.DataAbstraction;
 
+/******************************************************************************
+ *  Compilation:  javac Interval2D.java
+ *  Execution:    java Interval2D
+ *  Dependencies: StdOut.java Interval1D.java StdDraw.java
+ *
+ *  2-dimensional interval data type.
+ *
+ ******************************************************************************/
+
 import base.stdlib.StdDraw;
 import base.stdlib.StdOut;
 import base.stdlib.StdRandom;
@@ -17,6 +26,10 @@ import base.stdlib.StdRandom;
  * For additional documentation,
  * see <a href="https://algs4.cs.princeton.edu/12oop">Section 1.2</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * <p>
+ * Interval2D类表示闭合的二维间隔，其表示所有点（x，y），其中xmin <= x <= xmax且ymin <= y <= ymax。
+ * 二维间隔是不可变的：它们的值在创建后无法更改。
+ * Interval2D类包括用于检查二维间隔是否包含点并确定两个二维间隔是否相交的方法。
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne
@@ -27,6 +40,8 @@ public class Interval2D {
 
     /**
      * Initializes a two-dimensional interval.
+     * <p>
+     * 初始化二维间隔。
      *
      * @param x the one-dimensional interval of x-coordinates
      * @param y the one-dimensional interval of y-coordinates
@@ -38,6 +53,8 @@ public class Interval2D {
 
     /**
      * Does this two-dimensional interval intersect that two-dimensional interval?
+     * <p>
+     * 这个二维区间是否与那个二维区间相交？
      *
      * @param that the other two-dimensional interval
      * @return true if this two-dimensional interval intersects
@@ -55,6 +72,8 @@ public class Interval2D {
 
     /**
      * Does this two-dimensional interval contain the point p?
+     * <p>
+     * 这个二维区间是否包含点p？
      *
      * @param p the two-dimensional point
      * @return true if this two-dimensional interval contains the point p; false otherwise
@@ -65,6 +84,8 @@ public class Interval2D {
 
     /**
      * Returns the area of this two-dimensional interval.
+     * <p>
+     * 返回此二维间隔的区域。
      *
      * @return the area of this two-dimensional interval
      */

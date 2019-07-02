@@ -40,6 +40,8 @@ import base.stdlib.StdOut;
  * <p>
  * For additional documentation, see <a href="https://algs4.cs.princeton.edu/12oop">Section 1.2</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * <p>
+ * Whitelist类提供了一个客户端，用于从文件中读取一组整数; 从标准输入读取整数序列; 并打印到标准输出那些不在白名单中的整数。
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne
@@ -65,10 +67,8 @@ public class Whitelist {
         // Read key, print if not in whitelist.
         while (!StdIn.isEmpty()) {
             int key = StdIn.readInt();
-            if (!set.contains(key)) {
+            if (!set.contains(key))
                 StdOut.println(key);
-            }
         }
     }
 }
-
