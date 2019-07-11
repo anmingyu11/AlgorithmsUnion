@@ -6,6 +6,27 @@ import base.stdlib.StdOut;
 
 public class PrintUtil {
 
+    public static void print2DArr(boolean[][] arr2) {
+        for (boolean[] objarr : arr2) {
+            for (int i = 0; i < objarr.length; ++i) {
+                boolean val = objarr[i];
+                if (i == 0) {
+                    if (i != objarr.length - 1) {
+                        StdOut.printf("[ %5B,", val);
+                    } else {
+                        StdOut.printf("[ %5B", val);
+                        StdOut.printf(" ]\n");
+                    }
+                } else if (i == objarr.length - 1) {
+                    StdOut.printf(" %5B]\n", val);
+                } else {
+                    StdOut.printf(" %5B,", val);
+                }
+            }
+        }
+        println("");
+    }
+
     public static void print2DArr(int[][] arr2) {
         for (int[] objarr : arr2) {
             for (int i = 0; i < objarr.length; ++i) {

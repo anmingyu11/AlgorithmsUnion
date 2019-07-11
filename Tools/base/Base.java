@@ -32,6 +32,10 @@ public class Base {
         PrintUtil.print2DArr(arr2);
     }
 
+    public static void print2DArr(boolean[][] arr2) {
+        PrintUtil.print2DArr(arr2);
+    }
+
     public static void print2DArr(char[][] arr2) {
         PrintUtil.print2DArr(arr2);
     }

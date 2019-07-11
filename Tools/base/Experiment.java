@@ -9,10 +9,11 @@ public class Experiment extends Base {
         //testIntDivid();
         //testShiftRight();
         //testBinarySearch();
-        testErrorPrint();
+        //testErrorPrint();
+        testZero();
     }
 
-    private static void testErrorPrint(){
+    private static void testErrorPrint() {
         System.err.println("gogoo");
     }
 
@@ -41,5 +42,14 @@ public class Experiment extends Base {
         println(6 >> 1);
         println(10 >> 1);
         println(-10 >> 1);
+    }
+
+    private static void testZero() {
+        double a = 0.0, b = -0.0;
+        println(a == b);
+        println(a != b);
+        println(a > b);
+        println(Double.doubleToLongBits(a));
+        println(Double.doubleToLongBits(b));
     }
 }
