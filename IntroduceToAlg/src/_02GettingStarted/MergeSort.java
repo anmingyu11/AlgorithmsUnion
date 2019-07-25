@@ -74,7 +74,6 @@ public class MergeSort extends Base {
             if (hi <= lo) {
                 return;
             }
-
             int mid = (lo + hi) / 2;
             sort(A, aux, lo, mid);
             sort(A, aux, mid + 1, hi);
@@ -85,13 +84,12 @@ public class MergeSort extends Base {
             for (int i = lo; i <= hi; ++i) {
                 aux[i] = A[i];
             }
-
             int i = lo, j = mid + 1;
             for (int k = lo; k <= hi; ++k) {
                 if (j > hi) {
                     A[k] = aux[i++];
                 } else if (i > mid) {
-                    A[k] = aux[i++];
+                    A[k] = aux[j++]; // fix a bug.
                 } else if (aux[i] < aux[j]) {
                     A[k] = aux[i++];
                 } else {
@@ -103,7 +101,7 @@ public class MergeSort extends Base {
 
     /**
      * 自底向上版的归并排序,不是分治法
-     * 来自于 <<算法4>>>
+     * 来自于 <<算法4>>
      */
     private static class Solution3 extends Solution {
 
@@ -140,8 +138,7 @@ public class MergeSort extends Base {
     }
 
     public static void main(String[] args) {
-
-        Solution s = new Solution3();
+        Solution s = new Solution2();
 
         TestUtil.testSort(s);
     }
