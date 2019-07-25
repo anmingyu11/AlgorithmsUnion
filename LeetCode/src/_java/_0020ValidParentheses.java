@@ -23,8 +23,8 @@ public class _0020ValidParentheses extends Base {
     }
 
     /**
-     * Runtime: 2 ms, faster than 62.50% of Java online submissions for Valid Parentheses.
-     * Memory Usage: 34.3 MB, less than 99.97% of Java online submissions for Valid Parentheses.
+     * Runtime: 1 ms, faster than 98.31% of Java online submissions for Valid Parentheses.
+     * Memory Usage: 34.4 MB, less than 99.97% of Java online submissions for Valid Parentheses.
      */
     private static class Solution1 extends Solution {
         private Map<Character, Character> map;
@@ -36,23 +36,20 @@ public class _0020ValidParentheses extends Base {
             map.put('}', '{');
             char[] brackets = s.toCharArray();
             LinkedList<Character> stack = new LinkedList<>();
-
             for (char b : brackets) {
-                if (map.containsKey(b)) {
-                    if (stack.size() > 0) {
-                        char last = stack.removeLast();
-                        if (last != map.get(b)) {
-                            return false;
-                        }
-                    } else {
+                Character b2 = map.get(b);
+                if (b2 == null) {
+                    // 新的括号开始.
+                    stack.addLast(b);
+                } else {
+                    // 取最后一个元素看是否匹配最后一个括号.
+                    Character last = stack.isEmpty() ? null : stack.removeLast();
+                    if (last == null || !last.equals(b2)) {
                         return false;
                     }
-                } else {
-                    stack.addLast(b);
                 }
             }
-
-            return stack.size() == 0;
+            return stack.isEmpty();
         }
 
     }
@@ -60,6 +57,7 @@ public class _0020ValidParentheses extends Base {
     /**
      * Runtime: 1 ms, faster than 98.38% of Java online submissions for Valid Parentheses.
      * Memory Usage: 34.1 MB, less than 100.00% of Java online submissions for Valid Parentheses.
+     * 精妙.
      */
     private static class Solution2 extends Solution {
 
@@ -81,10 +79,9 @@ public class _0020ValidParentheses extends Base {
                         break;
                     }
                     default: {
-                        if (stack.isEmpty() || stack.removeLast()!=b){
+                        if (stack.isEmpty() || stack.removeLast() != b) {
                             return false;
                         }
-                        break;
                     }
                 }
             }
@@ -100,6 +97,7 @@ public class _0020ValidParentheses extends Base {
         String b5 = "{[]}";
         String b6 = "";
         String b7 = "[";
+        String b8 = "]";
 
         Solution s = new Solution2();
 
@@ -110,6 +108,6 @@ public class _0020ValidParentheses extends Base {
         println(s.isValid(b5));//t
         println(s.isValid(b6));//t
         println(s.isValid(b7));//f
-
+        println(s.isValid(b8));//f
     }
 }
