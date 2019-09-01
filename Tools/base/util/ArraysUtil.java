@@ -13,6 +13,9 @@ public class ArraysUtil {
 
     public static int max(int[] A) {
         final int n = A.length;
+        if (n < 1) {
+            return 0;
+        }
         int max = Integer.MIN_VALUE;
         for (int i = 0; i <= n / 2; ++i) {
             max = Math.max(max, Math.max(A[i], A[n - 1 - i]));
