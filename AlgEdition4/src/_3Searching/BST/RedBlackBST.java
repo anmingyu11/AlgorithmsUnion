@@ -437,12 +437,12 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
                 h = rotateRight(h); // 向右配平
             }
             if (key.compareTo(h.key) == 0 && (h.right == null)) {
-                return null; // Todo : 向右走走到了尽头?
+                return null; // 要删除的h一定是红的.
             }
             if (!isRed(h.right) && !isRed(h.right.left)) {
                 h = moveRedRight(h); // 向右配平
             }
-            if (key.compareTo(h.key) == 0) {
+            if (key.compareTo(h.key) == 0) {//删除,与二叉树的删除是一个原理.
                 Node x = min(h.right);
                 h.key = x.key;
                 h.val = x.val;
