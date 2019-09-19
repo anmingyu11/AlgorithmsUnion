@@ -49,7 +49,7 @@ import base.Base;
  * p = "a*c?b"
  * Output: false
  */
-public class _0044WildcardMatching____UNF extends Base {
+public class _0044WildcardMatching extends Base {
 
     private abstract static class Solution {
         public abstract boolean isMatch(String s, String p);
@@ -158,7 +158,7 @@ public class _0044WildcardMatching____UNF extends Base {
     /**
      * Runtime: 13 ms, faster than 40.18% of Java online submissions for Wildcard Matching.
      * Memory Usage: 38.1 MB, less than 93.02% of Java online submissions for Wildcard Matching.
-     *
+     * <p>
      * dp
      */
     private static class Solution3 extends Solution {
@@ -200,8 +200,55 @@ public class _0044WildcardMatching____UNF extends Base {
 
     }
 
+    /**
+     * Runtime: 2 ms, faster than 100.00% of Java online submissions for Wildcard Matching.
+     * Memory Usage: 38.1 MB, less than 93.02% of Java online submissions for Wildcard Matching.
+     */
+    private static class Solution4 extends Solution {
+
+        public boolean isMatch(String s, String p) {
+            if (s.equals(p) || p.equals("*")) {
+                return true;
+            }
+            if (s.isEmpty() || p.isEmpty()) {
+                return false;
+            }
+            int m = s.length(), n = p.length();
+            int i = 0, j = 0;
+            int starIdx = -1, sTmpIdx = -1;
+            while (i < m) {
+                if (j < n && (p.charAt(j) == '?' || s.charAt(i) == p.charAt(j))) {
+                    // i==j or j==?
+                    ++i;
+                    ++j;
+                } else if (j < n && p.charAt(j) == '*') {
+                    // when * matches no characters
+                    starIdx = j;
+                    sTmpIdx = i;
+                    ++j;
+                } else if (starIdx == -1) {
+                    // if i != j or j >= n or pattern has no *
+                    return false;
+                } else {
+                    // backtrack when * matches one more character
+                    j = starIdx + 1;
+                    i = sTmpIdx + 1;
+                    sTmpIdx = i;
+                }
+            }
+            // The remaining characters in the pattern should all be '*' characters
+            for (; j < n; ++j) {
+                if (p.charAt(j) != '*') {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+    }
+
     private static void test1(String s, String p) {
-        Solution so = new Solution3();
+        Solution so = new Solution4();
         println(so.isMatch(s, p));
     }
 
@@ -214,6 +261,7 @@ public class _0044WildcardMatching____UNF extends Base {
         test1("ho", "ho**"); // T
         test1("", ""); // T
         test1("a", ""); // F
+        test1("aa", "a*"); // T
     }
 
 }
