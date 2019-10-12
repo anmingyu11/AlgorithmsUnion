@@ -32,7 +32,7 @@ import base.Base;
  * 1 <= stones.length <= 1000
  * 0 <= stones[i][j] < 10000
  */
-public class _0947MostStonesRemovedWithSameRoworColumn_UNFMULT extends Base {
+public class _0947MostStonesRemovedWithSameRoworColumn extends Base {
 
     private abstract static class Solution {
         public abstract int removeStones(int[][] stones);
@@ -197,21 +197,48 @@ public class _0947MostStonesRemovedWithSameRoworColumn_UNFMULT extends Base {
 
     }
 
+    /**
+     * Runtime: 9 ms, faster than 81.75% of Java online submissions for Most Stones Removed with Same Row or Column.
+     * Memory Usage: 37.7 MB, less than 100.00% of Java online submissions for Most Stones Removed with Same Row or Column.
+     * final Memory Usage less than 100%
+     * 编码的方式很有启发.
+     */
     private static class Solution3 extends Solution {
 
-        HashMap<Integer, Integer> nodes;
+        HashMap<Integer, Integer> map;
+        int connected;
 
         public int removeStones(int[][] stones) {
             final int n = stones.length;
-            nodes = new HashMap<>();
-
-            return 0;
+            connected = 0;
+            map = new HashMap<>();
+            for (int[] stone : stones) {
+                union(stone[0], ~stone[1]);
+            }
+            return n - connected;
         }
 
         private void union(int p, int q) {
+            int rootP = find(p);
+            int rootQ = find(q);
+            if (rootP != rootQ) {
+                // root of rootP is rootQ
+                map.put(rootP, rootQ);
+                --connected;
+            }
         }
 
         private int find(int p) {
+            if (map.putIfAbsent(p, p) == null) {
+                ++connected;
+                return p;
+            }
+            while (p != map.get(p)) {
+                int grandPa = map.get(map.get(p));
+                map.put(p, grandPa);
+                p = grandPa;
+            }
+            return p;
         }
 
     }
