@@ -2,7 +2,7 @@ package _java;
 
 import base.Base;
 
-public class _470ImplementRand10usingRand7 extends Base {
+public class _0470ImplementRand10usingRand7 extends Base {
 
     private abstract static class Solution {
 
