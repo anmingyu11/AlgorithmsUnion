@@ -6,6 +6,20 @@ import java.util.Map;
 
 import base.Base;
 
+/**
+ * Given an array of integers,
+ * return indices of the two numbers such that they add up to a specific target.
+ * <p>
+ * You may assume that each input would have exactly one solution,
+ * and you may not use the same element twice.
+ * <p>
+ * Example:
+ * <p>
+ * Given nums = [2, 7, 11, 15], target = 9,
+ * <p>
+ * Because nums[0] + nums[1] = 2 + 7 = 9,
+ * return [0, 1].
+ */
 public class _0001TwoSum extends Base {
 
     private abstract static class Solution {
@@ -19,9 +33,6 @@ public class _0001TwoSum extends Base {
 
         @Override
         public int[] twoSum(int[] nums, int target) {
-            if (target < 0) {
-                throw new NullPointerException("loha");
-            }
             Map<Integer, Integer> map = new HashMap<>();
             for (int i = 0; i < nums.length; ++i) {
                 int n = nums[i];
@@ -81,9 +92,9 @@ public class _0001TwoSum extends Base {
         int nums1Target2 = 14;
         int[] nums2 = new int[]{3, 2, 4};
         int nums2Target1 = 6;
-        Solution s = new Solution2();
-        //printArr(s.twoSum(nums1, nums1Target1));
-        //printArr(s.twoSum(nums1, nums1Target2));
+        Solution s = new Solution1();
+        printArr(s.twoSum(nums1, nums1Target1));
+        printArr(s.twoSum(nums1, nums1Target2));
         printArr(s.twoSum(nums2, nums2Target1));
     }
 }
