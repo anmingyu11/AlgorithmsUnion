@@ -106,6 +106,9 @@ public class _0002AddTwoNumbers extends BaseLinkedList {
         ListNode n5 = new ListNode(5);
         ListNode n6 = new ListNode(5);
 
+        ListNode n7 = new ListNode(9);
+        ListNode n8 = new ListNode(9);
+
         //printSingleListNode(n1);
         //printSingleListNode(n2);
         printSingleListNode(s.addTwoNumbers(n1, n2)); // 7 -> 0 -> 8
@@ -114,6 +117,9 @@ public class _0002AddTwoNumbers extends BaseLinkedList {
         printSingleListNode(s.addTwoNumbers(n3, n4)); // 1 -> 8
         //printSingleListNode(n5);
         //printSingleListNode(n6);
-        printSingleListNode(s.addTwoNumbers(n5, n6)); // 1 -> 0
+        printSingleListNode(s.addTwoNumbers(n5, n6)); // 0 -> 1
+
+
+        printSingleListNode(s.addTwoNumbers(n7, n8)); // 8 -> 1
     }
 }
