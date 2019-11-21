@@ -4,3 +4,4 @@
 *.class
 IntroduceToAlg/out/
 LeetCode/out/
+.DS_STORE
