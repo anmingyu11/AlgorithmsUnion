@@ -73,8 +73,8 @@ public class _0006ZigZagConversion extends Base {
                         --r;
                         ++c;
                     } else {
-                       direct = -1;
-                       ++r;
+                        direct = -1;
+                        ++r;
                     }
                 }
                 //print2DArr(zigzag);
@@ -91,6 +91,51 @@ public class _0006ZigZagConversion extends Base {
         }
     }
 
+    /**
+     * Runtime: 5 ms, faster than 75.57% of Java online submissions for ZigZag Conversion.
+     * Memory Usage: 39.4 MB, less than 68.09% of Java online submissions for ZigZag Conversion.
+     * Amazing sort by row.
+     * 稀疏矩阵
+     */
+    private static class Solution2 extends Solution {
+        @Override
+        public String convert(String s, int numRows) {
+            final int n = s.length();
+            if (n <= numRows || numRows == 1) {
+                return s;
+            }
+            StringBuilder[] rows = new StringBuilder[numRows];
+            int r = 0;
+            boolean down = true;
+            for (int i = 0; i < n; ++i) {
+                if (rows[r] == null) {
+                    rows[r] = new StringBuilder();
+                }
+                rows[r].append(s.charAt(i));
+                r += down ? 1 : -1;
+                if (r == numRows - 1) {
+                    down = false;
+                } else if (r == 0) {
+                    down = true;
+                }
+            }
+
+            StringBuilder res = new StringBuilder();
+            for (StringBuilder sb : rows) {
+                res.append(sb);
+            }
+            return res.toString();
+        }
+    }
+
+    private static class Solution3 extends Solution {
+
+        public String convert(String s, int numRows) {
+            return null;
+        }
+
+    }
+
     public static void main(String[] args) {
         String s1 = "PAYPALISHIRING";
         int nr1 = 3;
@@ -103,7 +148,7 @@ public class _0006ZigZagConversion extends Base {
         String s5 = "ABCD";
         int nr5 = 2;
 
-        Solution s = new Solution1();
+        Solution s = new Solution2();
 
         int n = s1.length();
         println(s.convert(s1, nr1)); // PAHNAPLSIIGYIR
