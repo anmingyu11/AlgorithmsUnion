@@ -128,10 +128,31 @@ public class _0006ZigZagConversion extends Base {
         }
     }
 
+    /**
+     * Runtime: 3 ms, faster than 96.47% of Java online submissions for ZigZag Conversion.
+     * Memory Usage: 38.3 MB, less than 85.11% of Java online submissions for ZigZag Conversion.
+     * 对数组下标的处理可谓精妙
+     *
+     * 可我就是没想到
+     */
     private static class Solution3 extends Solution {
 
         public String convert(String s, int numRows) {
-            return null;
+            final int n = s.length();
+            if (n <= numRows || numRows == 1) {
+                return s;
+            }
+            final int cycle = 2 * numRows - 2;
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < numRows; ++i) {
+                for (int j = 0; i + j < n; j += cycle) {
+                    sb.append(s.charAt(i + j));
+                    if (i != 0 && i != numRows - 1 && j + cycle - i < n) {
+                        sb.append(s.charAt(j + cycle - i));
+                    }
+                }
+            }
+            return sb.toString();
         }
 
     }
@@ -148,7 +169,7 @@ public class _0006ZigZagConversion extends Base {
         String s5 = "ABCD";
         int nr5 = 2;
 
-        Solution s = new Solution2();
+        Solution s = new Solution3();
 
         int n = s1.length();
         println(s.convert(s1, nr1)); // PAHNAPLSIIGYIR
