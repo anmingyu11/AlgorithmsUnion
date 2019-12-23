@@ -95,7 +95,7 @@ public class _0005LongestPalindromicSubstring extends Base {
             for (int k = 0; k <= n / 2; ++k) {
                 int l = lo - k, r = hi + k;
                 if (l < 0 || r >= n
-                       || chArr[l] != chArr[r]) {
+                        || chArr[l] != chArr[r]) {
                     return len;
                 } else {
                     len = r - l + 1;
@@ -139,12 +139,61 @@ public class _0005LongestPalindromicSubstring extends Base {
 
     /**
      * 马拉车
+     * <p>
+     * Runtime: 6 ms, faster than 87.80% of Java online submissions for Longest Palindromic Substring.
+     * Memory Usage: 35.7 MB, less than 100.00% of Java online submissions for Longest Palindromic Substring.
      */
-    private static class Solution4  extends Solution{
-        @Override
-        public String longestPalindrome(String s) {
-            return null;
+    private static class Solution4 extends Solution {
+
+        // 摆脱字符串长度奇偶分别处理.
+        public String preProcess(String s) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("^");
+            for (int i = 0; i < s.length(); ++i) {
+                sb.append("#");
+                sb.append(s.charAt(i));
+            }
+            sb.append("#$");
+            // origin len is n, after len is n + n - 1 + 4(^#str#$) = 2 * n + 3
+            // ^ $ to ensure edge not the same.
+            return sb.toString();
         }
+
+        // 马拉车算法
+        public String longestPalindrome(String s) {
+            String str = preProcess(s); // 避免需要奇偶分别处理的情况。
+            final int n = str.length();
+            int[] P = new int[n];
+            int C = 0, R = 0;
+            for (int i = 1; i < n - 1; ++i) {
+                // this is the dp part
+                int iMirror = 2 * C - i;
+                if (R > i) {
+                    P[i] = Math.min(R - i, P[iMirror]);
+                } else {
+                    P[i] = 0;
+                }
+                // expand
+                while (str.charAt(i - P[i]-1) == str.charAt(i + P[i]+1)) {
+                    ++P[i];
+                }
+                // update C and R
+                if (i + P[i] > R) {
+                    C = i;
+                    R = i + P[i];
+                }
+            }
+            int maxLen = 0, center = 0;
+            for (int i = 0; i < n; ++i) {
+                if (P[i] > maxLen) {
+                    maxLen = P[i];
+                    center = i;
+                }
+            }
+            center = (center - maxLen) / 2;
+            return s.substring(center, center + maxLen);
+        }
+
     }
 
     public static void main(String[] args) {
@@ -155,8 +204,9 @@ public class _0005LongestPalindromicSubstring extends Base {
         String s5 = "bb";
         String s6 = "";
         String s7 = "abcba";
+        String s8 = "babcbabcbaccba";
 
-        Solution s = new Solution2();
+        Solution s = new Solution4();
 
         println(s.longestPalindrome(s1)); // aba
         println(s.longestPalindrome(s2)); // bb
@@ -165,5 +215,6 @@ public class _0005LongestPalindromicSubstring extends Base {
         println(s.longestPalindrome(s5)); // bb
         println(s.longestPalindrome(s6)); //
         println(s.longestPalindrome(s7)); // abcba
+        println(s.longestPalindrome(s8));
     }
 }
