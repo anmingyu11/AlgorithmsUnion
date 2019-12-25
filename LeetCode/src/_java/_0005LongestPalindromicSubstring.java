@@ -161,37 +161,41 @@ public class _0005LongestPalindromicSubstring extends Base {
 
         // 马拉车算法
         public String longestPalindrome(String s) {
-            String str = preProcess(s); // 避免需要奇偶分别处理的情况。
+            String str = preProcess(s);
             final int n = str.length();
             int[] P = new int[n];
             int C = 0, R = 0;
             for (int i = 1; i < n - 1; ++i) {
-                // this is the dp part
-                int iMirror = 2 * C - i;
+                // Found the mirror
+                int iMirror = 2 * C - i;// C - (i - C)
                 if (R > i) {
                     P[i] = Math.min(R - i, P[iMirror]);
                 } else {
                     P[i] = 0;
                 }
                 // expand
-                while (str.charAt(i - P[i]-1) == str.charAt(i + P[i]+1)) {
+                while (str.charAt(i + P[i] + 1) // P[i]= 0 i + P[i] + 1
+                        == str.charAt(i - P[i] - 1)) {
                     ++P[i];
                 }
-                // update C and R
+                // update c and r
                 if (i + P[i] > R) {
                     C = i;
                     R = i + P[i];
                 }
             }
-            int maxLen = 0, center = 0;
-            for (int i = 0; i < n; ++i) {
-                if (P[i] > maxLen) {
-                    maxLen = P[i];
+            int center = 0;
+            int max = 0;
+            for (int i = 1; i < n - 1; ++i) {
+                if (P[i] > max) {
+                    max = P[i];
                     center = i;
                 }
             }
-            center = (center - maxLen) / 2;
-            return s.substring(center, center + maxLen);
+            // 简简单单的计算一下
+            int left = (center - max - 1) / 2;
+            int right = (center + max -1) / 2;
+            return s.substring(left, right);
         }
 
     }
