@@ -121,11 +121,15 @@ public class _0053MaximumSubarray extends Base {
         int[] a1 = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
         int[] a2 = {1, 2};
         int[] a3 = {-2, 1};
+        int[] a4 = {-2, -1};
+        int[] a5 = {1};
 
-        Solution s = new Solution4();
+        Solution s = new Solution1();
 
         println(s.maxSubArray(a1));// 6
         println(s.maxSubArray(a2));// 3
         println(s.maxSubArray(a3));// 1
+        println(s.maxSubArray(a4));// -1
+        println(s.maxSubArray(a5));// 1
     }
 }
