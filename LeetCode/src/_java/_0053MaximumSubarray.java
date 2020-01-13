@@ -77,6 +77,10 @@ public class _0053MaximumSubarray extends Base {
         }
     }
 
+    /**
+     * Runtime: 1 ms, faster than 61.46% of Java online submissions for Maximum Subarray.
+     * Memory Usage: 37.1 MB, less than 99.53% of Java online submissions for Maximum Subarray.
+     */
     private static class Solution4 extends Solution {
 
         public int maxSubArray(int[] nums) {
@@ -87,28 +91,25 @@ public class _0053MaximumSubarray extends Base {
             if (lo == hi) {
                 return A[lo];
             }
-            int p = (lo + hi) / 2;
-
-            int left = helper(A, lo, p);
-            int right = helper(A, p + 1, hi);
-            int cross = cross(A, lo, hi, p);
-
-            return Math.max(Math.max(left, right), cross);
+            int partition = (lo + hi) / 2;
+            int left = helper(A, lo, partition);
+            int right = helper(A, partition + 1, hi);
+            int cross = cross(A, lo, hi, partition);
+            return Math.max(cross, Math.max(left, right));
         }
 
-        private int cross(int[] A, int lo, int hi, int p) {
+        private int cross(int[] A, int lo, int hi, int partition) {
             if (lo == hi) {
                 return A[lo];
             }
-            int left = Integer.MIN_VALUE;
+            int left = Integer.MIN_VALUE, right = Integer.MIN_VALUE;
             int sum = 0;
-            for (int i = p; i >= lo; --i) {
+            for (int i = partition; i >= lo; --i) {
                 sum += A[i];
-                left = Math.max(left, sum);
+                left = Math.max(sum, left);
             }
-            int right = Integer.MIN_VALUE;
             sum = 0;
-            for (int i = p + 1; i <= hi; ++i) {
+            for (int i = partition + 1; i <= hi; ++i) {
                 sum += A[i];
                 right = Math.max(right, sum);
             }
