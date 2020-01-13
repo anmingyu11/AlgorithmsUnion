@@ -15,7 +15,7 @@ import base.Base;
  * Input: [7,1,5,3,6,4]
  * Output: 5
  * Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
- * Not 7-1 = 6, as selling price needs to be larger than buying price.
+ * Not 7 - 1 = 6, as selling price needs to be larger than buying price.
  * Example 2:
  * <p>
  * Input: [7,6,4,3,1]
@@ -33,21 +33,30 @@ public class _0121BestTimetoBuyandSellStock extends Base {
      * Memory Usage: 35.5 MB, less than 94.99% of Java online submissions for Best Time to Buy and Sell Stock.
      */
     private static class Solution1 extends Solution {
-
+        /**
+         * The points of interest are the peaks and valleys in the given graph.
+         * We need to find the largest peak following the smallest valley.
+         * We can maintain two variables - minprice and maxprofit corresponding to the
+         * smallest valley and maximum profit
+         * (maximum difference between selling price and minprice) obtained so far respectively.
+         * @param A
+         * @return
+         */
         @Override
         public int maxProfit(int[] A) {
             final int n = A.length;
-            if (n < 2) {
-                return 0;
+            int max = 0;
+            if (n < 1) {
+                return max;
             }
-            int buy = A[0], gain = 0;
+            int buy = A[0];
             for (int i = 1; i < n; ++i) {
-                gain = Math.max(gain, A[i] - buy);
+                max = Math.max(max, A[i] - buy);
                 if (A[i] < buy) {
                     buy = A[i];
                 }
             }
-            return gain;
+            return max;
         }
 
     }
@@ -55,6 +64,7 @@ public class _0121BestTimetoBuyandSellStock extends Base {
     public static void main(String[] args) {
         int[] a1 = {7, 1, 5, 3, 6, 4};
         int[] a2 = {7, 6, 4, 3, 1};
+        int[] a3 = {};
 
         Solution s = new Solution1();
 
