@@ -50,6 +50,7 @@ public class _0121BestTimetoBuyandSellStock extends Base {
                 return max;
             }
             int buy = A[0];
+            // 既然从1开始就要想到会越界的这个问题.
             for (int i = 1; i < n; ++i) {
                 max = Math.max(max, A[i] - buy);
                 if (A[i] < buy) {
