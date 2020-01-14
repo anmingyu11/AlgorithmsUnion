@@ -37,44 +37,90 @@ public class _0122BestTimetoBuyandSellStock2 extends Base {
     }
 
     /**
-     * Runtime: 1 ms, faster than 80.94% of Java online submissions for Best Time to Buy and Sell Stock II.
-     * Memory Usage: 35.6 MB, less than 84.83% of Java online submissions for Best Time to Buy and Sell Stock II.
+     * Runtime: 1 ms, faster than 85.19% of Java online submissions for Best Time to Buy and Sell Stock II.
+     * Memory Usage: 37.5 MB, less than 99.05% of Java online submissions for Best Time to Buy and Sell Stock II.
      */
     private static class Solution1 extends Solution {
 
-        @Override
-        public int maxProfit(int[] A) {
-            final int n = A.length;
-            if (n < 2) {
-                return 0;
+        public int maxProfit(int[] prices) {
+            final int n = prices.length;
+            int total = 0;
+            if (n < 1) {
+                return total;
             }
-            int buy = A[0], gain = 0;
+            int gain = 0, buy = prices[0];
             for (int i = 1; i < n; ++i) {
-                if (A[i] < A[i - 1]) {
-                    gain += A[i - 1] - buy;
-                    buy = A[i];
+                if (prices[i] > buy && prices[i] - buy > gain) {
+                    gain = prices[i] - buy;
+                } else {
+                    total += gain;
+                    gain = 0;
+                    buy = prices[i];
                 }
             }
-            gain += A[n - 1] - buy;
-            return gain;
+            total += gain;
+            return total;
         }
-
     }
 
     /**
-     * 优化
+     * 算坡的优雅写法
+     * Runtime: 0 ms, faster than 100.00% of Java online submissions for Best Time to Buy and Sell Stock II.
+     * Memory Usage: 37.6 MB, less than 96.19% of Java online submissions for Best Time to Buy and Sell Stock II.
      */
     private static class Solution2 extends Solution {
 
-        @Override
         public int maxProfit(int[] prices) {
-            int max = 0;
-            for (int i = 1; i < prices.length; ++i) {
-                if (prices[i] > prices[i - 1]) {
-                    max += prices[i] - prices[i - 1];
-                }
+            final int n = prices.length;
+            int total = 0;
+            if (n < 1) {
+                return total;
             }
-            return max;
+            int i = 0;
+            while (i < n) {
+                // 算坡底
+                while (i < n - 1 && prices[i + 1] <= prices[i]) {
+                    ++i;
+                }
+                int valley = prices[i];
+                // 算坡顶
+                while (i < n - 1 && prices[i + 1] >= prices[i]) {
+                    ++i;
+                }
+                int peak = prices[i];
+                total += peak - valley;
+                ++i;
+            }
+            return total;
+        }
+    }
+
+    /**
+     * Runtime: 1 ms, faster than 85.19% of Java online submissions for Best Time to Buy and Sell Stock II.
+     * Memory Usage: 37.4 MB, less than 100.00% of Java online submissions for Best Time to Buy and Sell Stock II.
+     * 算破的最好写法
+     */
+    private static class Solution3 extends Solution {
+
+        public int maxProfit(int[] prices) {
+            final int n = prices.length;
+            int total = 0;
+            if (n < 1) {
+                return total;
+            }
+            int i = 0;
+            while (i < n - 1) {
+                if (prices[i + 1] >= prices[i]) {
+                    total += prices[i + 1] - prices[i];
+                }
+                ++i;
+            }
+//            for (int i = 0; i < n - 1; ++i) {
+//                if (prices[i + 1] >= prices[i]) {
+//                    total += prices[i + 1] - prices[i];
+//                }
+//            }
+            return total;
         }
     }
 
@@ -83,7 +129,7 @@ public class _0122BestTimetoBuyandSellStock2 extends Base {
         int[] a2 = {1, 2, 3, 4, 5};
         int[] a3 = {7, 6, 4, 3, 1};
 
-        Solution s = new Solution1();
+        Solution s = new Solution3();
 
         println(s.maxProfit(a1));//7
         println(s.maxProfit(a2));//4
