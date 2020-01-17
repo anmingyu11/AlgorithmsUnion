@@ -27,6 +27,27 @@ public class PrintUtil {
         println("");
     }
 
+    public static void print2DArr(Integer[][] arr2) {
+        for (Integer[] objarr : arr2) {
+            for (int i = 0; i < objarr.length; ++i) {
+                int val = objarr[i]!=null ? objarr[i]:0;
+                if (i == 0) {
+                    if (i != objarr.length - 1) {
+                        StdOut.printf("[ %8d,", val);
+                    } else {
+                        StdOut.printf("[ %8d", val);
+                        StdOut.printf(" ]\n");
+                    }
+                } else if (i == objarr.length - 1) {
+                    StdOut.printf(" %8d]\n", val);
+                } else {
+                    StdOut.printf(" %8d,", val);
+                }
+            }
+        }
+        println("");
+    }
+
     public static void print2DArr(int[][] arr2) {
         for (int[] objarr : arr2) {
             for (int i = 0; i < objarr.length; ++i) {
