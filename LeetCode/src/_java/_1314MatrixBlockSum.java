@@ -117,6 +117,10 @@ public class _1314MatrixBlockSum extends Base {
 
     }
 
+    /**
+     * Runtime: 5 ms, faster than 37.94% of Java online submissions for Matrix Block Sum.
+     * Memory Usage: 40 MB, less than 100.00% of Java online submissions for Matrix Block Sum.
+     */
     private static class Solution3 extends Solution {
 
         public int[][] matrixBlockSum(int[][] mat, int K) {
@@ -133,13 +137,16 @@ public class _1314MatrixBlockSum extends Base {
 
             for (int i = 0; i < m; ++i) {
                 // 1. calculate sum.
+                dp[0] = 0;
                 for (int j = 1; j <= n; ++j) {
-                    dp[j] += dp[j - 1] + mat[i][j - 1];
-                    if (j > K){
-                    }
+                    dp[j] = dp[j - 1] + mat[i][j - 1];
                 }
-                // 2.
-                for (int k = 1; k <= n; ++k) {
+                // 2. 发放阶段
+                for (int c = 0; c < n; ++c) {
+                    int subSum = dp[Math.min(c + K, n - 1) + 1] - dp[Math.max(c - K, 0)];
+                    for (int r = Math.max(i - K, 0); r <= Math.min(i + K, m - 1); ++r) {
+                        res[r][c] += subSum;
+                    }
                 }
             }
             return res;
