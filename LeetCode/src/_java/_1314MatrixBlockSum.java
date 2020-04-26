@@ -154,15 +154,100 @@ public class _1314MatrixBlockSum extends Base {
 
     }
 
+    /**
+     * Runtime: 6 ms, faster than 35.64% of Java online submissions for Matrix Block Sum.
+     * Memory Usage: 40.1 MB, less than 100.00% of Java online submissions for Matrix Block Sum.
+     */
+    private static class Solution4 extends Solution {
+
+        public int[][] matrixBlockSum(int[][] mat, int K) {
+            // 如何将dp转化为1维，进而使效率提升至 O(n^2)级别.
+            int m = mat.length;
+            if (m <= 0) {
+                return new int[0][];
+            }
+            int n = mat[0].length;
+            // 1. 先算[0,n)的和.
+            // 2. 再从0开始计算区间和，并分配到所有需要计算结果的res.
+            int[] dp = new int[n + 1];
+            int[][] res = new int[m][n];
+
+            for (int i = 0; i < m; ++i) {
+                // 1. cal & distribute.
+                dp[0] = 0;
+                for (int j = 1; j <= n; ++j) {
+                    dp[j] = dp[j - 1] + mat[i][j - 1];
+                    if (j > K) {
+                        int subSum = dp[j] - dp[Math.max(0, j - 2 * K - 1)];
+                        for (int r = Math.max(i - K, 0); r <= Math.min(i + K, m - 1); ++r) {
+                            res[r][j - K - 1] += subSum;
+                        }
+                    }
+                }
+                // 2. distribute the remains.
+                // remain the most right is n - K - 1
+                for (int c = Math.max(0, n - K); c < n; ++c) {
+                    int subSum = dp[Math.min(c + K, n)] - dp[Math.max(0, c - K)];
+                    for (int r = Math.max(i - K, 0); r <= Math.min(i + K, m - 1); ++r) {
+                        res[r][c] += subSum;
+                    }
+                }
+            }
+            return res;
+        }
+
+    }
+
+    /**
+     * Runtime: 3 ms, faster than 94.70% of Java online submissions for Matrix Block Sum.
+     * Memory Usage: 39.9 MB, less than 100.00% of Java online submissions for Matrix Block Sum.
+     */
+    private static class Solution5 extends Solution {
+
+        /**
+         * 算二维数组的一个重要技巧。
+         * @param mat
+         * @param K
+         * @return
+         */
+        public int[][] matrixBlockSum(int[][] mat, int K) {
+            int m = mat.length;
+            if (m <= 0) {
+                return new int[0][];
+            }
+            int n = mat[0].length;
+            int[][] dp = new int[m + 1][n + 1];
+            for (int i = 1; i <= m; ++i) {
+                for (int j = 1; j <= n; ++j) {
+                    dp[i][j] = dp[i][j - 1] + dp[i - 1][j] - dp[i - 1][j - 1] + mat[i - 1][j - 1];
+                }
+            }
+            int[][] res = new int[m][n];
+            for (int i = 1; i <= m; ++i) {
+                for (int j = 1; j <= n; ++j) {
+                    int top = Math.max(i - K - 1, 0), bottom = Math.min(i + K, m), left = Math.max(j - K - 1, 0), right = Math.min(j + K, n);
+                    res[i - 1][j - 1] =
+                            dp[bottom][right] - dp[top][right] - dp[bottom][left] + dp[top][left];
+                }
+            }
+            return res;
+        }
+
+    }
+
     public static void main(String[] args) {
         int[][] mat1 = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
         int k1 = 1;
         int[][] mat2 = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
         int k2 = 2;
+        int[][] mat3 = {{72}, {69}, {55}, {50}, {80}};
+        int k3 = 2;
 
-        Solution s = new Solution3();
+
+        Solution s = new Solution5();
 
         print2DArr(s.matrixBlockSum(mat1, k1));// Output: [[12,21,16],[27,45,33],[24,39,28]]
         print2DArr(s.matrixBlockSum(mat2, k2));// Output: [[45,45,45],[45,45,45],[45,45,45]]
+        print2DArr(s.matrixBlockSum(mat3, k3));
     }
 }
