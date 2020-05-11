@@ -17,9 +17,14 @@ package _6Context;
  *
  ******************************************************************************/
 
-import _2Sort.PriorityQueue.MinPQ;
+import java.awt.Color;
+import java.io.File;
+
+import _2Sort.MinPQ;
+import base.stdlib.In;
 import base.stdlib.Particle;
 import base.stdlib.StdDraw;
+import base.stdlib.StdOut;
 
 /**
  * The {@code CollisionSystem} class represents a collection of particles
@@ -52,29 +57,20 @@ public class CollisionSystem {
 
     // updates priority queue with all new events for particle a
     private void predict(Particle a, double limit) {
-        if (a == null) {
-            return;
-        }
+        if (a == null) return;
 
         // particle-particle collisions
-        // 粒子之间的撞击事件
         for (int i = 0; i < particles.length; i++) {
             double dt = a.timeToHit(particles[i]);
-            if (t + dt <= limit) {
+            if (t + dt <= limit)
                 pq.insert(new Event(t + dt, a, particles[i]));
-            }
         }
 
         // particle-wall collisions
-        // 粒子与墙的撞击事件
         double dtX = a.timeToHitVerticalWall();
         double dtY = a.timeToHitHorizontalWall();
-        if (t + dtX <= limit) {
-            pq.insert(new Event(t + dtX, a, null));
-        }
-        if (t + dtY <= limit) {
-            pq.insert(new Event(t + dtY, null, a));
-        }
+        if (t + dtX <= limit) pq.insert(new Event(t + dtX, a, null));
+        if (t + dtY <= limit) pq.insert(new Event(t + dtY, null, a));
     }
 
     // redraw all particles
@@ -97,41 +93,35 @@ public class CollisionSystem {
      * @param limit the amount of time
      */
     public void simulate(double limit) {
+
         // initialize PQ with collision events and redraw event
-        pq = new MinPQ<>();
+        pq = new MinPQ<Event>();
         for (int i = 0; i < particles.length; i++) {
             predict(particles[i], limit);
         }
         pq.insert(new Event(0, null, null));        // redraw event
+
+
         // the main event-driven simulation loop
         while (!pq.isEmpty()) {
+
             // get impending event, discard if invalidated
             Event e = pq.delMin();
-            if (!e.isValid()) {
-                continue;
-            }
+            if (!e.isValid()) continue;
             Particle a = e.a;
             Particle b = e.b;
+
             // physical collision, so update positions, and then simulation clock
-            //
-            for (int i = 0; i < particles.length; i++) {
+            for (int i = 0; i < particles.length; i++)
                 particles[i].move(e.time - t);
-            }
             t = e.time;
+
             // process event
-            if (a != null && b != null) {
-                a.bounceOff(b);
-                // particle-particle collision
-            } else if (a != null && b == null) {
-                a.bounceOffVerticalWall();
-                // particle-wall collision
-            } else if (a == null && b != null) {
-                b.bounceOffHorizontalWall();
-                // particle-wall collision
-            } else if (a == null && b == null) {
-                redraw(limit);
-                // redraw event
-            }
+            if (a != null && b != null) a.bounceOff(b);              // particle-particle collision
+            else if (a != null && b == null) a.bounceOffVerticalWall();   // particle-wall collision
+            else if (a == null && b != null) b.bounceOffHorizontalWall(); // particle-wall collision
+            else if (a == null && b == null) redraw(limit);               // redraw event
+
             // update the priority queue with new collisions involving a or b
             predict(a, limit);
             predict(b, limit);
@@ -161,16 +151,10 @@ public class CollisionSystem {
             this.time = t;
             this.a = a;
             this.b = b;
-            if (a != null) {
-                countA = a.count();
-            } else {
-                countA = -1;
-            }
-            if (b != null) {
-                countB = b.count();
-            } else {
-                countB = -1;
-            }
+            if (a != null) countA = a.count();
+            else countA = -1;
+            if (b != null) countB = b.count();
+            else countB = -1;
         }
 
         // compare times when two events will occur
@@ -180,12 +164,8 @@ public class CollisionSystem {
 
         // has any collision occurred between when event was created and now?
         public boolean isValid() {
-            if (a != null && a.count() != countA) {
-                return false;
-            }
-            if (b != null && b.count() != countB) {
-                return false;
-            }
+            if (a != null && a.count() != countA) return false;
+            if (b != null && b.count() != countB) return false;
             return true;
         }
 
@@ -201,24 +181,48 @@ public class CollisionSystem {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-
         StdDraw.setCanvasSize(600, 600);
-
         // enable double buffering
         StdDraw.enableDoubleBuffering();
 
+        // create collision system and simulate
+        CollisionSystem system = new CollisionSystem(getParticles(20));
+        system.simulate(10000);
+    }
+
+    private static Particle[] getParticles(String path) {
         // the array of particles
         Particle[] particles;
 
-        int n = 10000;
+        In in = new In(new File(path));
+
+        int n = in.readInt();
+        StdOut.println("Particle count : " + n);
         particles = new Particle[n];
-        for (int i = 0;i<n;++i){
+        for (int i = 0; i < n; i++) {
+            double rx = in.readDouble();
+            double ry = in.readDouble();
+            double vx = in.readDouble();
+            double vy = in.readDouble();
+            double radius = in.readDouble();
+            double mass = in.readDouble();
+            int r = in.readInt();
+            int g = in.readInt();
+            int b = in.readInt();
+            Color color = new Color(r, g, b);
+            particles[i] = new Particle(rx, ry, vx, vy, radius, mass, color);
+            StdOut.println(particles[i]);
+        }
+        return particles;
+    }
+
+    private static Particle[] getParticles(int num) {
+        Particle[] particles;
+        particles = new Particle[num];
+        for (int i = 0; i < particles.length; ++i) {
             particles[i] = new Particle();
         }
-
-        // create collision system and simulate
-        CollisionSystem system = new CollisionSystem(particles);
-        system.simulate(10000);
+        return particles;
     }
 
 }

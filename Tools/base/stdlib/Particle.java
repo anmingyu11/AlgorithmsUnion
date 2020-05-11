@@ -1,4 +1,5 @@
 package base.stdlib;
+
 /******************************************************************************
  *  Compilation:  javac Particle.java
  *  Execution:    none
@@ -232,6 +233,20 @@ public class Particle {
      */
     public double kineticEnergy() {
         return 0.5 * mass * (vx * vx + vy * vy);
+    }
+
+    @Override
+    public String toString() {
+        return "Particle{" +
+                "rx=" + rx +
+                ", ry=" + ry +
+                ", vx=" + vx +
+                ", vy=" + vy +
+                ", count=" + count +
+                ", radius=" + radius +
+                ", mass=" + mass +
+                ", color=" + color +
+                '}';
     }
 }
 
