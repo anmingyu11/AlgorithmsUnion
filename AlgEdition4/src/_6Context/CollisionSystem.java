@@ -1,4 +1,5 @@
 package _6Context;
+
 /******************************************************************************
  *  Compilation:  javac CollisionSystem.java
  *  Execution:    java CollisionSystem n               (n random particles)
@@ -35,15 +36,31 @@ import base.stdlib.StdOut;
  * see <a href="https://algs4.cs.princeton.edu/61event">Section 6.1</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
  *
+ * 我们对于事件驱动模拟的主要兴趣在于避免时间驱动模拟的内循环所必须的大量计算。
+ * - 时间驱动模拟 O(N^2/tick)
+ * - 事件驱动模拟 优先队列
+ *
+ * 对N个能够互相碰撞的
  * @author Robert Sedgewick
  * @author Kevin Wayne
+ * @author AMY
  */
 public class CollisionSystem {
-    private static final double HZ = 0.5;    // number of redraw events per clock tick
-
-    private MinPQ<Event> pq;          // the priority queue
-    private double t = 0.0;          // simulation clock time
-    private Particle[] particles;     // the array of particles
+    // number of redraw events per clock tick
+    private static final double HZ = 0.5;
+    // FPS Frame per Second
+    private static final double FPS = 45;
+    // the amount of time
+    private double limit;
+    // the priority queue
+    private MinPQ<Event> pq;
+    // simulation clock time
+    private double t = 0.0;
+    private double old_t = 0.0;
+    // particles
+    private Particle[] particles;
+    // particles back
+    private Particle[] particlesBak;
 
     /**
      * Initializes a system with the specified collection of particles.
@@ -52,40 +69,67 @@ public class CollisionSystem {
      * @param particles the array of particles
      */
     public CollisionSystem(Particle[] particles) {
-        this.particles = particles.clone();   // defensive copy
+        this.particlesBak = particles.clone();
     }
 
     // updates priority queue with all new events for particle a
-    private void predict(Particle a, double limit) {
-        if (a == null) return;
-
+    private void predict(Particle a) {
+        if (a == null) {
+            return;
+        }
         // particle-particle collisions
-        for (int i = 0; i < particles.length; i++) {
-            double dt = a.timeToHit(particles[i]);
-            if (t + dt <= limit)
-                pq.insert(new Event(t + dt, a, particles[i]));
+        for (Particle p : particles) {
+            if (a == p) {
+                // Particle中已经做了这方面的处理 , 多写一次循环就多了一次判断.
+                continue;
+            }
+            double dt = a.timeToHit(p);
+            if (t + dt <= limit) {
+                pq.insert(new Event(t + dt, a, p));
+            }
         }
 
         // particle-wall collisions
         double dtX = a.timeToHitVerticalWall();
         double dtY = a.timeToHitHorizontalWall();
-        if (t + dtX <= limit) pq.insert(new Event(t + dtX, a, null));
-        if (t + dtY <= limit) pq.insert(new Event(t + dtY, null, a));
+        if (t + dtX <= limit) {
+            pq.insert(new Event(t + dtX, a, null));
+        }
+        if (t + dtY <= limit) {
+            pq.insert(new Event(t + dtY, null, a));
+        }
     }
 
     // redraw all particles
-    private void redraw(double limit) {
+    private void redraw() {
         StdDraw.clear();
-        for (int i = 0; i < particles.length; i++) {
-            particles[i].draw();
+        for (Particle p : this.particles) {
+            p.draw();
         }
+        StdDraw.text(0.08,0.95,String.format("t: %.3f ",(t-old_t) ));
         StdDraw.show();
-        StdDraw.pause(20);
+        StdDraw.pause((int) (1000 / FPS));
         if (t < limit) {
             pq.insert(new Event(t + 1.0 / HZ, null, null));
         }
     }
 
+    private void init(double limit) {
+        // time clock tick
+        this.t = 0.0;
+        // the amount of time
+        this.limit = limit;
+        // initialize PQ with collision events and redraw event
+        this.pq = new MinPQ<>();
+        // get particles
+        this.particles = this.particlesBak.clone();
+        // all events
+        for (Particle p : particles) {
+            predict(p);
+        }
+        // redraw event
+        pq.insert(new Event(t, null, null));
+    }
 
     /**
      * Simulates the system of particles for the specified amount of time.
@@ -93,38 +137,47 @@ public class CollisionSystem {
      * @param limit the amount of time
      */
     public void simulate(double limit) {
-
-        // initialize PQ with collision events and redraw event
-        pq = new MinPQ<Event>();
-        for (int i = 0; i < particles.length; i++) {
-            predict(particles[i], limit);
-        }
-        pq.insert(new Event(0, null, null));        // redraw event
-
+        init(limit);
 
         // the main event-driven simulation loop
         while (!pq.isEmpty()) {
 
             // get impending event, discard if invalidated
             Event e = pq.delMin();
-            if (!e.isValid()) continue;
+            if (!e.isValid()) {
+                continue;
+            }
             Particle a = e.a;
             Particle b = e.b;
 
             // physical collision, so update positions, and then simulation clock
-            for (int i = 0; i < particles.length; i++)
-                particles[i].move(e.time - t);
+            for (Particle p : particles) {
+                // 这里理论上是会掉帧的,因为只有重绘事件会对整个画面进行刷新，这时候可能会出现空气碰撞的情况。
+                // 但是由于差距十分微小并且如果每秒刷新频率够高，人类是感觉不到的。
+                p.move(e.time - t);
+            }
+            old_t = t;
             t = e.time;
 
             // process event
-            if (a != null && b != null) a.bounceOff(b);              // particle-particle collision
-            else if (a != null && b == null) a.bounceOffVerticalWall();   // particle-wall collision
-            else if (a == null && b != null) b.bounceOffHorizontalWall(); // particle-wall collision
-            else if (a == null && b == null) redraw(limit);               // redraw event
+            if (a != null && b != null) {
+                // particle-particle collision
+                a.bounceOff(b);
+            } else if (a != null && b == null) {
+                // particle-wall collision
+                a.bounceOffVerticalWall();
+            } else if (a == null && b != null) {
+                // particle-wall collision
+                b.bounceOffHorizontalWall();
+            } else if (a == null && b == null) {
+                // redraw event
+                // 所有的重绘事件都在这里。
+                redraw();
+            }
 
             // update the priority queue with new collisions involving a or b
-            predict(a, limit);
-            predict(b, limit);
+            predict(a);
+            predict(b);
         }
     }
 
@@ -140,21 +193,23 @@ public class CollisionSystem {
      *    -  a and b both not null:  binary collision between a and b
      *
      ***************************************************************************/
-    private static class Event implements Comparable<Event> {
-        private final double time;         // time that event is scheduled to occur
-        private final Particle a, b;       // particles involved in event, possibly null
-        private final int countA, countB;  // collision counts at event creation
-
+    private class Event implements Comparable<Event> {
+        // time that event is scheduled to occur
+        private final double time;
+        // particles involved in event, possibly null
+        private final Particle a, b;
+        // collision counts at event creation
+        private final int countA, countB;
 
         // create a new event to occur at time t involving a and b
+        // Event是整个算法中最精华的部分
         public Event(double t, Particle a, Particle b) {
             this.time = t;
             this.a = a;
             this.b = b;
-            if (a != null) countA = a.count();
-            else countA = -1;
-            if (b != null) countB = b.count();
-            else countB = -1;
+            // 排除无效事件用.
+            countA = a != null ? a.count() : -1;
+            countB = b != null ? b.count() : -1;
         }
 
         // compare times when two events will occur
@@ -164,11 +219,11 @@ public class CollisionSystem {
 
         // has any collision occurred between when event was created and now?
         public boolean isValid() {
-            if (a != null && a.count() != countA) return false;
-            if (b != null && b.count() != countB) return false;
+            if ((a != null && a.count() != countA) || (b != null && b.count() != countB)) {
+                return false;
+            }
             return true;
         }
-
     }
 
 
@@ -184,6 +239,14 @@ public class CollisionSystem {
         StdDraw.setCanvasSize(600, 600);
         // enable double buffering
         StdDraw.enableDoubleBuffering();
+
+        String path1 = "/Users/helloword/Anmingyu/AlgorithmsUnion/AlgEdition4/resources/6Context/EventSimulation/billiards5.txt";
+        String path2 = "/Users/helloword/Anmingyu/AlgorithmsUnion/AlgEdition4/resources/6Context/EventSimulation/brownian.txt";
+        String path3 = "/Users/helloword/Anmingyu/AlgorithmsUnion/AlgEdition4/resources/6Context/EventSimulation/brownian2.txt";
+        String path4 = "/Users/helloword/Anmingyu/AlgorithmsUnion/AlgEdition4/resources/6Context/EventSimulation/diffusion.txt";
+        String path5 = "/Users/helloword/Anmingyu/AlgorithmsUnion/AlgEdition4/resources/6Context/EventSimulation/diffusion2.txt";
+        String path6 = "/Users/helloword/Anmingyu/AlgorithmsUnion/AlgEdition4/resources/6Context/EventSimulation/diffusion3.txt";
+        String path7 = "/Users/helloword/Anmingyu/AlgorithmsUnion/AlgEdition4/resources/6Context/EventSimulation/pendulum.txt";
 
         // create collision system and simulate
         CollisionSystem system = new CollisionSystem(getParticles(20));

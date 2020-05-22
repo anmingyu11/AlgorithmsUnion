@@ -22,6 +22,13 @@ import java.awt.Color;
  * For additional documentation,
  * see <a href="https://algs4.cs.princeton.edu/61event">Section 6.1</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * <p>
+ * 刚性球体模型：
+ * 它描述的是原子和分子在含有以下性质的容器中运动
+ * <p>
+ * - 运动的粒子与墙以及互相之间的碰撞是弹性的；
+ * - 每个粒子都是一个已知位置，速度，质量和直径的球体；
+ * - 不存在其他外力。
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne
@@ -35,7 +42,6 @@ public class Particle {
     private final double radius;  // radius
     private final double mass;    // mass
     private final Color color;    // color
-
 
     /**
      * Initializes a particle with the specified position, velocity, radius, mass, and color.
@@ -116,20 +122,33 @@ public class Particle {
      * {@code Double.POSITIVE_INFINITY} if the particles will not collide
      */
     public double timeToHit(Particle that) {
-        if (this == that) return INFINITY;
+        if (this == that) {
+            return INFINITY;
+        }
+        // x轴距离
         double dx = that.rx - this.rx;
+        // y轴距离
         double dy = that.ry - this.ry;
+        // vx速度
         double dvx = that.vx - this.vx;
+        // vy速度
         double dvy = that.vy - this.vy;
+        // dvdr
         double dvdr = dx * dvx + dy * dvy;
-        if (dvdr > 0) return INFINITY;
+        if (dvdr > 0) {
+            return INFINITY;
+        }
         double dvdv = dvx * dvx + dvy * dvy;
-        if (dvdv == 0) return INFINITY;
+        if (dvdv == 0) {
+            return INFINITY;
+        }
         double drdr = dx * dx + dy * dy;
         double sigma = this.radius + that.radius;
         double d = (dvdr * dvdr) - dvdv * (drdr - sigma * sigma);
         // if (drdr < sigma*sigma) StdOut.println("overlapping particles");
-        if (d < 0) return INFINITY;
+        if (d < 0) {
+            return INFINITY;
+        }
         return -(dvdr + Math.sqrt(d)) / dvdv;
     }
 
@@ -200,8 +219,8 @@ public class Particle {
         that.vy -= fy / that.mass;
 
         // update collision counts
-        this.count++;
-        that.count++;
+        ++this.count;
+        ++that.count;
     }
 
     /**
@@ -211,7 +230,7 @@ public class Particle {
      */
     public void bounceOffVerticalWall() {
         vx = -vx;
-        count++;
+        ++count;
     }
 
     /**
@@ -221,7 +240,7 @@ public class Particle {
      */
     public void bounceOffHorizontalWall() {
         vy = -vy;
-        count++;
+        ++count;
     }
 
     /**
