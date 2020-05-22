@@ -50,7 +50,9 @@ public class CollisionSystem {
     private static final double HZ = 0.5;
     // FPS Frame per Second
     private static final double FPS = 45;
-    // the amount of time
+    // the amount of time  这里书写的有问题，原话：
+    // 为了处理另一种典型情况，也就是预测到的碰撞距现在的时间太远时，就需要一个limit参数指定有效时间段，
+    // 这样就可以忽略时间晚于limit发生的所有事件了。
     private double limit;
     // the priority queue
     private MinPQ<Event> pq;
