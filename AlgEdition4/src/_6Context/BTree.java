@@ -118,7 +118,6 @@ public class BTree<Key extends Comparable<Key>, Value> {
         return height;
     }
 
-
     /**
      * Returns the value associated with the given key.
      *
@@ -148,7 +147,6 @@ public class BTree<Key extends Comparable<Key>, Value> {
             // internal node
             for (int j = 0; j < x.m; ++j) {
                 if (j + 1 == x.m || less(key, children[j + 1].key)) {
-                    // 一个Node中的最后一个Entry所指定的Node应是比 Entry.key大的 Node
                     return search(children[j].next, key, ht - 1);
                 }
             }
@@ -156,11 +154,11 @@ public class BTree<Key extends Comparable<Key>, Value> {
         return null;
     }
 
-
     /**
      * Inserts the key-value pair into the symbol table, overwriting the old value
      * with the new value if the key is already in the symbol table.
      * If the value is {@code null}, this effectively deletes the key from the symbol table.
+     * 很多的功能并未完全实现。
      *
      * @param key the key
      * @param val the value
@@ -170,6 +168,7 @@ public class BTree<Key extends Comparable<Key>, Value> {
         if (key == null) {
             throw new IllegalArgumentException("argument key to put() is null");
         }
+
         Node u = insert(root, key, val, height);
         ++n;
         if (u == null) {
@@ -210,7 +209,6 @@ public class BTree<Key extends Comparable<Key>, Value> {
             }
         }
 
-        // insert
         for (int i = h.m; i > j; --i) {
             h.children[i] = h.children[i - 1];
         }
@@ -231,6 +229,15 @@ public class BTree<Key extends Comparable<Key>, Value> {
             t.children[j] = h.children[M / 2 + j];
         }
         return t;
+    }
+
+    // comparison functions - make Comparable instead of Key to avoid casts
+    private boolean less(Comparable k1, Comparable k2) {
+        return k1.compareTo(k2) < 0;
+    }
+
+    private boolean eq(Comparable k1, Comparable k2) {
+        return k1.compareTo(k2) == 0;
     }
 
     /**
@@ -259,24 +266,13 @@ public class BTree<Key extends Comparable<Key>, Value> {
         return s.toString();
     }
 
-
-    // comparison functions - make Comparable instead of Key to avoid casts
-    private boolean less(Comparable k1, Comparable k2) {
-        return k1.compareTo(k2) < 0;
-    }
-
-    private boolean eq(Comparable k1, Comparable k2) {
-        return k1.compareTo(k2) == 0;
-    }
-
-
     /**
      * Unit tests the {@code BTree} data type.
      *
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        BTree<String, String> st = new BTree<String, String>();
+        BTree<String, String> st = new BTree<>();
 
         st.put("www.cs.princeton.edu", "128.112.136.12");
         st.put("www.cs.princeton.edu", "128.112.136.11");
@@ -295,7 +291,6 @@ public class BTree<Key extends Comparable<Key>, Value> {
         st.put("www.espn.com", "199.181.135.201");
         st.put("www.weather.com", "63.111.66.11");
         st.put("www.yahoo.com", "216.109.118.65");
-
 
         StdOut.println("cs.princeton.edu:  " + st.get("www.cs.princeton.edu"));
         StdOut.println("hardvardsucks.com: " + st.get("www.harvardsucks.com"));
