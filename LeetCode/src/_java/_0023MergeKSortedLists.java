@@ -2,6 +2,21 @@ package _java;
 
 import base.BaseLinkedList;
 
+/**
+ * Merge k sorted linked lists and return it as one sorted list.
+ * <p>
+ * Analyze and describe its complexity.
+ * <p>
+ * Example:
+ * <p>
+ * Input:
+ * [
+ * 1->4->5,
+ * 1->3->4,
+ * 2->6
+ * ]
+ * Output: 1->1->2->3->4->4->5->6
+ */
 public class _0023MergeKSortedLists extends BaseLinkedList {
 
     private abstract static class Solution {
@@ -237,10 +252,12 @@ public class _0023MergeKSortedLists extends BaseLinkedList {
     }
 
     public static void main(String[] args) {
-        Solution s = new Solution3();
+        Solution s = new Solution2();
 
         printSingleListNode(s.mergeKLists(lists1()));
         printSingleListNode(s.mergeKLists(lists2()));
+        printSingleListNode(s.mergeKLists(lists3()));
+        printSingleListNode(s.mergeKLists(lists4()));
 
         //testSort();
     }
@@ -260,6 +277,24 @@ public class _0023MergeKSortedLists extends BaseLinkedList {
         listNodes[0] = generateASingleListNode(arr1);
         listNodes[1] = generateASingleListNode(arr2);
         listNodes[2] = generateASingleListNode(arr3);
+        return listNodes;
+    }
+
+    private static ListNode[] lists3() {
+        int[] arr1 = {1, 4, 5};
+        int[] arr2 = {0, 2};
+        ListNode[] listNodes = new ListNode[2];
+        listNodes[0] = generateASingleListNode(arr1);
+        listNodes[1] = generateASingleListNode(arr2);
+        return listNodes;
+    }
+
+    private static ListNode[] lists4() {
+        int[] arr1 = {-1, -1, -1};
+        int[] arr2 = {-2, -2, -1};
+        ListNode[] listNodes = new ListNode[2];
+        listNodes[0] = generateASingleListNode(arr1);
+        listNodes[1] = generateASingleListNode(arr2);
         return listNodes;
     }
 
