@@ -54,6 +54,7 @@ public class _0206ReverseLinkedList extends BaseLinkedList {
     }
 
     // 优雅的递归
+    // 整个递归流程其实与迭代相同，递归唯一返回的值就是收敛条件中返回的值即头节点。
     // Runtime: 0 ms, faster than 100.00% of Java online submissions for Reverse Linked List.
     // Memory Usage: 37.9 MB, less than 10.16% of Java online submissions for Reverse Linked List.
     private static class Solution3 extends Solution {
@@ -61,6 +62,7 @@ public class _0206ReverseLinkedList extends BaseLinkedList {
         @Override
         public ListNode reverseList(ListNode head) {
             if (head == null || head.next == null) {
+                // head == null only used for if the first head is null
                 return head;
             }
             ListNode p = reverseList(head.next);
