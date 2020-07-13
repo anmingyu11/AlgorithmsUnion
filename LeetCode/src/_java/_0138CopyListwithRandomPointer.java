@@ -10,6 +10,41 @@ import base.Base;
  * which could point to any node in the list or null.
  * <p>
  * Return a deep copy of the list.
+ * <p>
+ * The Linked List is represented in the input/output as a list of n nodes. Each node is represented as a pair of [val, random_index] where:
+ * <p>
+ * val: an integer representing Node.val
+ * random_index: the index of the node (range from 0 to n-1) where random pointer points to, or null if it does not point to any node.
+ * <p>
+ * <p>
+ * Example 1:
+ * <p>
+ * <p>
+ * Input: head = [[7,null],[13,0],[11,4],[10,2],[1,0]]
+ * Output: [[7,null],[13,0],[11,4],[10,2],[1,0]]
+ * Example 2:
+ * <p>
+ * <p>
+ * Input: head = [[1,1],[2,1]]
+ * Output: [[1,1],[2,1]]
+ * Example 3:
+ * <p>
+ * <p>
+ * <p>
+ * Input: head = [[3,null],[3,0],[3,null]]
+ * Output: [[3,null],[3,0],[3,null]]
+ * Example 4:
+ * <p>
+ * Input: head = []
+ * Output: []
+ * Explanation: Given linked list is empty (null pointer), so return null.
+ * <p>
+ * <p>
+ * Constraints:
+ * <p>
+ * -10000 <= Node.val <= 10000
+ * Node.random is null or pointing to a node in the linked list.
+ * Number of Nodes will not exceed 1000.
  */
 public class _0138CopyListwithRandomPointer extends Base {
 
@@ -100,19 +135,15 @@ public class _0138CopyListwithRandomPointer extends Base {
             }
 
             Node node = map.get(head);
-
             if (node == null) {
-                node = new Node();
-                node.val = head.val;
+                node = new Node(head.val, null, null);
             } else {
                 return node;
             }
-
-
-            node.random = copyRandomList(head.random);
-            node.next = copyRandomList(head.next);
-
             map.put(head, node);
+
+            node.next = copyRandomList(head.next);
+            node.random = copyRandomList(head.random);
 
             return node;
         }
@@ -129,18 +160,15 @@ public class _0138CopyListwithRandomPointer extends Base {
         @Override
         public Node copyRandomList(Node head) {
             if (head == null) {
-                return null;
+                return head;
             }
 
-            Node oldNode = head;
-            Node newNode = getCloneNode(head);
-            while (oldNode != null) {
-                newNode.next = getCloneNode(oldNode.next);
-                newNode.random = getCloneNode(oldNode.random);
-
-                oldNode = oldNode.next;
-                newNode = newNode.next;
+            for (Node p = head; p != null; p = p.next) {
+                Node node = getCloneNode(p);
+                node.random = getCloneNode(p.random);
+                node.next = getCloneNode(p.next);
             }
+
             return map.get(head);
         }
 
@@ -171,7 +199,7 @@ public class _0138CopyListwithRandomPointer extends Base {
         l1[1].next = null;
         l1[1].random = l1[1];
 
-        Solution s = new Solution3();
+        Solution s = new Solution2();
 
         println(l1[0]);
         println(s.copyRandomList(l1[0]));
