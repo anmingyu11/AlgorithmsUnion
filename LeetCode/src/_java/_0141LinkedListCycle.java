@@ -7,16 +7,37 @@ import base.BaseLinkedList;
 /**
  * Given a linked list, determine if it has a cycle in it.
  * <p>
- * To represent a cycle in the given linked list,
- * we use an integer pos which represents the position (0-indexed) in the linked list where tail connects to.
- * If pos is -1, then there is no cycle
- * in the linked list.
+ * To represent a cycle in the given linked list, we use an integer pos which represents the position (0-indexed) in the linked list where tail connects to. If pos is -1, then there is no cycle in the linked list.
+ * <p>
+ * <p>
+ * Example 1:
+ * <p>
+ * Input: head = [3,2,0,-4], pos = 1
+ * Output: true
+ * Explanation: There is a cycle in the linked list, where tail connects to the second node.
+ * <p>
+ * <p>
+ * Example 2:
+ * <p>
+ * Input: head = [1,2], pos = 0
+ * Output: true
+ * Explanation: There is a cycle in the linked list, where tail connects to the first node.
+ * <p>
+ * <p>
+ * Example 3:
+ * <p>
+ * Input: head = [1], pos = -1
+ * Output: false
+ * Explanation: There is no cycle in the linked list.
+ * <p>
+ * Follow up:
+ * <p>
+ * Can you solve it using O(1) (i.e. constant) memory?
  */
 public class _0141LinkedListCycle extends BaseLinkedList {
     private abstract static class Solution {
         public abstract boolean hasCycle(ListNode head);
     }
-
 
     // Runtime: 0 ms, faster than 100.00% of Java online submissions for Linked List Cycle.
     // Memory Usage: 38.7 MB, less than 25.10% of Java online submissions for Linked List Cycle.
@@ -45,7 +66,6 @@ public class _0141LinkedListCycle extends BaseLinkedList {
         }
 
     }
-
 
     // 同样是双指针,人家的为什么这么优雅
     // Runtime: 0 ms, faster than 100.00% of Java online submissions for Linked List Cycle.
@@ -102,7 +122,7 @@ public class _0141LinkedListCycle extends BaseLinkedList {
         ListNode l2 = generateASingleListNode(1);
         Solution s = new Solution3();
 
-        println(s.hasCycle(l1));
-        println(s.hasCycle(l2));
+        println(s.hasCycle(l1));// true
+        println(s.hasCycle(l2));// false
     }
 }
