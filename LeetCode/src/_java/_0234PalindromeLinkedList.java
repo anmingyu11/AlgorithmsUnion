@@ -23,9 +23,20 @@ public class _0234PalindromeLinkedList extends BaseLinkedList {
     /**
      * 一段关于时间复杂度的解释.
      * <p>
-     * It is a common misunderstanding that the space complexity of a program is just how much the size of additional memory space being used besides input. An important prerequisite is neglected the above definition: the input has to be read-only. By definition, changing the input and change it back is not allowed (or the input size should be counted when doing so). Another way of determining the space complexity of a program is to simply look at how much space it has written to. Reversing a singly linked list requires writing to O(n) memory space, thus the space complexities for all "reverse-the-list"-based approaches are O(n), not O(1).
+     * It is a common misunderstanding that the space complexity of a program is
+     * just how much the size of additional memory space being used besides input.
+     * An important prerequisite is neglected the above definition: the input has to be read-only.
+     * By definition, changing the input and change it back is not allowed (or the input size should be counted
+     * when doing so).
+     * Another way of determining the space complexity of a program is to simply look at how much space
+     * it has written to.
+     * Reversing a singly linked list requires writing to O(n) memory space,
+     * thus the space complexities for all "reverse-the-list"-based approaches are O(n), not O(1).
      * <p>
-     * Solving this problem in O(1) space is theoretically impossible due to two simple facts: (1) a program using O(1) space is computationally equivalent to a finite automata, or a regular expression checker; (2) the pumping lemma states that the set of palindrome strings does not form a regular set.
+     * Solving this problem in O(1) space is theoretically impossible due to two simple facts:
+     * (1) a program using O(1) space is computationally equivalent to a finite automata,
+     * or a regular expression checker;
+     * (2) the pumping lemma states that the set of palindrome strings does not form a regular set.
      * <p>
      * Please change the incorrect problem statement.
      */
@@ -124,10 +135,12 @@ public class _0234PalindromeLinkedList extends BaseLinkedList {
         ListNode head1 = generateASingleListNode(1, 2);
         ListNode head2 = generateASingleListNode(1, 2, 2, 1);
         ListNode head3 = generateASingleListNode(1, 2, 3, 2, 1);
-        Solution s = new Solution2();
+        ListNode head4 = generateASingleListNode(1);
+        Solution s = new Solution1();
 
         println(s.isPalindrome(head1)); // F
         println(s.isPalindrome(head2)); // T
         println(s.isPalindrome(head3)); // T
+        println(s.isPalindrome(head4)); // T
     }
 }
