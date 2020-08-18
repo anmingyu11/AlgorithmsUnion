@@ -8,7 +8,6 @@ import base.BaseLinkedList;
  * Example:
  * <p>
  * Given linked list: 1->2->3->4->5, and n = 2.
- * 这道题让我们移除链表倒数第N个节点
  * <p>
  * After removing the second node from the end, the linked list becomes 1->2->3->5.
  * Note:
@@ -25,27 +24,67 @@ public class _0019RemoveNthNodeFromEndofList extends BaseLinkedList {
         public abstract ListNode removeNthFromEnd(ListNode head, int n);
     }
 
-    // Runtime: 0 ms, faster than 100.00% of Java online submissions for Remove Nth Node From End of List.
-    // Memory Usage: 36.8 MB, less than 92.46% of Java online submissions for Remove Nth Node From End of List.
     private static class Solution1 extends Solution {
 
         @Override
         public ListNode removeNthFromEnd(ListNode head, int n) {
+            ListNode p = head, dummy = new ListNode(-1), prev = dummy;
+            dummy.next = head;
+            int len = 0;
+            for (; p != null; p = p.next, ++len) ;
+            int i = len;
+            for (p = head; p != null; prev = p, p = p.next, --i) {
+                if (i == n) {
+                    prev.next = p.next;
+                }
+            }
+            return dummy.next;
+        }
+
+    }
+
+    private static class Solution2 extends Solution {
+
+        private int total;
+        private int n;
+
+        public ListNode removeNthFromEnd(ListNode head, int n) {
+            this.total = -1;
+            this.n = n;
             ListNode dummy = new ListNode(-1);
             dummy.next = head;
-            ListNode p1 = dummy, p2 = dummy;
-            int i = 0;
-            while (i < n) {
-                p2 = p2.next;
-                ++i;
+            dummy.next = aux(dummy, head, 0);
+            return dummy.next;
+        }
+
+        private ListNode aux(ListNode prev, ListNode cur, int i) {
+            if (cur == null) {
+                total = i;
+                return null;
             }
-            ListNode prev = null;
-            while (p2 != null) {
-                prev = p1;
-                p1 = p1.next;
-                p2 = p2.next;
+            ListNode next = aux(cur, cur.next, i + 1);
+            if (total > 0 && total - i == n) {
+                return next;
             }
-            prev.next = prev.next.next;
+            cur.next = next;
+            return cur;
+        }
+
+    }
+
+    private static class Solution3 extends Solution {
+
+        @Override
+        public ListNode removeNthFromEnd(ListNode head, int n) {
+            ListNode dummy = new ListNode(-1), prev = dummy, slow = head, fast = head;
+            dummy.next = head;
+            for (int i = 0; i < n; ++i, fast = fast.next) ;
+            while (fast != null) {
+                prev = slow;
+                slow = slow.next;
+                fast = fast.next;
+            }
+            prev.next = slow.next;
             return dummy.next;
         }
     }
@@ -56,7 +95,7 @@ public class _0019RemoveNthNodeFromEndofList extends BaseLinkedList {
         ListNode l2 = generateASingleListNode(1);
         int n2 = 1;
 
-        Solution s = new Solution1();
+        Solution s = new Solution2();
 
         printSingleListNode(s.removeNthFromEnd(l1, n1));
         printSingleListNode(s.removeNthFromEnd(l2, n2));
