@@ -2,6 +2,18 @@ package _java;
 
 import base.BaseLinkedList;
 
+/**
+ * Given a sorted linked list, delete all duplicates such that each element appear only once.
+ * <p>
+ * Example 1:
+ * <p>
+ * Input: 1->1->2
+ * Output: 1->2
+ * Example 2:
+ * <p>
+ * Input: 1->1->2->3->3
+ * Output: 1->2->3
+ */
 public class _0083RemoveDuplicateFromSortedList extends BaseLinkedList {
 
     private abstract static class Solution {
@@ -16,26 +28,24 @@ public class _0083RemoveDuplicateFromSortedList extends BaseLinkedList {
 
         @Override
         public ListNode deleteDuplicates(ListNode<Integer> head) {
-            ListNode dummy = new ListNode(-1);
-            ListNode p = dummy;
-            ListNode cur = head, prev = cur;
-            p.next = head;
-            p = p.next;
-
-            while (cur != null) {
-                if (cur.val != prev.val) {
-                    p.next = cur;
-                    p = p.next;
-                    prev = cur;
+            if (head == null || head.next == null) {
+                return head;
+            }
+            ListNode dummy = new ListNode(head.val - 1);
+            dummy.next = head;
+            ListNode p = head, prev = dummy;
+            while (p != null) {
+                ListNode next = p.next;
+                if (p.val == prev.val) {
+                    prev.next = p.next;
+                } else {
+                    prev = p;
                 }
-                cur = cur.next;
+                p = next;
             }
-            if (p != null) {
-                p.next = null;
-            }
-
             return dummy.next;
         }
+
     }
 
     // Runtime: 0 ms, faster than 100.00% of Java online submissions for Remove Duplicates from Sorted List.
@@ -44,12 +54,12 @@ public class _0083RemoveDuplicateFromSortedList extends BaseLinkedList {
 
         @Override
         public ListNode deleteDuplicates(ListNode<Integer> head) {
-            ListNode cur = head;
-            while (cur != null && cur.next != null) {
-                if (cur.next.val == cur.val) {
-                    cur.next = cur.next.next;
+            ListNode p = head;
+            while (p != null && p.next != null) {
+                if (p.next.val == p.val) {
+                    p.next = p.next.next;
                 } else {
-                    cur = cur.next;
+                    p = p.next;
                 }
             }
             return head;
