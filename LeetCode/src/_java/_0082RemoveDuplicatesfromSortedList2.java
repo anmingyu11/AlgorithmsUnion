@@ -3,8 +3,21 @@ package _java;
 import base.BaseLinkedList;
 
 /**
- * Given a sorted linked list, delete all nodes that have duplicate numbers,
+ * Given a sorted linked list,
+ * delete all nodes that have duplicate numbers,
  * leaving only distinct numbers from the original list.
+ * <p>
+ * Return the linked list sorted as well.
+ * <p>
+ * Example 1:
+ * <p>
+ * Input: 1->2->3->3->4->4->5
+ * Output: 1->2->5
+ * <p>
+ * Example 2:
+ * <p>
+ * Input: 1->1->1->2->3
+ * Output: 2->3
  */
 public class _0082RemoveDuplicatesfromSortedList2 extends BaseLinkedList {
 
@@ -94,7 +107,6 @@ public class _0082RemoveDuplicatesfromSortedList2 extends BaseLinkedList {
 
         printSingleListNode(s.deleteDuplicates(l1)); // 1->2->5
         printSingleListNode(s.deleteDuplicates(l2)); // 2->3
-
     }
 
 }
