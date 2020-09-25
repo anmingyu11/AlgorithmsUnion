@@ -34,39 +34,26 @@ public class _0061RotateList extends BaseLinkedList {
 
         @Override
         public ListNode rotateRight(ListNode head, int k) {
-            if (head == null) {
-                return null;
+            if (head == null || head.next == null) {
+                return head;
             }
-            ListNode p = head, nodeN = null, nodeNK = null, nodeNKm1 = null;
-            int n = 0, i;
-
-            while (p != null) {
-                if (p.next == null) {
-                    nodeN = p;
-                }
-                p = p.next;
-                ++n;
-            }
-
-            k = k % n;
+            ListNode dummy = new ListNode(-1);
+            dummy.next = head;
+            // Get the len and the last node.
+            int n = 1;
+            ListNode p, last, prev;
+            for (p = head; p.next != null; p = p.next, ++n) ;
+            last = p;
+            k %= n;
             if (k == 0) {
                 return head;
             }
-            i = 0;
-            p = head;
-            while (i < n - k + 1) {
-                if (i == n - k) {
-                    nodeNK = p;
-                } else if (i == n - k - 1) {
-                    nodeNKm1 = p;
-                }
-                p = p.next;
-                ++i;
-            }
-            nodeNKm1.next = null;
-            nodeN.next = head;
-
-            return nodeNK;
+            k = n - k;
+            for (p = head, prev = dummy; k > 0; --k, prev = p, p = p.next) ;
+            prev.next = null;
+            dummy.next = p;
+            last.next = head;
+            return dummy.next;
         }
     }
 
@@ -77,11 +64,14 @@ public class _0061RotateList extends BaseLinkedList {
         int k2 = 4;
         ListNode<Integer> l3 = generateASingleListNode(1);
         int k3 = 0;
+        ListNode<Integer> l4 = generateASingleListNode(1, 2);
+        int k4 = 1;
         Solution s = new Solution1();
 
         printSingleListNode(s.rotateRight(l1, k1)); //Output: 4->5->1->2->3->NULL
         printSingleListNode(s.rotateRight(l2, k2)); //Output: 2->0->1->NULL
-        printSingleListNode(s.rotateRight(l3, k3)); // 1
+        printSingleListNode(s.rotateRight(l3, k3)); // 1->NULL
+        printSingleListNode(s.rotateRight(l4, k4)); // 2->1->NULL
 
     }
 
